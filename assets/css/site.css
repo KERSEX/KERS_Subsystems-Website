@@ -216,7 +216,7 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   box-shadow:var(--shadow);transition:left .55s cubic-bezier(.65,0,.35,1),top .55s cubic-bezier(.65,0,.35,1)}
 
 /* OBS */
-.ways{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;margin-top:3rem}
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:1.3rem;margin-top:3rem}
 .way{background:var(--panel-alt);border:1px solid var(--line);border-radius:var(--radius);padding:2rem 1.8rem;position:relative}
 .way-no{font-family:'Teko',sans-serif;font-size:3.2rem;font-weight:700;line-height:1;color:rgba(255,255,255,.09);
   position:absolute;top:1rem;right:1.4rem}
@@ -244,6 +244,8 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   background:rgba(0,0,0,.35);border:1px solid var(--line-soft);border-radius:7px;padding:.6rem .8rem}
 .urls code{color:var(--accent);font-weight:600}
 .urls span{font-size:.88rem;color:var(--muted)}
+
+.urls-note{margin-top:.9rem;font-size:.85rem;color:var(--muted)}
 
 .callout{margin-top:1.8rem;padding:1.3rem 1.5rem;border-radius:var(--radius);font-size:.93rem;color:var(--muted);
   background:linear-gradient(90deg,rgba(225,6,0,.1),rgba(225,6,0,.02));border:1px solid rgba(225,6,0,.28)}

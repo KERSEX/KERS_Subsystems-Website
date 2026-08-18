@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KERS Subsystems — Live-Telemetrie-Overlay für F1 26</title>
-<meta name="description" content="KERS Subsystems ist ein Live-Telemetrie-Overlay für F1 26: Timing Tower, Trackmap, Battle-Boxen, Boxenstopp-Karten und mehr — als Fenster über dem Spiel und als Browserquelle für OBS.">
+<meta name="description" content="KERS Subsystems ist ein Live-Telemetrie-Overlay für F1 26: Timing Tower, Trackmap, Battle-Boxen, Boxenstopp-Karten und mehr — als Fenster über dem Spiel und als eigenes Fenster für die Aufnahme in OBS.">
 <meta name="theme-color" content="#0e0e13">
 <link rel="icon" href="assets/img/favicon.ico" sizes="any">
 <link rel="icon" href="assets/img/icon.png" type="image/png">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KERS Subsystems">
 <meta property="og:title" content="KERS Subsystems — Live-Telemetrie-Overlay für F1 26">
-<meta property="og:description" content="Timing Tower, Trackmap, Battles, Boxenstopps und WM-Stand aus dem UDP-Strom von F1 26 — frei platzierbar, direkt über dem Spiel oder in OBS.">
+<meta property="og:description" content="Timing Tower, Trackmap, Battles, Boxenstopps und WM-Stand aus dem UDP-Strom von F1 26 — frei platzierbar, direkt über dem Spiel und in OBS.">
 <meta property="og:image" content="assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
@@ -61,7 +61,7 @@
       <p class="lead">
         KERS Subsystems hört auf den Telemetrie-Strom von <strong>F1&nbsp;26</strong> und macht daraus
         ein Overlay im Fernseh-Look: Timing Tower, Trackmap, Kampfgruppen, Boxenstopps, Strafen.
-        Als rahmenloses Fenster über dem Spiel — oder als Browserquelle in OBS.
+        Als rahmenloses Fenster über dem Spiel — und als eigenes Fenster für die Aufnahme in OBS.
       </p>
       <div class="cta">
         <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">
@@ -105,13 +105,13 @@
     </article>
     <article>
       <h3>In OBS</h3>
-      <p>Browserquelle auf <code>localhost:5100</code>, transparent. Oder ein zweites, undurchsichtiges
-         Fenster in Canvas-Größe für die Fensteraufnahme.</p>
+      <p>Ein zweites, undurchsichtiges Fenster in Canvas-Größe. In OBS per Fensteraufnahme holen,
+         Farbschlüssel auf Magenta — fertig.</p>
     </article>
     <article>
       <h3>Vom Handy</h3>
-      <p>Regie und Einstellungen laufen im Browser. Im selben WLAN steuerst du das Overlay vom Handy,
-         ohne das Rennen zu verlassen.</p>
+      <p>Regie und Einstellungen sind die beiden Seiten im Browser. Im selben WLAN steuerst du das
+         Overlay vom Handy, ohne das Rennen zu verlassen.</p>
     </article>
   </div>
 </section>
@@ -121,8 +121,8 @@
   <div class="wrap">
     <p class="kicker">Bausteine</p>
     <h2>Dreizehn Teile. Du entscheidest, welche laufen.</h2>
-    <p class="sub">Jeder Baustein rechnet für sich, lässt sich einzeln abschalten und frei platzieren —
-       als Ganzes im Overlay oder einzeln unter <code>/part/&lt;name&gt;</code> als eigene Quelle.</p>
+    <p class="sub">Jeder Baustein rechnet für sich, lässt sich einzeln abschalten und frei platzieren.
+       Was gerade nichts zu zeigen hat, bleibt still — die Hotlap-Boxen etwa laufen nur im Qualifying.</p>
 
     <div class="cards" id="cards">
       <article class="card"><h3>Timing Tower</h3><p>Die Rangliste mit Abstand zur Spitze, Intervall, Sektoren, Reifen und DRS. Positionswechsel gleiten, Strafen hängen als Pille an der Zeile.</p></article>
@@ -178,24 +178,41 @@
 <section class="sec" id="obs">
   <div class="wrap">
     <p class="kicker">Aufnahme &amp; Stream</p>
-    <h2>Zwei Wege nach OBS.</h2>
+    <h2>Ein zweites Fenster, drei Handgriffe.</h2>
+    <p class="sub">Das durchsichtige HUD selbst aufzunehmen funktioniert nicht — es friert in der
+      Fensteraufnahme auf einem Bild ein. Deshalb zeichnet KERS Subsystems dieselbe Szene ein zweites
+      Mal: undurchsichtig, in Canvas-Größe, eigens für die Aufnahme.</p>
 
     <div class="ways">
       <article class="way">
         <span class="way-no">01</span>
-        <h3>Browserquelle</h3>
-        <p>Neue Quelle → Browser → <code>http://localhost:5100/</code>. Hintergrund ist transparent,
-           einzelne Bausteine holst du über <code>/part/&lt;name&gt;</code> als eigene Quelle.</p>
-        <p class="way-note">Der saubere Weg, wenn das Spiel im echten Vollbild läuft.</p>
+        <h3>Fenster einschalten</h3>
+        <p>Im Schaltbrett unter <em>OBS</em> das <em>eigene OBS-Fenster</em> anschalten und die
+           Canvas-Größe auf das stellen, was in OBS eingestellt ist — meist 1920×1080.</p>
+        <p class="way-note">Das Desktop-HUD darf dabei aus bleiben. Das OBS-Fenster läuft unabhängig.</p>
       </article>
       <article class="way">
         <span class="way-no">02</span>
-        <h3>Fensteraufnahme</h3>
-        <p>Das HUD öffnet auf Wunsch ein zweites, undurchsichtiges Fenster in Canvas-Größe.
-           Damit OBS es überhaupt auflistet, im Schaltbrett <em>In OBS auffindbar</em> einschalten.</p>
-        <p class="way-note">Reicht deine Aufnahme den Alphakanal nicht durch: Rückfallebene <em>Chroma</em> —
-           einfarbiger Grund in Magenta, den du per Farbschlüssel wegfilterst.</p>
+        <h3>In OBS aufnehmen</h3>
+        <p><em>Fensteraufnahme</em> → Fenster <code>[pythonw.exe]: KERS OBS</code>,
+           Methode „Windows 10 (1903 und neuer)", <em>Fensterrahmen aufnehmen</em> aus.</p>
       </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Farbschlüssel</h3>
+        <p>Auf die Quelle einen Filter <em>Farbschlüssel</em> legen, Schlüsselfarbe <em>Magenta</em>.</p>
+        <p class="way-note">Kein Notbehelf, sondern der Plan: im OBS-Fenster sind alle Panels deckend,
+           damit der Schlüssel sie nicht anteilig mitfrisst. Magenta, weil die Farbe im Overlay nirgends
+           vorkommt — Grün kollidiert mit Sektoren und DRS, Blau mit Alpine, Williams und RB.</p>
+      </article>
+    </div>
+
+    <div class="callout">
+      <b>Warum nicht das HUD-Fenster selbst?</b> Ein durchsichtiges Fenster zeichnet unter Windows über
+      DirectComposition unmittelbar in den Desktop. Die Windows Graphics Capture, aus der OBS seine
+      Fensteraufnahme speist, liest dagegen die DWM-Umleitungsfläche — und die bekommt bei so einem
+      Fenster keine neuen Bilder mehr. An einem Fenster ist das nicht lösbar: entweder durchsichtig für
+      den Desktop oder undurchsichtig für die Aufnahme. Deshalb zwei.
     </div>
   </div>
 </section>
@@ -231,12 +248,14 @@
       </li>
       <li>
         <h3>Einrichten</h3>
-        <p>Im Browser erreichbar, sobald der Server läuft:</p>
+        <p>Zwei Seiten im Browser — im Schaltbrett je ein Knopf, oder direkt aufgerufen,
+           sobald der Server läuft:</p>
         <div class="urls">
-          <div><code>/</code><span>Das komplette Overlay als Browserquelle</span></div>
           <div><code>/regie</code><span>Charts, WM-Stand, Battle- und Hotlap-Boxen von Hand einblenden</span></div>
           <div><code>/settings</code><span>Branding, Farben, Deckkraft, Sichtbarkeit, Layout</span></div>
         </div>
+        <p class="urls-note">Das Overlay selbst wird nicht im Browser aufgerufen — es läuft im HUD-Fenster
+           und für die Aufnahme im OBS-Fenster.</p>
       </li>
     </ol>
 
@@ -261,15 +280,15 @@
         <div class="node"><b>Parser + Flask</b><span>main.py · Port 5100</span></div>
         <div class="arrow" aria-hidden="true"></div>
         <div class="node split-node">
-          <div><b>QML-Szene</b><span>Desktop-HUD</span></div>
-          <div><b>Web-Overlay</b><span>OBS-Browserquelle</span></div>
+          <div><b>HUD-Fenster</b><span>durchsichtig, immer oben</span></div>
+          <div><b>OBS-Fenster</b><span>deckend, Canvas-Größe</span></div>
         </div>
       </div>
 
       <dl class="specs">
         <div><dt>Spiel</dt><dd>F1 26, UDP-Format „2026". Ältere Titel senden ein anderes Format und werden nicht gelesen.</dd></div>
         <div><dt>Ports</dt><dd><code>5100</code> Weboberfläche · <code>20777</code> Telemetrie</dd></div>
-        <div><dt>Renderer</dt><dd>QML-Szene (Standard) oder die HTML-Seiten in einer WebEngine — beide teilen dieselben Farb-Tokens.</dd></div>
+        <div><dt>Renderer</dt><dd>Die QML-Szene. Die alten HTML-Seiten liegen als Rückfallebene daneben, die OBS-Schalter gelten aber nur für QML.</dd></div>
         <div><dt>Renderrate</dt><dd>10 bis 120&nbsp;Hz. Das Spiel sendet höchstens 60 Pakete/s; darüber laufen nur noch die weichen Zähler flüssiger.</dd></div>
         <div><dt>Quelltext</dt><dd>Python 3.13, Flask und PySide6. <code>run.bat</code> legt die venv an und startet den Server, <code>start_hud.bat</code> das Desktop-HUD.</dd></div>
         <div><dt>Deine Daten</dt><dd>Alles Persönliche liegt in <code>data\</code> neben der EXE. Die EXE selbst enthält keine.</dd></div>
@@ -296,12 +315,15 @@
         <summary>Das HUD liegt hinter dem Spiel.</summary>
         <p>Im randlosen Vollbild schiebt sich das Spiel manchmal nach vorn. Das HUD meldet sich alle
            zwei Sekunden von selbst wieder oben an. Hilft das nicht, läuft das Spiel meist im echten
-           Vollbild — dann ist die Browserquelle in OBS der bessere Weg.</p>
+           Vollbild — fürs Bild im Stream ist ohnehin das OBS-Fenster zuständig, und das läuft davon
+           unberührt weiter.</p>
       </details>
       <details>
         <summary>OBS findet das Fenster nicht.</summary>
-        <p><em>In OBS auffindbar</em> im Schaltbrett einschalten. Dafür erscheint das HUD dann auch in
-           der Taskleiste.</p>
+        <p>Gesucht ist <code>[pythonw.exe]: KERS OBS</code> — nicht das HUD-Fenster. Willst du doch das
+           HUD selbst aufnehmen, muss <em>In OBS auffindbar</em> im Schaltbrett an: das HUD läuft sonst
+           als Werkzeugfenster, und genau die wirft OBS aus seiner Liste. Der Preis ist ein Eintrag in
+           der Taskleiste — beides hängt an derselben Eigenschaft.</p>
       </details>
       <details>
         <summary>Ich bekomme das HUD nicht mit der Maus zu fassen.</summary>
