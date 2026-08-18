@@ -10,9 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+# Ein laufendes Deployment NICHT abbrechen: Pages laesst immer nur eines zu, und
+# ein abgebrochenes blockiert das naechste ("due to in progress deployment").
+# Neue Laeufe warten stattdessen, bis das vorige durch ist.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
