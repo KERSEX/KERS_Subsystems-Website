@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KERS Subsystems — Live-Telemetrie-Overlay für F1 26</title>
+<meta name="description" content="KERS Subsystems ist ein Live-Telemetrie-Overlay für F1 26: Timing Tower, Trackmap, Battle-Boxen, Boxenstopp-Karten und mehr — als Fenster über dem Spiel und als Browserquelle für OBS.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="KERS Subsystems — Live-Telemetrie-Overlay für F1 26">
+<meta property="og:description" content="Timing Tower, Trackmap, Battles, Boxenstopps und WM-Stand aus dem UDP-Strom von F1 26 — frei platzierbar, direkt über dem Spiel oder in OBS.">
+<meta property="og:image" content="assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <img src="assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="#bausteine">Bausteine</a>
+      <a href="#layout">Layout</a>
+      <a href="#obs">OBS</a>
+      <a href="#start">Schnellstart</a>
+      <a href="#technik">Technik</a>
+      <a href="#hilfe">Hilfe</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="dot"></span> Nur F1 26 · UDP-Format 2026</p>
+      <h1>Dein Rennen,<br>als <em>Broadcast.</em></h1>
+      <p class="lead">
+        KERS Subsystems hört auf den Telemetrie-Strom von <strong>F1&nbsp;26</strong> und macht daraus
+        ein Overlay im Fernseh-Look: Timing Tower, Trackmap, Kampfgruppen, Boxenstopps, Strafen.
+        Als rahmenloses Fenster über dem Spiel — oder als Browserquelle in OBS.
+      </p>
+      <div class="cta">
+        <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">
+          Neueste Fassung laden
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#start">So läuft es in 4 Schritten</a>
+      </div>
+      <ul class="hero-facts">
+        <li><strong>13</strong><span>Bausteine, einzeln schaltbar</span></li>
+        <li><strong>0</strong><span>Installation — eine EXE</span></li>
+        <li><strong>60&nbsp;Hz</strong><span>so schnell wie das Spiel sendet</span></li>
+      </ul>
+    </div>
+
+    <!-- Nachbau des Timing Towers, animiert -->
+    <div class="hero-demo" aria-hidden="true">
+      <div class="tower" id="tower">
+        <div class="tower-head">
+          <span class="live"><i class="pulse"></i>LIVE</span>
+          <span class="champ-title">Grand Prix</span>
+          <span class="lap">RUNDE <b id="lapNo">32</b>/57</span>
+        </div>
+        <div class="tower-cols">
+          <span>Pos</span><span></span><span>Fahrer</span><span>Leader</span><span>Interval</span><span>Reifen</span>
+        </div>
+        <div class="tower-body" id="towerBody"></div>
+        <div class="tower-foot"><span class="tag">DRS aktiv</span><span class="tag warn">Gelb S2</span></div>
+      </div>
+      <div class="demo-caption">Nachbau — im Betrieb kommen die Werte aus dem Spiel.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ WAS ES IST ══════════════ -->
+<section class="band">
+  <div class="wrap trio">
+    <article>
+      <h3>Über dem Spiel</h3>
+      <p>Ein rahmenloses Fenster, immer oben. Gesperrt gehen alle Klicks hindurch — du spielst normal
+         weiter, während das Overlay darüber liegt.</p>
+    </article>
+    <article>
+      <h3>In OBS</h3>
+      <p>Browserquelle auf <code>localhost:5100</code>, transparent. Oder ein zweites, undurchsichtiges
+         Fenster in Canvas-Größe für die Fensteraufnahme.</p>
+    </article>
+    <article>
+      <h3>Vom Handy</h3>
+      <p>Regie und Einstellungen laufen im Browser. Im selben WLAN steuerst du das Overlay vom Handy,
+         ohne das Rennen zu verlassen.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════════ BAUSTEINE ══════════════ -->
+<section class="sec" id="bausteine">
+  <div class="wrap">
+    <p class="kicker">Bausteine</p>
+    <h2>Dreizehn Teile. Du entscheidest, welche laufen.</h2>
+    <p class="sub">Jeder Baustein rechnet für sich, lässt sich einzeln abschalten und frei platzieren —
+       als Ganzes im Overlay oder einzeln unter <code>/part/&lt;name&gt;</code> als eigene Quelle.</p>
+
+    <div class="cards" id="cards">
+      <article class="card"><h3>Timing Tower</h3><p>Die Rangliste mit Abstand zur Spitze, Intervall, Sektoren, Reifen und DRS. Positionswechsel gleiten, Strafen hängen als Pille an der Zeile.</p></article>
+      <article class="card"><h3>Trackmap</h3><p>Die Strecke lernt sich beim Fahren selbst an. Alle Autos als Punkte, der Kamera-Fahrer hervorgehoben.</p></article>
+      <article class="card"><h3>Meldungs-Banner</h3><p>Strafen, Flaggen, Safety Car und Untersuchungen laufen als Warteschlange über eine gemeinsame Leiste.</p></article>
+      <article class="card"><h3>Fastest-Lap-Banner</h3><p>Das lila Banner, wenn die schnellste Runde fällt — mit Fahrer, Team und Zeit.</p></article>
+      <article class="card"><h3>Start-Ampel</h3><p>Die fünf Lichter, synchron zum Startvorgang des Spiels.</p></article>
+      <article class="card"><h3>Battle-Boxen</h3><p>Erkennt Kampfgruppen und projiziert, wann der Hintermann dran ist — inklusive Undercut-Erkennung beim Boxenstopp.</p></article>
+      <article class="card"><h3>Hotlap-Boxen</h3><p>Im Qualifying: wer gerade eine fliegende Runde fährt, Sektor für Sektor gegen die Bestzeit.</p></article>
+      <article class="card"><h3>Lower-Third</h3><p>Der Namens-Tag beim Kamerawechsel — Fahrer, Team, Position.</p></article>
+      <article class="card"><h3>Gefahrenzone</h3><p>Countdown für den letzten sicheren Platz: wer fliegt raus, wenn die Session jetzt endet.</p></article>
+      <article class="card"><h3>Onboard</h3><p>Die Telemetrie des Kamera-Fahrers: Gang, Drehzahl, Gas, Bremse, ERS, Reifenzustand.</p></article>
+      <article class="card"><h3>Pit-Projektion</h3><p>„Wo käme er nach dem Stopp raus?" — die Position, auf die der Fahrer bei einem Stopp jetzt zurückfiele.</p></article>
+      <article class="card"><h3>Boxenstopp-Karten</h3><p>Live mitlaufender Standzeit-Timer, sobald ein Auto in der Box steht.</p></article>
+      <article class="card"><h3>WM-Stand</h3><p>Fahrer- und Teamwertung aus deiner eigenen Meisterschaftsdatei, einblendbar über die Regie.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ LAYOUT ══════════════ -->
+<section class="sec alt" id="layout">
+  <div class="wrap split">
+    <div>
+      <p class="kicker">Freies Layout</p>
+      <h2>Anker statt Koordinaten.</h2>
+      <p class="sub">Ein Baustein hängt nicht an festen Pixeln, sondern an einem von neun Ankerpunkten
+        plus Versatz. Was du unten rechts platzierst, bleibt unten rechts — auch wenn das HUD in
+        2560×1440 läuft und OBS in 1920×1080 aufnimmt.</p>
+
+      <ul class="checks">
+        <li><b>Mit der Maus.</b> „Layout bearbeiten" im Schaltbrett: jeder Baustein bekommt einen Rahmen mit Namen, du ziehst ihn an seinen Platz. Was gerade nichts anzeigt, steht als beschrifteter Platzhalter da.</li>
+        <li><b>Auf den Pixel genau.</b> In den Einstellungen gibt es zu jedem Baustein Regler für Ankerpunkt, Versatz, Größe und Ebene.</li>
+        <li><b>Zurück auf Anfang.</b> „Standard Layout" stellt alle Positionen wieder her — Branding, Farben und der Rest bleiben unangetastet.</li>
+      </ul>
+    </div>
+
+    <!-- 3x3-Ankerraster, interaktiv -->
+    <div class="anchor-demo">
+      <div class="anchor-frame" id="anchorFrame">
+        <div class="anchor-grid" role="group" aria-label="Ankerpunkte">
+          <button class="anchor" data-a="tl">tl</button><button class="anchor" data-a="tc">tc</button><button class="anchor" data-a="tr">tr</button>
+          <button class="anchor" data-a="lc">lc</button><button class="anchor" data-a="cc">cc</button><button class="anchor" data-a="rc">rc</button>
+          <button class="anchor" data-a="bl">bl</button><button class="anchor" data-a="bc">bc</button><button class="anchor" data-a="br">br</button>
+        </div>
+        <div class="ghost" id="ghost">Timing Tower</div>
+      </div>
+      <p class="demo-caption">Ankerpunkt anklicken — der Baustein zieht um.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ OBS ══════════════ -->
+<section class="sec" id="obs">
+  <div class="wrap">
+    <p class="kicker">Aufnahme &amp; Stream</p>
+    <h2>Zwei Wege nach OBS.</h2>
+
+    <div class="ways">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Browserquelle</h3>
+        <p>Neue Quelle → Browser → <code>http://localhost:5100/</code>. Hintergrund ist transparent,
+           einzelne Bausteine holst du über <code>/part/&lt;name&gt;</code> als eigene Quelle.</p>
+        <p class="way-note">Der saubere Weg, wenn das Spiel im echten Vollbild läuft.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>Fensteraufnahme</h3>
+        <p>Das HUD öffnet auf Wunsch ein zweites, undurchsichtiges Fenster in Canvas-Größe.
+           Damit OBS es überhaupt auflistet, im Schaltbrett <em>In OBS auffindbar</em> einschalten.</p>
+        <p class="way-note">Reicht deine Aufnahme den Alphakanal nicht durch: Rückfallebene <em>Chroma</em> —
+           einfarbiger Grund in Magenta, den du per Farbschlüssel wegfilterst.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SCHNELLSTART ══════════════ -->
+<section class="sec alt" id="start">
+  <div class="wrap">
+    <p class="kicker">Schnellstart</p>
+    <h2>In vier Schritten im Bild.</h2>
+
+    <ol class="steps">
+      <li>
+        <h3>Herunterladen</h3>
+        <p>Die <code>KERS_Subsystems.exe</code> aus den Releases in einen eigenen Ordner legen.
+           Keine Installation. Beim ersten Start entsteht daneben ein Ordner <code>data\</code> —
+           dort liegen deine Einstellungen, Fensterlage, WM-Stände und Aufzeichnungen.</p>
+      </li>
+      <li>
+        <h3>Telemetrie einschalten</h3>
+        <p>Im Spiel unter <em>Einstellungen → Telemetrie</em>:</p>
+        <div class="kv">
+          <div><span>UDP Telemetry</span><b>An</b></div>
+          <div><span>UDP Format</span><b>2026</b></div>
+          <div><span>IP</span><b>127.0.0.1</b></div>
+          <div><span>Port</span><b>20777</b></div>
+          <div><span>Spielernamen</span><b>An</b></div>
+        </div>
+      </li>
+      <li>
+        <h3>Starten</h3>
+        <p>EXE öffnen — es erscheint das Schaltbrett <em>KERS Subsystems</em>.
+           Dort <b>Start Server</b> drücken, dann <b>HUD IST AN</b>.</p>
+      </li>
+      <li>
+        <h3>Einrichten</h3>
+        <p>Im Browser erreichbar, sobald der Server läuft:</p>
+        <div class="urls">
+          <div><code>/</code><span>Das komplette Overlay als Browserquelle</span></div>
+          <div><code>/regie</code><span>Charts, WM-Stand, Battle- und Hotlap-Boxen von Hand einblenden</span></div>
+          <div><code>/settings</code><span>Branding, Farben, Deckkraft, Sichtbarkeit, Layout</span></div>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <b>Selbst-Update.</b> Beim Start sieht das Programm still nach, ob es eine neuere Fassung gibt.
+      Der Download wird gegen Größe und SHA-256 geprüft, bevor er die laufende Datei ersetzt —
+      die alte bleibt als Rückfallebene liegen. Eine bestimmte Fassung wählst du im Schaltbrett gezielt aus.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TECHNIK ══════════════ -->
+<section class="sec" id="technik">
+  <div class="wrap">
+    <p class="kicker">Unter der Haube</p>
+    <h2>Wie es gebaut ist.</h2>
+
+    <div class="tech">
+      <div class="tech-flow">
+        <div class="node"><b>F1 26</b><span>UDP · Port 20777</span></div>
+        <div class="arrow" aria-hidden="true"></div>
+        <div class="node"><b>Parser + Flask</b><span>main.py · Port 5100</span></div>
+        <div class="arrow" aria-hidden="true"></div>
+        <div class="node split-node">
+          <div><b>QML-Szene</b><span>Desktop-HUD</span></div>
+          <div><b>Web-Overlay</b><span>OBS-Browserquelle</span></div>
+        </div>
+      </div>
+
+      <dl class="specs">
+        <div><dt>Spiel</dt><dd>F1 26, UDP-Format „2026". Ältere Titel senden ein anderes Format und werden nicht gelesen.</dd></div>
+        <div><dt>Ports</dt><dd><code>5100</code> Weboberfläche · <code>20777</code> Telemetrie</dd></div>
+        <div><dt>Renderer</dt><dd>QML-Szene (Standard) oder die HTML-Seiten in einer WebEngine — beide teilen dieselben Farb-Tokens.</dd></div>
+        <div><dt>Renderrate</dt><dd>10 bis 120&nbsp;Hz. Das Spiel sendet höchstens 60 Pakete/s; darüber laufen nur noch die weichen Zähler flüssiger.</dd></div>
+        <div><dt>Quelltext</dt><dd>Python 3.13, Flask und PySide6. <code>run.bat</code> legt die venv an und startet den Server, <code>start_hud.bat</code> das Desktop-HUD.</dd></div>
+        <div><dt>Deine Daten</dt><dd>Alles Persönliche liegt in <code>data\</code> neben der EXE. Die EXE selbst enthält keine.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ HILFE ══════════════ -->
+<section class="sec alt" id="hilfe">
+  <div class="wrap narrow">
+    <p class="kicker">Fehlersuche</p>
+    <h2>Wenn etwas klemmt.</h2>
+
+    <div class="faq">
+      <details>
+        <summary>Es kommt nichts an.</summary>
+        <p>Die Statuszeile im Schaltbrett zeigt getrennt an, ob der Server läuft und ob UDP-Pakete
+           ankommen. Sendet das Spiel ein anderes Format als 2026, kommen zwar Pakete an, werden aber
+           nicht gelesen. Beim Testen darf außerdem nur <em>eine</em> Quelle auf Port 20777 senden —
+           entweder das Spiel oder ein Testsender, sonst mischen sich die Daten.</p>
+      </details>
+      <details>
+        <summary>Das HUD liegt hinter dem Spiel.</summary>
+        <p>Im randlosen Vollbild schiebt sich das Spiel manchmal nach vorn. Das HUD meldet sich alle
+           zwei Sekunden von selbst wieder oben an. Hilft das nicht, läuft das Spiel meist im echten
+           Vollbild — dann ist die Browserquelle in OBS der bessere Weg.</p>
+      </details>
+      <details>
+        <summary>OBS findet das Fenster nicht.</summary>
+        <p><em>In OBS auffindbar</em> im Schaltbrett einschalten. Dafür erscheint das HUD dann auch in
+           der Taskleiste.</p>
+      </details>
+      <details>
+        <summary>Ich bekomme das HUD nicht mit der Maus zu fassen.</summary>
+        <p>Ab Werk ist es gesperrt — genau das lässt die Klicks zum Spiel durch. Zum Verschieben erst
+           im Schaltbrett oder über das Symbol im Infobereich entsperren.</p>
+      </details>
+      <details>
+        <summary>Das Overlay sieht anders aus als erwartet.</summary>
+        <p>Beim Start aus dem Quelltext müssen die Schriften einmalig erzeugt werden:
+           <code>python tools\woff2_to_ttf.py</code>. Qt kann keine woff2-Dateien lesen und fällt sonst
+           auf die Systemschrift zurück.</p>
+      </details>
+    </div>
+
+    <p class="help-more">
+      Alles Weitere steht in der <a href="https://github.com/KERSEX/KERS_Overlay#readme" target="_blank" rel="noopener">README des Projekts</a>
+      und in den <a href="https://github.com/KERSEX/KERS_Overlay/blob/main/hud/README.md" target="_blank" rel="noopener">Technik-Notizen zum HUD</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════ DOWNLOAD ══════════════ -->
+<section class="download" id="download">
+  <div class="wrap dl-in">
+    <img src="assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
+    <h2>Hol es dir.</h2>
+    <p>Eine Datei, kein Installer. Läuft neben dem Spiel und aktualisiert sich selbst.</p>
+    <div class="cta">
+      <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">KERS_Subsystems.exe</a>
+      <a class="btn btn-ghost btn-lg" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quelltext auf GitHub</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">
+      Privates Projekt, kein offizielles Produkt von EA oder Codemasters.
+      Alle Marken gehören ihren jeweiligen Eigentümern.
+    </p>
+    <p class="foot-links">
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Projekt</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">Diese Seite</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
