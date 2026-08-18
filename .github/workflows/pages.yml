@@ -22,7 +22,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      # enablement schaltet Pages beim ersten Lauf selbst ein - sonst bricht der
+      # Schritt ab, solange unter Settings -> Pages nichts eingestellt ist.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
