@@ -56,11 +56,11 @@
 
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="dot"></span> Nur F1 26 · UDP-Format 2026</p>
-      <h1>Dein Rennen,<br>als <em>Broadcast.</em></h1>
+      <h1>Dein Rennen,<br>in <em>Zahlen.</em></h1>
       <p class="lead">
         KERS Subsystems hört auf den Telemetrie-Strom von <strong>F1&nbsp;26</strong> und macht daraus
-        ein Overlay im Fernseh-Look: Timing Tower, Trackmap, Kampfgruppen, Boxenstopps, Strafen.
+        ein Overlay, das die Lage sofort lesbar macht: Timing Tower, Trackmap, Kampfgruppen,
+        Boxenstopps, Strafen.
         Als rahmenloses Fenster über dem Spiel — und als eigenes Fenster für die Aufnahme in OBS.
       </p>
       <div class="cta">
@@ -72,7 +72,7 @@
       <ul class="hero-facts">
         <li><strong>13</strong><span>Bausteine, einzeln schaltbar</span></li>
         <li><strong>0</strong><span>Installation — eine EXE</span></li>
-        <li><strong>60&nbsp;Hz</strong><span>so schnell wie das Spiel sendet</span></li>
+        <li><strong>10–120&nbsp;Hz</strong><span>Overlay-Renderrate</span></li>
       </ul>
     </div>
 
@@ -88,7 +88,6 @@
           <span>Pos</span><span></span><span>Fahrer</span><span>Leader</span><span>Interval</span><span>Reifen</span>
         </div>
         <div class="tower-body" id="towerBody"></div>
-        <div class="tower-foot"><span class="tag">DRS aktiv</span><span class="tag warn">Gelb S2</span></div>
       </div>
       <div class="demo-caption">Nachbau — im Betrieb kommen die Werte aus dem Spiel.</div>
     </div>
@@ -194,7 +193,7 @@
       <article class="way">
         <span class="way-no">02</span>
         <h3>In OBS aufnehmen</h3>
-        <p><em>Fensteraufnahme</em> → Fenster <code>[pythonw.exe]: KERS OBS</code>,
+        <p><em>Fensteraufnahme</em> → Fenster <code>[KERS_Subsystems]: KERS OBS</code>,
            Methode „Windows 10 (1903 und neuer)", <em>Fensterrahmen aufnehmen</em> aus.</p>
       </article>
       <article class="way">
@@ -205,6 +204,14 @@
            damit der Schlüssel sie nicht anteilig mitfrisst. Magenta, weil die Farbe im Overlay nirgends
            vorkommt — Grün kollidiert mit Sektoren und DRS, Blau mit Alpine, Williams und RB.</p>
       </article>
+    </div>
+
+    <div class="callout">
+      <b>Und die Monitoraufnahme?</b> Das HUD liegt auf dem Desktop, also ist es bei einer
+      Bildschirmaufnahme automatisch mit im Bild. Zum Streamen taugt das trotzdem wenig: du bekommst
+      alles mit, was sonst noch auf dem Bildschirm liegt, das Overlay hängt an der Auflösung und Lage
+      deines Monitors statt an der OBS-Canvas, und einzeln ein- oder ausblenden lässt sich nichts mehr.
+      Das eigene OBS-Fenster ist deshalb der empfohlene Weg.
     </div>
 
     <div class="callout">
@@ -320,7 +327,7 @@
       </details>
       <details>
         <summary>OBS findet das Fenster nicht.</summary>
-        <p>Gesucht ist <code>[pythonw.exe]: KERS OBS</code> — nicht das HUD-Fenster. Willst du doch das
+        <p>Gesucht ist <code>[KERS_Subsystems]: KERS OBS</code> — nicht das HUD-Fenster. Willst du doch das
            HUD selbst aufnehmen, muss <em>In OBS auffindbar</em> im Schaltbrett an: das HUD läuft sonst
            als Werkzeugfenster, und genau die wirft OBS aus seiner Liste. Der Preis ist ein Eintrag in
            der Taskleiste — beides hängt an derselben Eigenschaft.</p>
