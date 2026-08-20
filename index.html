@@ -297,7 +297,7 @@
         <div><dt>Ports</dt><dd><code>5100</code> Weboberfläche · <code>20777</code> Telemetrie</dd></div>
         <div><dt>Renderer</dt><dd>Die QML-Szene. Die alten HTML-Seiten liegen als Rückfallebene daneben, die OBS-Schalter gelten aber nur für QML.</dd></div>
         <div><dt>Renderrate</dt><dd>10 bis 120&nbsp;Hz. Das Spiel sendet höchstens 60 Pakete/s; darüber laufen nur noch die weichen Zähler flüssiger.</dd></div>
-        <div><dt>Quelltext</dt><dd>Python 3.13, Flask und PySide6. <code>run.bat</code> legt die venv an und startet den Server, <code>start_hud.bat</code> das Desktop-HUD.</dd></div>
+        <div><dt>Quellcode</dt><dd>Python 3.13, Flask und PySide6. <code>run.bat</code> legt die venv an und startet den Server, <code>start_hud.bat</code> das Desktop-HUD.</dd></div>
         <div><dt>Deine Daten</dt><dd>Alles Persönliche liegt in <code>data\</code> neben der EXE. Die EXE selbst enthält keine.</dd></div>
       </dl>
     </div>
@@ -339,7 +339,7 @@
       </details>
       <details>
         <summary>Das Overlay sieht anders aus als erwartet.</summary>
-        <p>Beim Start aus dem Quelltext müssen die Schriften einmalig erzeugt werden:
+        <p>Beim Start aus dem Quellcode müssen die Schriften einmalig erzeugt werden:
            <code>python tools\woff2_to_ttf.py</code>. Qt kann keine woff2-Dateien lesen und fällt sonst
            auf die Systemschrift zurück.</p>
       </details>
@@ -359,8 +359,9 @@
     <h2>Hol es dir.</h2>
     <p>Eine Datei, kein Installer. Läuft neben dem Spiel und aktualisiert sich selbst.</p>
     <div class="cta">
-      <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">KERS_Subsystems.exe</a>
-      <a class="btn btn-ghost btn-lg" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quelltext auf GitHub</a>
+      <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">Download</a>
+      <a class="btn btn-ghost btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Alle Releases</a>
+      <a class="btn btn-ghost btn-lg" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quellcode auf GitHub</a>
     </div>
   </div>
 </section>
