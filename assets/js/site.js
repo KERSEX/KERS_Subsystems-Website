@@ -50,6 +50,55 @@
     zuZeigen.forEach(function (el) { beobachter.observe(el); });
   }
 
+  /* ── Bausteine weich auf- und zuklappen ──────────────────────────────────── */
+  // <details> kennt von sich aus keine Animation - es springt. Deshalb faengt das
+  // Skript den Klick ab, faehrt die Hoehe des Textes hoch bzw. runter und setzt
+  // `open` erst danach. Ohne Skript bleibt das Aufklappen erhalten, nur eben hart.
+  if (!sanft) {
+    document.querySelectorAll(".card").forEach(function (karte) {
+      var kopf = karte.querySelector("summary");
+      var text = karte.querySelector("p");
+      if (!kopf || !text) return;
+      var laeuft = null;
+      var ziel = null;          // wohin der laufende Lauf will
+
+      kopf.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // Einen abgebrochenen Lauf zuerst zu Ende denken: `open` wird sonst nie
+        // gesetzt, und der naechste Klick liefe in die falsche Richtung.
+        if (laeuft) {
+          laeuft.cancel();
+          laeuft = null;
+          karte.open = ziel;
+          text.classList.remove("klappt");
+        }
+
+        var warOffen = karte.open;
+        // Zum Messen muss der Text im Fluss stehen - beim Oeffnen also zuerst auf.
+        if (!warOffen) karte.open = true;
+
+        var hoehe = text.scrollHeight;
+        text.classList.add("klappt");
+        ziel = !warOffen;
+
+        laeuft = text.animate(
+          {
+            height: warOffen ? [hoehe + "px", "0px"] : ["0px", hoehe + "px"],
+            opacity: warOffen ? [1, 0] : [0, 1]
+          },
+          { duration: 240, easing: "cubic-bezier(.4, 0, .2, 1)" }
+        );
+
+        laeuft.onfinish = function () {
+          laeuft = null;
+          text.classList.remove("klappt");
+          karte.open = !warOffen;      // beim Zuklappen erst jetzt, sonst waere der Text sofort weg
+        };
+      });
+    });
+  }
+
   /* ── Ankerraster: Baustein zieht auf den angeklickten Ankerpunkt ─────────── */
   var ghost = document.getElementById("ghost");
   if (ghost) {
