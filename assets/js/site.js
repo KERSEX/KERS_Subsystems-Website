@@ -50,6 +50,28 @@
     zuZeigen.forEach(function (el) { beobachter.observe(el); });
   }
 
+  /* ── Wechselnder Halbsatz in der Ueberschrift ────────────────────────────── */
+  var wechsel = document.getElementById("wechsel");
+  if (wechsel && !sanft) {
+    var SAETZE = ["in Zahlen.", "in Echtzeit.", "auf einen Blick.",
+                  "auf den Punkt.", "sofort lesbar."];
+    var stelle = 0;
+
+    setInterval(function () {
+      stelle = (stelle + 1) % SAETZE.length;
+      // Ausblenden, Text tauschen, wieder einblenden - zwei Haelften derselben Bewegung.
+      wechsel.animate([{ opacity: 1, transform: "translateY(0)" },
+                       { opacity: 0, transform: "translateY(-.22em)" }],
+                      { duration: 260, easing: "cubic-bezier(.4, 0, 1, 1)" })
+        .onfinish = function () {
+          wechsel.textContent = SAETZE[stelle];
+          wechsel.animate([{ opacity: 0, transform: "translateY(.22em)" },
+                           { opacity: 1, transform: "translateY(0)" }],
+                          { duration: 320, easing: "cubic-bezier(0, 0, .2, 1)" });
+        };
+    }, 3200);
+  }
+
   /* ── Bausteine weich auf- und zuklappen ──────────────────────────────────── */
   // <details> kennt von sich aus keine Animation - es springt. Deshalb faengt das
   // Skript den Klick ab, faehrt die Hoehe des Textes hoch bzw. runter und setzt
@@ -79,15 +101,16 @@
         if (!warOffen) karte.open = true;
 
         var hoehe = text.scrollHeight;
+        var polster = getComputedStyle(text).paddingBottom;
         text.classList.add("klappt");
         ziel = !warOffen;
 
+        var zu = { height: "0px", paddingBottom: "0px", opacity: 0 };
+        var auf = { height: hoehe + "px", paddingBottom: polster, opacity: 1 };
+
         laeuft = text.animate(
-          {
-            height: warOffen ? [hoehe + "px", "0px"] : ["0px", hoehe + "px"],
-            opacity: warOffen ? [1, 0] : [0, 1]
-          },
-          { duration: 240, easing: "cubic-bezier(.4, 0, .2, 1)" }
+          warOffen ? [auf, zu] : [zu, auf],
+          { duration: 300, easing: "cubic-bezier(.4, 0, .2, 1)" }
         );
 
         laeuft.onfinish = function () {

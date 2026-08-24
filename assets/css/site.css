@@ -99,7 +99,8 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 
 .hero h1{font-family:'Teko',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;
   font-size:clamp(3rem,6.4vw,4.8rem);line-height:.94;margin-bottom:1.3rem}
-.hero h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 32px var(--accent-glow)}
+.hero h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 32px var(--accent-glow);
+  display:inline-block}
 .lead{font-size:1.08rem;color:#cfcfda;max-width:34rem}
 .lead strong{color:#fff;font-weight:600}
 
