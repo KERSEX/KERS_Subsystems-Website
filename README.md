@@ -3,6 +3,8 @@
 Die Projektseite zu **[KERS Subsystems](https://github.com/KERSEX/KERS_Overlay)**, dem
 Live-Telemetrie-Overlay für F1 26.
 
+**→ https://kersex.github.io/KERS_Subsystems-Website/**
+
 Statische Seite, eine Datei plus Assets — kein Build-Schritt, keine Abhängigkeiten,
 keine externen Quellen zur Laufzeit. Schriften, Logo und Skript liegen im Repo,
 damit die Seite ohne CDN auskommt.
@@ -27,8 +29,12 @@ assets/img/           Logo, Icon, Favicon
 
 ## Veröffentlichen
 
-`.github/workflows/pages.yml` legt die Seite bei jedem Push auf `main` auf GitHub Pages.
-Einmalig unter **Settings → Pages → Source** *GitHub Actions* auswählen.
+`.github/workflows/pages.yml` legt die Seite bei jedem Push auf `main` auf GitHub Pages —
+zu erreichen unter <https://kersex.github.io/KERS_Subsystems-Website/>.
+
+Damit das greift, muss unter **Settings → Pages → Source** einmalig *GitHub Actions*
+ausgewählt sein; der Workflow kann das nicht selbst nachholen. Fehlt es, bricht der Lauf
+mit *„Get Pages site failed: Not Found"* ab.
 
 ## Inhalte pflegen
 
