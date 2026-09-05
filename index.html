@@ -17,7 +17,7 @@
 <meta property="og:image" content="assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="assets/css/site.css?v=2">
+<link rel="stylesheet" href="assets/css/site.css?v=3">
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body>
@@ -38,11 +38,12 @@
     <nav class="menu" id="menu">
       <a href="#bausteine">Bausteine</a>
       <a href="#layout">Layout</a>
+      <a href="#regie">Regie</a>
       <a href="#obs">OBS</a>
       <a href="#start">Schnellstart</a>
       <a href="#technik">Technik</a>
       <a href="#hilfe">Hilfe</a>
-      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">Download</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
     </nav>
   </div>
 </header>
@@ -64,8 +65,8 @@
         Als rahmenloses Fenster über dem Spiel — und als eigenes Fenster für die Aufnahme in OBS.
       </p>
       <div class="cta">
-        <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">
-          Neuste Version
+        <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">
+          Neuste Version laden
         </a>
         <a class="btn btn-ghost btn-lg" href="#start">So läuft es in 4 Schritten</a>
       </div>
@@ -110,7 +111,7 @@
     <article>
       <h3>Vom Handy</h3>
       <p>Regie und Einstellungen sind die beiden Seiten im Browser. Im selben WLAN steuerst du das
-         Overlay vom Handy, ohne das Rennen zu verlassen.</p>
+         Overlay vom Handy — bis hin zur <a href="#regie">Kamera im Spiel</a>.</p>
     </article>
   </div>
 </section>
@@ -191,8 +192,10 @@
         2560×1440 läuft und OBS in 1920×1080 aufnimmt.</p>
 
       <ul class="checks">
-        <li><b>Mit der Maus.</b> „Layout bearbeiten" im Schaltbrett: jeder Baustein bekommt einen Rahmen mit Namen, du ziehst ihn an seinen Platz. Was gerade nichts anzeigt, steht als beschrifteter Platzhalter da.</li>
+        <li><b>Mit der Maus.</b> „Layout bearbeiten" im Schaltbrett: jeder Baustein bekommt einen Rahmen mit Namen, du ziehst ihn an seinen Platz und an den Ecken größer oder kleiner. Was gerade nichts anzeigt, steht als beschrifteter Platzhalter da.</li>
         <li><b>Auf den Pixel genau.</b> In den Einstellungen gibt es zu jedem Baustein Regler für Ankerpunkt, Versatz, Größe und Ebene.</li>
+        <li><b>Was liegt vorn.</b> Die Liste <em>Ebenen</em> sortiert die Bausteine übereinander — oben liegt vorn. Das ändert wirklich nur die Ebene: wer noch auf Standard steht, behält seinen eingebauten Platz.</li>
+        <li><b>Mehrere Anordnungen.</b> Unter <em>Eigene Layouts</em> sicherst du die aktuelle Anordnung unter einem Namen — eine fürs Rennen, eine für die Quali. Sie liegen auf dem Server und sind damit auch vom Handy aus da.</li>
         <li><b>Zurück auf Anfang.</b> „Standard Layout" stellt alle Positionen wieder her — Branding, Farben und der Rest bleiben unangetastet.</li>
       </ul>
     </div>
@@ -208,6 +211,47 @@
         <div class="ghost" id="ghost">Timing Tower</div>
       </div>
       <p class="demo-caption">Ankerpunkt anklicken — der Baustein zieht um.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ REGIE ══════════════ -->
+<section class="sec" id="regie">
+  <div class="wrap">
+    <p class="kicker">Regie</p>
+    <h2>Der Blick hinter das Bild.</h2>
+    <p class="sub">Unter <code>/regie</code> läuft eine zweite Seite, von der nichts ins Bild geht:
+      das ganze Feld mit Reifen, Abständen und Boxenstopps, die Rennleitung, ein Pace-Vergleich und die
+      Live-Projektion des WM-Stands. Von hier blendest du ein und aus, was gerade dran ist.</p>
+
+    <div class="ways">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Director's Eye</h3>
+        <p>Der Kamera-Tipp sagt dir, wo gerade etwas passiert — welcher Zweikampf, welche Runde,
+           welcher Stopp den Blick lohnt.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>Kamera setzen</h3>
+        <p>Direkt darunter ein Knopf je Position, mit dem Fahrernamen daneben: antippen, und die
+           Kamera im Spiel springt dorthin. Der empfohlene Platz bekommt einen Rahmen, ausgefallene
+           Fahrer verschwinden.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Einblenden</h3>
+        <p>Charts, WM-Stand, Battle- und Hotlap-Boxen lassen sich von Hand ins Bild holen, statt auf
+           die Automatik zu warten.</p>
+      </article>
+    </div>
+
+    <div class="callout">
+      <b>Zur Kamera-Steuerung:</b> Sie schickt Tastendrücke ins laufende Spiel, und der Server hört im
+      ganzen Netz. Solange der Schalter an ist, kann also jeder im selben WLAN die Kamera umschalten.
+      Der Endpunkt nimmt zwar nur eine Positionsnummer entgegen — welche Taste das ist, schlägt der
+      Server selbst nach —, aber der eigentliche Schutz ist der Schalter: in <code>/settings</code>
+      abschaltbar, ab Werk an.
     </div>
   </div>
 </section>
@@ -403,7 +447,7 @@
     <h2>Hol es dir.</h2>
     <p>Eine Datei, kein Installer. Läuft neben dem Spiel und aktualisiert sich selbst.</p>
     <div class="cta cta-haupt">
-      <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest" target="_blank" rel="noopener">Download</a>
+      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
     </div>
     <div class="cta">
       <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Alle Releases</a>
@@ -429,6 +473,6 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=2"></script>
+<script src="assets/js/site.js?v=3"></script>
 </body>
 </html>

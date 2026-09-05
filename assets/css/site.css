@@ -83,6 +83,8 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .btn-lg{padding:.85rem 1.7rem;font-size:1rem}
 .btn-ghost{background:transparent;border-color:var(--line);color:#fff}
 .btn-ghost:hover,.btn-ghost:focus-visible{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.3);box-shadow:none}
+.btn-dl{padding-block:.7rem;line-height:1.2}
+.btn-dl small{display:block;font-size:.7rem;font-weight:500;letter-spacing:.4px;opacity:.85;margin-top:.15rem}
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero{position:relative;padding:11rem 0 6rem;overflow:hidden}
@@ -171,6 +173,8 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .band{padding:3.5rem 0;background:var(--bg-2);border-block:1px solid var(--line-soft)}
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
 .trio p{color:var(--muted);font-size:.95rem}
+.trio a{color:var(--accent);text-decoration:none;font-weight:600}
+.trio a:hover{text-decoration:underline}
 
 /* Baustein-Karten - aufklappbar (<details>), zugeklappt passen alle 13 auf einen Blick */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:1.1rem;margin-top:3rem;
