@@ -38,7 +38,7 @@ QUELLEN = WURZEL / "seiten"
 # Cache-Kennzeichen an CSS und JS. Hochzaehlen, wenn sich eine der beiden Dateien
 # aendert - sonst behalten Browser die alte Version (GitHub Pages laesst sie
 # zwischenspeichern).
-VERSION = "13"
+VERSION = "14"
 
 # Deutsch liegt oben, damit die Adresse ohne Sprachkuerzel auskommt; Englisch
 # darunter. Die Reihenfolge bestimmt auch, was x-default bekommt.

@@ -460,8 +460,20 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .dl-in{display:grid;justify-items:center;gap:.3rem}
 .dl-text{color:var(--muted);max-width:38rem;font-size:.98rem}
 .dl-text+.dl-text{margin-top:.7rem}
+
+/* Die vier harten Fakten als Reihe - kurz gesagt, was der Absatz erklaert */
+.fakten{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;
+  margin:1.5rem 0 1.8rem}
+.fakten li{font-size:.78rem;font-weight:600;letter-spacing:.6px;color:#dcdce6;
+  border:1px solid var(--line);border-radius:999px;padding:.4rem .95rem;
+  background:rgba(255,255,255,.03);transition:border-color .25s ease,background .25s ease}
+.fakten li:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.06)}
+.fakten a{color:var(--accent);text-decoration:none}
+.fakten a:hover{text-decoration:underline}
+/* Der erste Punkt bekommt die Akzentfarbe - er ist die Aussage, um die es geht */
+.fakten li:first-child{border-color:rgba(225,6,0,.4);background:rgba(225,6,0,.1);color:#fff}
 /* Zaesur zwischen dem Community-Teil und dem Download darunter */
-.dl-logo{filter:drop-shadow(0 0 26px var(--accent-glow));margin:3.2rem 0 1rem;position:relative}
+.dl-logo{filter:drop-shadow(0 0 26px var(--accent-glow));margin:2.8rem 0 1rem;position:relative}
 .dl-logo::before{content:"";position:absolute;left:50%;top:-1.9rem;transform:translateX(-50%);
   width:min(28rem,60vw);height:1px;
   background:linear-gradient(90deg,transparent,var(--line) 30%,var(--line) 70%,transparent)}
