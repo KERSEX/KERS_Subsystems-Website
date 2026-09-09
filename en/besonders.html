@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What sets it apart — KERS Subsystems</title>
+<meta name="description" content="Battles with overtake projection, undercut detection, pit projection and danger zone: where the overlay calculates instead of just displaying.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/icon.png">
+
+<link rel="alternate" hreflang="de" href="../besonders.html">
+<link rel="alternate" hreflang="en" href="../en/besonders.html">
+<link rel="alternate" hreflang="x-default" href="../besonders.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="What sets it apart — KERS Subsystems">
+<meta property="og:description" content="Battles with overtake projection, undercut detection, pit projection and danger zone: where the overlay calculates instead of just displaying.">
+<meta property="og:image" content="../assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="../assets/css/site.css?v=12">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "en", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("../besonders.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Open menu" data-auf="Open menu" data-zu="Close menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html" aria-current="page">Highlights</a>
+      <a href="bausteine.html">Modules</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html">Control</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Quick start</a>
+      <a href="technik.html">Technical</a>
+      <a class="sprachwahl" href="../besonders.html" id="sprachwahl"
+         title="Auf Deutsch wechseln" lang="de">DE</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>What sets it apart</h1>
+    <p class="sub">Showing gaps is something every overlay can do. It gets interesting when that turns into a prediction.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="besonders">
+  <div class="wrap split">
+    <div>
+      <h2>Not just what is.<br>Also what comes.</h2>
+
+      <ul class="checks">
+        <li><b>Fight in three laps.</b> The overlay detects groups fighting and works out from lap
+          times and gap when the driver behind will really be there. The countdown is in the battle
+          box before the duel is on screen.</li>
+        <li><b>Undercut detected.</b> If a pit stop flips the order, the message banner says so —
+          not afterwards, but while the stop is running.</li>
+        <li><b>Where would he come out?</b> The pit projection puts the driver into the pits in
+          theory and shows the position he would drop back to.</li>
+        <li><b>The last safe spot.</b> In qualifying the danger zone runs a countdown for whoever
+          would be knocked out right now.</li>
+      </ul>
+    </div>
+
+    <div class="bbox-demo" aria-hidden="true">
+      <div class="bbox" id="bbox">
+        <div class="bbox-head" id="bboxHead">Battle for P4</div>
+        <div class="bbox-sub">
+          <span class="bs-ico">⚔</span><span class="bs-txt">Fight in</span>
+          <b class="bs-laps" id="bboxLaps">3</b><span class="bs-unit" id="bboxUnit">laps</span>
+        </div>
+        <div class="bbox-rows" id="bboxRows"></div>
+      </div>
+      <p class="demo-caption">Mock-up — in use the countdown comes from the lap times.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="../assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.</p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Project</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">This site</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js?v=12"></script>
+</body>
+</html>

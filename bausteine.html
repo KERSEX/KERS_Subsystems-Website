@@ -10,6 +10,10 @@
 <link rel="icon" href="assets/img/icon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/icon.png">
 
+<link rel="alternate" hreflang="de" href="bausteine.html">
+<link rel="alternate" hreflang="en" href="en/bausteine.html">
+<link rel="alternate" hreflang="x-default" href="bausteine.html">
+
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KERS Subsystems">
 <meta property="og:title" content="Bausteine — KERS Subsystems">
@@ -17,8 +21,27 @@
 <meta property="og:image" content="assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="assets/css/site.css?v=9">
-<script>document.documentElement.className+=" js";</script>
+<link rel="stylesheet" href="assets/css/site.css?v=12">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "de", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("en/bausteine.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
 </head>
 <body>
 
@@ -31,7 +54,8 @@
       <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
     </a>
 
-    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Menü öffnen" data-auf="Menü öffnen" data-zu="Menü schließen">
       <span></span><span></span><span></span>
     </button>
 
@@ -43,6 +67,8 @@
       <a href="obs.html">OBS</a>
       <a href="start.html">Schnellstart</a>
       <a href="technik.html">Technik</a>
+      <a class="sprachwahl" href="en/bausteine.html" id="sprachwahl"
+         title="Switch to English" lang="en">EN</a>
       <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
     </nav>
   </div>
@@ -125,10 +151,7 @@
 <footer class="foot">
   <div class="wrap foot-in">
     <p class="foot-brand"><img src="assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
-    <p class="foot-legal">
-      Privates Projekt, kein offizielles Produkt von EA oder Codemasters.
-      Alle Marken gehören ihren jeweiligen Eigentümern.
-    </p>
+    <p class="foot-legal">Privates Projekt, kein offizielles Produkt von EA oder Codemasters. Alle Marken gehören ihren jeweiligen Eigentümern.</p>
     <p class="foot-links">
       <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
       <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Projekt</a>
@@ -138,6 +161,6 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=9"></script>
+<script src="assets/js/site.js?v=12"></script>
 </body>
 </html>

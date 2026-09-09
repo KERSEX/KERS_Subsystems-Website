@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free layout — KERS Subsystems</title>
+<meta name="description" content="Place modules on nine anchor points, set size and layer, save several arrangements.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/icon.png">
+
+<link rel="alternate" hreflang="de" href="../layout.html">
+<link rel="alternate" hreflang="en" href="../en/layout.html">
+<link rel="alternate" hreflang="x-default" href="../layout.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Free layout — KERS Subsystems">
+<meta property="og:description" content="Place modules on nine anchor points, set size and layer, save several arrangements.">
+<meta property="og:image" content="../assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="../assets/css/site.css?v=12">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "en", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("../layout.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Open menu" data-auf="Open menu" data-zu="Close menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Highlights</a>
+      <a href="bausteine.html">Modules</a>
+      <a href="layout.html" aria-current="page">Layout</a>
+      <a href="regie.html">Control</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Quick start</a>
+      <a href="technik.html">Technical</a>
+      <a class="sprachwahl" href="../layout.html" id="sprachwahl"
+         title="Auf Deutsch wechseln" lang="de">DE</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Free layout</h1>
+    <p class="sub">A module doesn't hang on fixed pixels but on one of nine anchor points plus an offset.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="layout">
+  <div class="wrap split">
+    <div>
+      <p class="sub">What you place at the bottom right stays at the bottom right — even when the
+        HUD runs at 2560×1440 and OBS records at 1920×1080.</p>
+
+      <ul class="checks">
+        <li><b>With the mouse.</b> “Edit layout” on the control panel: every module gets a frame with
+          its name, you drag it into place and resize it from the corners. Whatever shows nothing
+          right now sits there as a labelled placeholder.</li>
+        <li><b>Pixel exact.</b> In the settings every module has sliders for anchor point, offset,
+          size and layer.</li>
+        <li><b>What sits in front.</b> The <em>Layers</em> list stacks the modules — top is front.
+          It really only changes the layer: anything still on default keeps its built-in place.</li>
+        <li><b>Several arrangements.</b> Under <em>My layouts</em> you save the current arrangement
+          under a name — one for the race, one for qualifying. They live on the server, so they are
+          there from your phone too.</li>
+        <li><b>Back to the start.</b> “Default layout” restores every position — branding, colours
+          and the rest stay untouched.</li>
+      </ul>
+    </div>
+
+    <div class="anchor-demo">
+      <div class="anchor-frame" id="anchorFrame">
+        <div class="anchor-grid" role="group" aria-label="Anchor points">
+          <button class="anchor" data-a="tl">tl</button><button class="anchor" data-a="tc">tc</button><button class="anchor" data-a="tr">tr</button>
+          <button class="anchor" data-a="lc">lc</button><button class="anchor" data-a="cc">cc</button><button class="anchor" data-a="rc">rc</button>
+          <button class="anchor" data-a="bl">bl</button><button class="anchor" data-a="bc">bc</button><button class="anchor" data-a="br">br</button>
+        </div>
+        <div class="ghost" id="ghost">Timing Tower</div>
+      </div>
+      <p class="demo-caption">Click an anchor point — the module moves there.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="../assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.</p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Project</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">This site</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js?v=12"></script>
+</body>
+</html>

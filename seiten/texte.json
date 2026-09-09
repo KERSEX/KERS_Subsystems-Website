@@ -1,0 +1,56 @@
+{
+  "de": {
+    "sprache": "de",
+    "andere": "en",
+    "andere_name": "English",
+    "andere_kurz": "EN",
+    "wechsel_titel": "Switch to English",
+    "zum_inhalt": "Zum Inhalt springen",
+    "menue_auf": "Menü öffnen",
+    "menue_zu": "Menü schließen",
+    "nav": {
+      "besonders": "Besonders",
+      "bausteine": "Bausteine",
+      "layout": "Layout",
+      "regie": "Regie",
+      "obs": "OBS",
+      "start": "Schnellstart",
+      "technik": "Technik",
+      "download": "Download"
+    },
+    "fuss_recht": "Privates Projekt, kein offizielles Produkt von EA oder Codemasters. Alle Marken gehören ihren jeweiligen Eigentümern.",
+    "fuss": {
+      "discord": "Discord",
+      "projekt": "Projekt",
+      "releases": "Releases",
+      "seite": "Diese Seite"
+    }
+  },
+  "en": {
+    "sprache": "en",
+    "andere": "de",
+    "andere_name": "Deutsch",
+    "andere_kurz": "DE",
+    "wechsel_titel": "Auf Deutsch wechseln",
+    "zum_inhalt": "Skip to content",
+    "menue_auf": "Open menu",
+    "menue_zu": "Close menu",
+    "nav": {
+      "besonders": "Highlights",
+      "bausteine": "Modules",
+      "layout": "Layout",
+      "regie": "Control",
+      "obs": "OBS",
+      "start": "Quick start",
+      "technik": "Technical",
+      "download": "Download"
+    },
+    "fuss_recht": "Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.",
+    "fuss": {
+      "discord": "Discord",
+      "projekt": "Project",
+      "releases": "Releases",
+      "seite": "This site"
+    }
+  }
+}

@@ -73,11 +73,17 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 
 /* ── Knöpfe ───────────────────────────────────────────────────────────────── */
 .btn{
+  position:relative;overflow:hidden;
   display:inline-block;text-decoration:none;font-weight:600;letter-spacing:.3px;
   background:var(--accent);color:#fff;border:1px solid var(--accent);
   padding:.6rem 1.15rem;border-radius:7px;font-size:.9rem;
   transition:transform .18s ease,box-shadow .2s ease,background .2s ease;
 }
+/* Glanz, der beim Zeigen einmal durchlaeuft */
+.btn::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);
+  transform:translateX(-120%);transition:transform .55s ease}
+.btn:hover::after,.btn:focus-visible::after{transform:translateX(120%)}
 .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 8px 22px rgba(225,6,0,.38);background:#f21200}
 .btn-sm{padding:.45rem .9rem;font-size:.85rem}
 .btn-lg{padding:.85rem 1.7rem;font-size:1rem}
@@ -89,7 +95,12 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero{position:relative;padding:11rem 0 6rem;overflow:hidden}
 .hero-glow{position:absolute;top:-25%;left:50%;width:1100px;height:1100px;transform:translateX(-50%);
-  background:radial-gradient(circle,rgba(225,6,0,.16) 0%,rgba(225,6,0,.05) 38%,transparent 68%);pointer-events:none}
+  background:radial-gradient(circle,rgba(225,6,0,.16) 0%,rgba(225,6,0,.05) 38%,transparent 68%);
+  pointer-events:none;animation:glut 14s ease-in-out infinite}
+@keyframes glut{
+  0%,100%{transform:translateX(-50%) scale(1);opacity:.85}
+  50%    {transform:translateX(-46%) scale(1.12);opacity:1}
+}
 .hero-grid-bg{position:absolute;inset:0;pointer-events:none;opacity:.5;
   background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
   background-size:64px 64px;
@@ -122,7 +133,8 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 
 .hero-facts{list-style:none;display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:2.4rem;
   margin-top:2.8rem;padding-top:1.8rem;border-top:1px solid var(--line)}
-.hero-facts strong{display:block;font-family:'Teko',sans-serif;font-size:2.2rem;font-weight:700;line-height:1;color:#fff}
+.hero-facts strong{display:block;font-family:'Teko',sans-serif;font-size:2.2rem;font-weight:700;
+  line-height:1;color:#fff;font-variant-numeric:tabular-nums}
 .hero-facts>li>span{font-size:.8rem;color:var(--muted)}
 .hero-facts strong span{font:inherit;color:inherit}   /* Zahl kommt aus tools/bausteine.py */
 
@@ -201,6 +213,10 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 
 /* ── Abschnitte ───────────────────────────────────────────────────────────── */
 .sec{padding:6.5rem 0;position:relative}
+/* Feine Kante zwischen den Abschnitten, in der Mitte am hellsten */
+.sec+.sec::before,.band+.sec::before{content:"";position:absolute;left:50%;top:0;
+  transform:translateX(-50%);width:min(100% - 2.5rem,var(--wrap));height:1px;
+  background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
 .sec.alt{background:var(--bg-2);border-block:1px solid var(--line-soft)}
 .kicker{font-size:.74rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem}
 h2{font-family:'Teko',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;
@@ -214,6 +230,32 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .trio p{color:var(--muted);font-size:.95rem}
 .trio a{color:var(--accent);text-decoration:none;font-weight:600}
 .trio a:hover{text-decoration:underline}
+
+/* ── Sprachumschalter und der Hinweis nach dem Umleiten ───────────────────── */
+.sprachwahl{display:inline-flex;align-items:center;justify-content:center;min-width:2.1rem;
+  padding:.28rem .5rem;border:1px solid var(--line);border-radius:6px;font-size:.75rem;
+  font-weight:700;letter-spacing:1px;color:var(--muted);text-decoration:none;
+  transition:color .2s,border-color .2s,background .2s}
+.sprachwahl:hover,.sprachwahl:focus-visible{color:#fff;border-color:rgba(255,255,255,.3);
+  background:rgba(255,255,255,.06)}
+
+.sprachhinweis{position:fixed;left:50%;bottom:1.2rem;transform:translate(-50%,140%);
+  display:flex;align-items:center;gap:.9rem;z-index:120;
+  background:rgba(20,20,27,.97);border:1px solid var(--line);border-radius:999px;
+  padding:.6rem .7rem .6rem 1.2rem;box-shadow:var(--shadow);backdrop-filter:blur(10px);
+  font-size:.85rem;color:#dcdce6;max-width:calc(100% - 2rem);
+  transition:transform .45s cubic-bezier(.2,.85,.3,1),opacity .35s ease;opacity:0}
+.sprachhinweis.da{transform:translate(-50%,0);opacity:1}
+.sprachhinweis a{color:var(--accent);font-weight:600;text-decoration:none;white-space:nowrap}
+.sprachhinweis a:hover{text-decoration:underline}
+.sprachhinweis button{background:none;border:0;color:var(--muted);font-size:1.1rem;line-height:1;
+  cursor:pointer;padding:.2rem .5rem;border-radius:50%;transition:color .2s,background .2s}
+.sprachhinweis button:hover{color:#fff;background:rgba(255,255,255,.08)}
+@media (max-width:520px){
+  .sprachhinweis{flex-wrap:wrap;border-radius:14px;padding:.8rem 1rem;left:1rem;right:1rem;
+    transform:translateY(140%);max-width:none}
+  .sprachhinweis.da{transform:translateY(0)}
+}
 
 /* ── Startseite: das Themen-Raster ────────────────────────────────────────── */
 .themen{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));
@@ -434,9 +476,28 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .foot-links a{font-size:.82rem;color:var(--muted);text-decoration:none}
 .foot-links a:hover{color:#fff}
 
-/* Einblenden beim Scrollen — ebenfalls nur mit Skript */
-.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+/* ── Einblenden beim Scrollen — ausschliesslich mit Skript ────────────────── */
+.js .reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
 .js .reveal.in{opacity:1;transform:none}
+
+/* Der Kopf einer Unterseite kommt beim Laden herein, nicht erst beim Scrollen. */
+.js .seitenkopf>.wrap>*{opacity:0;transform:translateY(16px);
+  animation:herein .75s cubic-bezier(.2,.8,.3,1) forwards}
+.js .seitenkopf>.wrap>*:nth-child(1){animation-delay:.05s}
+.js .seitenkopf>.wrap>*:nth-child(2){animation-delay:.14s}
+.js .seitenkopf>.wrap>*:nth-child(3){animation-delay:.23s}
+@keyframes herein{to{opacity:1;transform:none}}
+
+/* Ebenso der Kopfbereich der Startseite. */
+.js .hero-copy>*{opacity:0;transform:translateY(18px);
+  animation:herein .8s cubic-bezier(.2,.8,.3,1) forwards}
+.js .hero-copy>*:nth-child(1){animation-delay:.06s}
+.js .hero-copy>*:nth-child(2){animation-delay:.16s}
+.js .hero-copy>*:nth-child(3){animation-delay:.26s}
+.js .hero-copy>*:nth-child(4){animation-delay:.36s}
+.js .hero-copy>*:nth-child(5){animation-delay:.46s}
+.js .hero-demo{opacity:0;animation:herein 1s cubic-bezier(.2,.8,.3,1) .35s forwards}
 
 /* ── Schmalere Fenster ────────────────────────────────────────────────────── */
 @media (max-width:1000px){
@@ -454,6 +515,7 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .menu.open{transform:none;visibility:visible}
   .menu a{padding:.85rem 0;border-bottom:1px solid var(--line-soft);font-size:1rem}
   .menu .btn{margin-top:.9rem;text-align:center;border-bottom:0}
+  .menu .sprachwahl{margin-top:.9rem;align-self:flex-start;border-bottom:0}
   .menu a[aria-current="page"]::after{display:none}
   .seitenkopf{padding-top:7rem}
 }

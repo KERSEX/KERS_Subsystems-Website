@@ -1,15 +1,32 @@
 {
-  "tower": "Die Rangliste mit Abstand zur Spitze, Intervall, Sektoren, Reifen und DRS. Positionswechsel gleiten, Strafen hängen als Pille an der Zeile.",
-  "trackmap": "Die Strecke wird an ihrer Kennung erkannt und die Kontur vorgeladen — gelernt wird nur, was noch fehlt, und einmal Gefahrenes schlägt das Mitgelieferte. Drehung und Spiegelung merkt sich das Overlay je Strecke. Alle Autos als Punkte, der Kamera-Fahrer hervorgehoben.",
-  "racemsg": "Strafen, Flaggen, Safety Car und Untersuchungen laufen als Warteschlange über eine gemeinsame Leiste.",
-  "flbanner": "Das lila Banner, wenn die schnellste Runde fällt — mit Fahrer, Team und Zeit.",
-  "lights": "Die fünf Lichter, synchron zum Startvorgang des Spiels.",
-  "battles": "Erkennt Kampfgruppen und projiziert, wann der Hintermann dran ist — inklusive Undercut-Erkennung beim Boxenstopp.",
-  "hotlaps": "Im Qualifying: wer gerade eine fliegende Runde fährt, Sektor für Sektor gegen die Bestzeit.",
-  "lowerthird": "Der Namens-Tag beim Kamerawechsel — Fahrer, Team, Position.",
-  "danger": "Countdown für den letzten sicheren Platz: wer fliegt raus, wenn die Session jetzt endet.",
-  "onboard": "Die Telemetrie des Kamera-Fahrers: Gang, Drehzahl, Gas, Bremse, ERS, Reifenzustand.",
-  "pitproj": "„Wo käme er nach dem Stopp raus?\" — die Position, auf die der Fahrer bei einem Stopp jetzt zurückfiele.",
-  "pitcards": "Live mitlaufender Standzeit-Timer, sobald ein Auto in der Box steht.",
-  "champ": "Fahrer- und Teamwertung aus deiner eigenen Meisterschaftsdatei, einblendbar über die Regie."
+  "de": {
+    "tower": "Die Rangliste mit Abstand zur Spitze, Intervall, Sektoren, Reifen und DRS. Positionswechsel gleiten, Strafen hängen als Pille an der Zeile.",
+    "trackmap": "Die Strecke wird an ihrer Kennung erkannt und die Kontur vorgeladen — gelernt wird nur, was noch fehlt, und einmal Gefahrenes schlägt das Mitgelieferte. Drehung und Spiegelung merkt sich das Overlay je Strecke. Alle Autos als Punkte, der Kamera-Fahrer hervorgehoben.",
+    "racemsg": "Strafen, Flaggen, Safety Car und Untersuchungen laufen als Warteschlange über eine gemeinsame Leiste.",
+    "flbanner": "Das lila Banner, wenn die schnellste Runde fällt — mit Fahrer, Team und Zeit.",
+    "lights": "Die fünf Lichter, synchron zum Startvorgang des Spiels.",
+    "battles": "Erkennt Kampfgruppen und projiziert, wann der Hintermann dran ist — inklusive Undercut-Erkennung beim Boxenstopp.",
+    "hotlaps": "Im Qualifying: wer gerade eine fliegende Runde fährt, Sektor für Sektor gegen die Bestzeit.",
+    "lowerthird": "Der Namens-Tag beim Kamerawechsel — Fahrer, Team, Position.",
+    "danger": "Countdown für den letzten sicheren Platz: wer fliegt raus, wenn die Session jetzt endet.",
+    "onboard": "Die Telemetrie des Kamera-Fahrers: Gang, Drehzahl, Gas, Bremse, ERS, Reifenzustand.",
+    "pitproj": "„Wo käme er nach dem Stopp raus?\" — die Position, auf die der Fahrer bei einem Stopp jetzt zurückfiele.",
+    "pitcards": "Live mitlaufender Standzeit-Timer, sobald ein Auto in der Box steht.",
+    "champ": "Fahrer- und Teamwertung aus deiner eigenen Meisterschaftsdatei, einblendbar über die Regie."
+  },
+  "en": {
+    "tower": "The running order with gap to the leader, interval, sectors, tyres and DRS. Position changes glide, penalties hang off the row as a pill.",
+    "trackmap": "The circuit is recognised by its ID and the outline preloaded — only what is missing gets learned, and what you drove yourself beats what shipped. Rotation and mirroring are remembered per circuit. Every car as a dot, the camera driver highlighted.",
+    "racemsg": "Penalties, flags, safety car and investigations queue up across one shared bar.",
+    "flbanner": "The purple banner when the fastest lap falls — with driver, team and time.",
+    "lights": "The five start lights, in sync with the game's start procedure.",
+    "battles": "Detects groups fighting and projects when the driver behind will actually be there — including undercut detection during pit stops.",
+    "hotlaps": "In qualifying: who is on a flying lap right now, sector by sector against the best time.",
+    "lowerthird": "The name tag on a camera change — driver, team, position.",
+    "danger": "Countdown for the last safe spot: who drops out if the session ended now.",
+    "onboard": "Telemetry of the camera driver: gear, revs, throttle, brake, ERS, tyre condition.",
+    "pitproj": "“Where would he come out?” — the position the driver would fall back to if he pitted now.",
+    "pitcards": "A live stationary timer as soon as a car is in the pit box.",
+    "champ": "Drivers' and teams' standings from your own championship file, shown on demand from the control page."
+  }
 }

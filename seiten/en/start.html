@@ -1,0 +1,66 @@
+<!-- titel: Quick start — KERS Subsystems -->
+<!-- beschreibung: In four steps: download, switch telemetry on, start, set up. -->
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Quick start</h1>
+    <p class="sub">Four steps and it runs. No installation, no accounts.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="start">
+  <div class="wrap">
+    <h2>In four steps.</h2>
+
+    <ol class="steps">
+      <li>
+        <h3>Download</h3>
+        <p>Put <code>KERS_Subsystems.exe</code> into a folder of its own — the button above
+           downloads it directly. No installation. On the first start a folder <code>data\</code>
+           appears next to it — that is where your settings, window position, championship
+           standings, own layouts, the circuit outlines you drove and the recordings live.</p>
+      </li>
+      <li>
+        <h3>Switch telemetry on</h3>
+        <p>In the game under <em>Settings → Telemetry</em>:</p>
+        <div class="kv">
+          <div><span>UDP Telemetry</span><b>On</b></div>
+          <div><span>UDP Format</span><b>2026</b></div>
+          <div><span>IP</span><b>127.0.0.1</b></div>
+          <div><span>Port</span><b>20777</b></div>
+          <div><span>Player names</span><b>On</b></div>
+        </div>
+        <p class="urls-note"><b>Racing with others:</b> every driver sets this for themselves. For
+           names instead of placeholders to show in the overlay, the others in the lobby need
+           <em>player names</em> set to <b>On</b> as well. Anyone who also switches their telemetry
+           from <em>restricted</em> to <b>public</b> supplies what onboard and the tyre display need
+           — not required, the overlay runs without it.</p>
+      </li>
+      <li>
+        <h3>Start</h3>
+        <p>Open the EXE — the <em>KERS Subsystems</em> control panel appears.
+           Press <b>Start Server</b> there, then <b>HUD IS ON</b>.</p>
+      </li>
+      <li>
+        <h3>Set up</h3>
+        <p>Two pages in the browser — one button each on the control panel, or opened directly once
+           the server runs:</p>
+        <div class="urls">
+          <div><code>/regie</code><span>The whole field, camera hint, camera control and the cut-ins</span></div>
+          <div><code>/settings</code><span>Branding, colours, opacity, visibility, layout</span></div>
+        </div>
+        <p class="urls-note">The overlay itself is not opened in a browser — it runs in the HUD
+           window and, for recording, in the OBS window.</p>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <b>Self-update.</b> On start the program quietly checks whether a newer version exists. The
+      download is verified against size and SHA-256 before it replaces the running file — the old
+      one stays behind as a fallback. A specific version can be picked on the control panel.
+    </div>
+  </div>
+</section>
+

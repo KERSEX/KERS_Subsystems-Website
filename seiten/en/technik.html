@@ -1,0 +1,85 @@
+<!-- titel: Technical &amp; help — KERS Subsystems -->
+<!-- beschreibung: How the overlay is built — ports, renderer, render rate — and what to do when something goes wrong. -->
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Technical &amp; help</h1>
+    <p class="sub">What runs under the hood, and what helps when it doesn't.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="technik">
+  <div class="wrap">
+    <div class="tech">
+      <div class="tech-flow">
+        <div class="node"><b>F1 26</b><span>UDP · port 20777</span></div>
+        <div class="arrow" aria-hidden="true"></div>
+        <div class="node"><b>Parser + Flask</b><span>main.py · port 5100</span></div>
+        <div class="arrow" aria-hidden="true"></div>
+        <div class="node split-node">
+          <div><b>HUD window</b><span>transparent, always on top</span></div>
+          <div><b>OBS window</b><span>opaque, canvas size</span></div>
+        </div>
+      </div>
+
+      <dl class="specs">
+        <div><dt>Game</dt><dd>F1 26, UDP format “2026”. Older titles send a different format and are not read.</dd></div>
+        <div><dt>Ports</dt><dd><code>5100</code> web interface · <code>20777</code> telemetry</dd></div>
+        <div><dt>Renderer</dt><dd>The QML scene. The old HTML pages sit alongside as a fallback, but the OBS switches only apply to QML.</dd></div>
+        <div><dt>Render rate</dt><dd>10 to 120&nbsp;Hz. The game sends at most 60 packets/s; above that only the smooth counters run more fluidly.</dd></div>
+        <div><dt>Source</dt><dd>Python 3.13, Flask and PySide6. <code>run.bat</code> creates the venv and starts the server, <code>start_hud.bat</code> the desktop HUD.</dd></div>
+        <div><dt>Your data</dt><dd>Everything personal lives in <code>data\</code> next to the EXE. The EXE itself contains none.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="hilfe">
+  <div class="wrap narrow">
+    <p class="kicker">Troubleshooting</p>
+    <h2>When something goes wrong.</h2>
+
+    <div class="faq">
+      <details>
+        <summary>Nothing arrives.</summary>
+        <p>The status line on the control panel shows separately whether the server runs and whether
+           UDP packets arrive. If the game sends a format other than 2026, packets do arrive but are
+           not read. When testing, only <em>one</em> source may send to port 20777 — either the game
+           or a test sender, otherwise the data mixes.</p>
+      </details>
+      <details>
+        <summary>The HUD sits behind the game.</summary>
+        <p>In borderless fullscreen the game sometimes pushes itself to the front. The HUD
+           re-registers itself on top every two seconds. If that doesn't help, the game is usually in
+           exclusive fullscreen — for the picture in the stream the OBS window is responsible anyway,
+           and it carries on unaffected.</p>
+      </details>
+      <details>
+        <summary>OBS can't find the window.</summary>
+        <p>You are looking for <code>[KERS_Subsystems]: KERS OBS</code> — not the HUD window. If you
+           do want to capture the HUD itself, <em>make findable in OBS</em> has to be on: otherwise
+           the HUD runs as a tool window, and those are exactly what OBS drops from its list. The
+           price is an entry in the taskbar — both hang on the same property.</p>
+      </details>
+      <details>
+        <summary>I can't grab the HUD with the mouse.</summary>
+        <p>It is locked by default — which is what lets clicks through to the game. To move it,
+           unlock it first on the control panel or via the tray icon.</p>
+      </details>
+      <details>
+        <summary>The overlay looks different than expected.</summary>
+        <p>When starting from source the fonts have to be generated once:
+           <code>python tools\woff2_to_ttf.py</code>. Qt cannot read woff2 files and otherwise falls
+           back to the system font.</p>
+      </details>
+    </div>
+
+    <p class="help-more">
+      Everything else is in the <a href="https://github.com/KERSEX/KERS_Overlay#readme" target="_blank" rel="noopener">project README</a>
+      and in the <a href="https://github.com/KERSEX/KERS_Overlay/blob/main/hud/README.md" target="_blank" rel="noopener">technical notes on the HUD</a>.
+    </p>
+  </div>
+</section>
+

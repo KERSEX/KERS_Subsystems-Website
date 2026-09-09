@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recording &amp; stream — KERS Subsystems</title>
+<meta name="description" content="Get the overlay into OBS: a dedicated window at canvas size, window capture and a colour key on magenta.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/icon.png">
+
+<link rel="alternate" hreflang="de" href="../obs.html">
+<link rel="alternate" hreflang="en" href="../en/obs.html">
+<link rel="alternate" hreflang="x-default" href="../obs.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Recording &amp; stream — KERS Subsystems">
+<meta property="og:description" content="Get the overlay into OBS: a dedicated window at canvas size, window capture and a colour key on magenta.">
+<meta property="og:image" content="../assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="../assets/css/site.css?v=12">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "en", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("../obs.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Open menu" data-auf="Open menu" data-zu="Close menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Highlights</a>
+      <a href="bausteine.html">Modules</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html">Control</a>
+      <a href="obs.html" aria-current="page">OBS</a>
+      <a href="start.html">Quick start</a>
+      <a href="technik.html">Technical</a>
+      <a class="sprachwahl" href="../obs.html" id="sprachwahl"
+         title="Auf Deutsch wechseln" lang="de">DE</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Recording &amp; stream</h1>
+    <p class="sub">Capturing the transparent HUD itself doesn't work — which is why there is a second window.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="obs">
+  <div class="wrap">
+    <h2>A second window, three steps.</h2>
+    <p class="sub">It freezes on a single frame in a window capture. So KERS Subsystems draws the
+      same scene a second time: opaque, at canvas size, purely for recording.</p>
+
+    <div class="ways">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Switch the window on</h3>
+        <p>On the control panel under <em>OBS</em>, enable the <em>dedicated OBS window</em> and set
+           the canvas size to whatever OBS is set to — usually 1920×1080.</p>
+        <p class="way-note">The desktop HUD may stay off. The OBS window runs independently.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>Capture it in OBS</h3>
+        <p><em>Window capture</em> → window <code>[KERS_Subsystems]: KERS OBS</code>,
+           method “Windows 10 (1903 and up)”, <em>capture window frame</em> off.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Colour key</h3>
+        <p>Put a <em>colour key</em> filter on the source, key colour <em>magenta</em>.</p>
+        <p class="way-note">Not a workaround but the plan: in the OBS window every panel is opaque so
+           the key doesn't eat into it. Magenta because the colour appears nowhere in the overlay —
+           green clashes with sectors and DRS, blue with Alpine, Williams and RB.</p>
+      </article>
+    </div>
+
+    <div class="callout">
+      <b>What about a display capture?</b> The HUD sits on the desktop, so a screen capture picks it
+      up automatically. It still makes a poor stream: you get everything else on screen as well, the
+      overlay depends on your monitor's resolution and position instead of the OBS canvas, and
+      nothing can be shown or hidden separately any more. The dedicated OBS window is the
+      recommended way.
+    </div>
+
+    <div class="callout">
+      <b>Why not the HUD window itself?</b> A transparent window draws straight into the desktop via
+      DirectComposition on Windows. Windows Graphics Capture, which feeds the OBS window capture,
+      reads the DWM redirection surface instead — and that stops receiving new frames for such a
+      window. With one window it can't be solved: either transparent for the desktop or opaque for
+      the recording. Hence two.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="../assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.</p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Project</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">This site</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js?v=12"></script>
+</body>
+</html>

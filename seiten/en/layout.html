@@ -1,0 +1,48 @@
+<!-- titel: Free layout — KERS Subsystems -->
+<!-- beschreibung: Place modules on nine anchor points, set size and layer, save several arrangements. -->
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Free layout</h1>
+    <p class="sub">A module doesn't hang on fixed pixels but on one of nine anchor points plus an offset.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="layout">
+  <div class="wrap split">
+    <div>
+      <p class="sub">What you place at the bottom right stays at the bottom right — even when the
+        HUD runs at 2560×1440 and OBS records at 1920×1080.</p>
+
+      <ul class="checks">
+        <li><b>With the mouse.</b> “Edit layout” on the control panel: every module gets a frame with
+          its name, you drag it into place and resize it from the corners. Whatever shows nothing
+          right now sits there as a labelled placeholder.</li>
+        <li><b>Pixel exact.</b> In the settings every module has sliders for anchor point, offset,
+          size and layer.</li>
+        <li><b>What sits in front.</b> The <em>Layers</em> list stacks the modules — top is front.
+          It really only changes the layer: anything still on default keeps its built-in place.</li>
+        <li><b>Several arrangements.</b> Under <em>My layouts</em> you save the current arrangement
+          under a name — one for the race, one for qualifying. They live on the server, so they are
+          there from your phone too.</li>
+        <li><b>Back to the start.</b> “Default layout” restores every position — branding, colours
+          and the rest stay untouched.</li>
+      </ul>
+    </div>
+
+    <div class="anchor-demo">
+      <div class="anchor-frame" id="anchorFrame">
+        <div class="anchor-grid" role="group" aria-label="Anchor points">
+          <button class="anchor" data-a="tl">tl</button><button class="anchor" data-a="tc">tc</button><button class="anchor" data-a="tr">tr</button>
+          <button class="anchor" data-a="lc">lc</button><button class="anchor" data-a="cc">cc</button><button class="anchor" data-a="rc">rc</button>
+          <button class="anchor" data-a="bl">bl</button><button class="anchor" data-a="bc">bc</button><button class="anchor" data-a="br">br</button>
+        </div>
+        <div class="ghost" id="ghost">Timing Tower</div>
+      </div>
+      <p class="demo-caption">Click an anchor point — the module moves there.</p>
+    </div>
+  </div>
+</section>
+

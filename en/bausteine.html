@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modules — KERS Subsystems</title>
+<meta name="description" content="Every module of the overlay: timing tower, track map, battle boxes, onboard, pit projection, championship standings and more.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/icon.png">
+
+<link rel="alternate" hreflang="de" href="../bausteine.html">
+<link rel="alternate" hreflang="en" href="../en/bausteine.html">
+<link rel="alternate" hreflang="x-default" href="../bausteine.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Modules — KERS Subsystems">
+<meta property="og:description" content="Every module of the overlay: timing tower, track map, battle boxes, onboard, pit projection, championship standings and more.">
+<meta property="og:image" content="../assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="../assets/css/site.css?v=12">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "en", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("../bausteine.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Open menu" data-auf="Open menu" data-zu="Close menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Highlights</a>
+      <a href="bausteine.html" aria-current="page">Modules</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html">Control</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Quick start</a>
+      <a href="technik.html">Technical</a>
+      <a class="sprachwahl" href="../bausteine.html" id="sprachwahl"
+         title="Auf Deutsch wechseln" lang="de">DE</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>The modules</h1>
+    <p class="sub">Each one calculates for itself, can be switched off individually and placed freely. Whatever has nothing to show stays quiet.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="bausteine">
+  <div class="wrap">
+    <h2><span data-gen="anzahl-wort">Thirteen</span> parts. You decide which ones run.</h2>
+
+    <div class="cards" id="cards">
+      <!-- BAUSTEINE:START -->
+      <details class="card">
+        <summary><h3>Timing Tower</h3></summary>
+        <p>The running order with gap to the leader, interval, sectors, tyres and DRS. Position changes glide, penalties hang off the row as a pill.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Trackmap</h3></summary>
+        <p>The circuit is recognised by its ID and the outline preloaded — only what is missing gets learned, and what you drove yourself beats what shipped. Rotation and mirroring are remembered per circuit. Every car as a dot, the camera driver highlighted.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Meldungs-Banner</h3></summary>
+        <p>Penalties, flags, safety car and investigations queue up across one shared bar.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Fastest-Lap-Banner</h3></summary>
+        <p>The purple banner when the fastest lap falls — with driver, team and time.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Start-Ampel</h3></summary>
+        <p>The five start lights, in sync with the game's start procedure.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Battle-Boxen</h3></summary>
+        <p>Detects groups fighting and projects when the driver behind will actually be there — including undercut detection during pit stops.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Hotlap-Boxen</h3></summary>
+        <p>In qualifying: who is on a flying lap right now, sector by sector against the best time.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Lower-Third</h3></summary>
+        <p>The name tag on a camera change — driver, team, position.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Gefahrenzone</h3></summary>
+        <p>Countdown for the last safe spot: who drops out if the session ended now.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Onboard</h3></summary>
+        <p>Telemetry of the camera driver: gear, revs, throttle, brake, ERS, tyre condition.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Pit-Projektion</h3></summary>
+        <p>“Where would he come out?” — the position the driver would fall back to if he pitted now.</p>
+      </details>
+      <details class="card">
+        <summary><h3>Boxenstopp-Karten</h3></summary>
+        <p>A live stationary timer as soon as a car is in the pit box.</p>
+      </details>
+      <details class="card">
+        <summary><h3>WM-Stand</h3></summary>
+        <p>Drivers' and teams' standings from your own championship file, shown on demand from the control page.</p>
+      </details>
+      <!-- BAUSTEINE:ENDE -->
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="../assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.</p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Project</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">This site</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js?v=12"></script>
+</body>
+</html>

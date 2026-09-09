@@ -21,10 +21,12 @@ Dann `http://localhost:8000` öffnen. Ein Doppelklick auf `index.html` tut es au
 
 ```
 seiten/rahmen.html    Kopfzeile, Navigation und Fußbereich — einmal für alle Seiten
-seiten/*.html         der Inhalt je Seite, mit Titel und Beschreibung im Kopf
-tools/seiten.py       setzt Rahmen und Inhalt zusammen → die *.html im Wurzelverzeichnis
-tools/bausteine.py    schreibt Bausteinliste und Fassung aus dem Overlay in seiten/
-bausteine.json        die Beschreibungen der Bausteine (Handarbeit)
+seiten/texte.json     Navigation, Fußzeile und Umschalter je Sprache
+seiten/de/*.html      der deutsche Inhalt je Seite, mit Titel und Beschreibung im Kopf
+seiten/en/*.html      dasselbe auf Englisch
+tools/seiten.py       setzt Rahmen und Inhalt zusammen → *.html und en/*.html
+tools/bausteine.py    schreibt Bausteinliste und Version aus dem Overlay in seiten/
+bausteine.json        die Beschreibungen der Bausteine je Sprache (Handarbeit)
 assets/css/site.css   Farben und Layout — Tokens 1:1 aus dem Overlay (core.css)
 assets/js/site.js     Kopfzeile, Einblenden, Tower- und Battle-Nachbau, Ankerraster
 assets/fonts/         Inter und Teko (woff2), aus dem Overlay übernommen
@@ -35,6 +37,28 @@ assets/img/           Logo, Icon, Favicon
 Die Seite besteht aus einer Startseite mit den Themen als Kacheln und je einer
 Unterseite dahinter: `besonders`, `bausteine`, `layout`, `regie`, `obs`, `start`
 und `technik`.
+
+## Zwei Sprachen
+
+Deutsch liegt im Wurzelverzeichnis, Englisch unter `en/`. Beides sind echte
+Dateien — kein Austausch per Skript, jede Sprache funktioniert also auch ohne
+JavaScript und ist einzeln verlinkbar (`hreflang` steht in jedem Kopf).
+
+Welche Sprache jemand sieht, entscheidet ein kleines Skript im `<head>`, noch
+vor dem ersten Anstrich:
+
+1. Eine früher getroffene Wahl (`localStorage`, Schlüssel `kers-sprache`) gilt.
+2. Sonst die Sprache des Geräts: beginnt sie mit `de`, bleibt es Deutsch, alles
+   andere bekommt Englisch.
+
+Wer automatisch umgeleitet wurde, sieht einmal einen Hinweis mit dem Weg zurück;
+das Kürzel oben rechts (`DE`/`EN`) wechselt jederzeit und merkt sich die Wahl.
+Ohne JavaScript findet keine Umleitung statt — dann bleibt es bei der Adresse,
+die aufgerufen wurde.
+
+**Eine neue Seite braucht beide Sprachen.** `tools/seiten.py` bricht ab, wenn
+eine Datei nur in einem der beiden Ordner liegt — sonst führte der Umschalter
+dort ins Leere.
 
 ## Seiten bauen
 
@@ -78,8 +102,12 @@ python3 tools/bausteine.py --overlay /tmp/overlay
 python3 tools/seiten.py
 ```
 
-Die **Beschreibungen** stehen in `bausteine.json`, mit dem Schlüssel aus
-`LAYOUT_TEILE`. Sie sind Prosa und können nicht aus dem Quelltext kommen — ein
+Die Version kommt dabei aus dem neuesten GitHub-Release (der Download-Knopf lädt
+genau dessen Anhängsel); scheitert die Anfrage, fällt das Skript auf
+`static/version.txt` zurück und sagt es auf stderr.
+
+Die **Beschreibungen** stehen in `bausteine.json`, je Sprache und mit dem
+Schlüssel aus `LAYOUT_TEILE`. Sie sind Prosa und können nicht aus dem Quelltext kommen — ein
 neuer Baustein bekommt deshalb zunächst einen Platzhalter, und das Skript meldet
 ihn auf stderr. Ein Schlüssel, den es im Overlay nicht mehr gibt, wird ebenfalls
 gemeldet.

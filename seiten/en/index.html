@@ -1,0 +1,161 @@
+<!-- titel: KERS Subsystems — live telemetry overlay for F1 26 -->
+<!-- beschreibung: KERS Subsystems is a live telemetry overlay for F1 26: timing tower, track map, battle boxes, pit stop cards and more — as a window on top of the game and as its own window for recording in OBS. -->
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <h1>Your race,<br><em id="wechsel">in numbers.</em></h1>
+      <p class="lead">
+        KERS Subsystems listens to the telemetry stream from <strong>F1&nbsp;26</strong> and turns it
+        into an overlay that makes the situation readable at a glance: timing tower, track map,
+        battles, pit stops, penalties.
+        As a frameless window on top of the game — and as its own window for recording in OBS.
+      </p>
+      <div class="cta">
+        <a class="btn btn-lg" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">
+          Download latest version
+        </a>
+        <a class="btn btn-ghost btn-lg" href="start.html">How it runs, in 4 steps</a>
+      </div>
+      <ul class="merkmale">
+        <li>Free, no account</li>
+        <li>Lightweight — runs alongside without taking performance from the game</li>
+        <li>Direct support from the developer via <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a></li>
+      </ul>
+      <ul class="hero-facts">
+        <li><strong><span data-gen="anzahl">13</span></strong><span>modules, each switchable</span></li>
+        <li><strong>0</strong><span>installation — one EXE</span></li>
+        <li><strong>10–120&nbsp;Hz</strong><span>overlay render rate</span></li>
+      </ul>
+    </div>
+
+    <div class="hero-demo" aria-hidden="true">
+      <div class="tower" id="tower">
+        <div class="tower-head">
+          <span class="live"><i class="pulse"></i>LIVE</span>
+          <span class="champ-title">Grand Prix</span>
+          <span class="lap">LAP <b id="lapNo">32</b>/57</span>
+        </div>
+        <div class="tower-cols">
+          <span>Pos</span><span></span><span>Driver</span><span>Leader</span><span>Interval</span>
+          <span class="c-mid">Tyre</span><span class="c-sec">Sectors</span><span class="c-drs">DRS</span>
+        </div>
+        <div class="tower-body" id="towerBody"></div>
+      </div>
+      <div class="demo-caption">Mock-up — in use the values come from the game.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ WAS ES IST ══════════════ -->
+<section class="band">
+  <div class="wrap trio">
+    <article>
+      <h3>On top of the game</h3>
+      <p>A frameless window, always on top. Locked, every click passes through — you keep playing
+         normally while the overlay sits above it.</p>
+    </article>
+    <article>
+      <h3>In OBS</h3>
+      <p>A second, opaque window at canvas size. Pick it up in OBS with a window capture, colour key
+         on magenta — done.</p>
+    </article>
+    <article>
+      <h3>From your phone</h3>
+      <p>Control and settings are the two pages in the browser. On the same network you steer the
+         overlay from your phone — right down to the <a href="regie.html">camera in the game</a>.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════════ THEMEN ══════════════ -->
+<section class="sec" id="themen">
+  <div class="wrap">
+    <p class="kicker">Everything in detail</p>
+    <h2>Where do you want to go?</h2>
+    <p class="sub">Every topic has its own page — with what actually matters there, instead of
+      everything at once.</p>
+
+    <div class="themen">
+      <a class="thema" href="besonders.html">
+        <h3>What sets it apart</h3>
+        <p>Fight in three laps, undercut detected, pit projection: where the overlay calculates instead of just displaying.</p>
+        <span class="thema-mehr">View</span>
+      </a>
+      <a class="thema" href="bausteine.html">
+        <h3>The modules</h3>
+        <p>All <span data-gen="anzahl">13</span> parts one by one — timing tower, track map, battle boxes, onboard, standings.</p>
+        <span class="thema-mehr">View</span>
+      </a>
+      <a class="thema" href="layout.html">
+        <h3>Free layout</h3>
+        <p>Nine anchor points, size and layer per module, several arrangements saved under a name.</p>
+        <span class="thema-mehr">View</span>
+      </a>
+      <a class="thema" href="regie.html">
+        <h3>The control page</h3>
+        <p>Director’s Eye, manual cut-ins — and a tap on a driver moves the camera in the game.</p>
+        <span class="thema-mehr">View</span>
+      </a>
+      <a class="thema" href="obs.html">
+        <h3>Recording &amp; stream</h3>
+        <p>The dedicated OBS window, the window capture and the colour key — in three steps.</p>
+        <span class="thema-mehr">View</span>
+      </a>
+      <a class="thema" href="start.html">
+        <h3>Quick start</h3>
+        <p>Download, switch telemetry on, start, set up. Four steps, no installation.</p>
+        <span class="thema-mehr">View</span>
+      </a>
+      <a class="thema" href="technik.html">
+        <h3>Technical &amp; help</h3>
+        <p>Ports, renderer, render rate — and what to do when nothing arrives or OBS can’t find the window.</p>
+        <span class="thema-mehr">View</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ COMMUNITY ══════════════ -->
+<section class="sec alt" id="community">
+  <div class="wrap narrow mitte">
+    <p class="kicker">Free &amp; open</p>
+    <h2>Built with the people who use it.</h2>
+    <p class="sub mitte-text">KERS Subsystems costs nothing, knows no accounts and carries no ads.
+      The source code sits publicly readable on GitHub — what the overlay calculates, anyone can
+      look up.</p>
+    <p class="sub mitte-text">The way in is Discord: wishes, bug reports and shouts from races in
+      progress land there and turn into what the next version contains. Much of what is on this site
+      is there for exactly that reason.</p>
+
+    <div class="cta mitte-cta cta-haupt">
+      <a class="btn btn-lg" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Join Discord</a>
+    </div>
+    <div class="cta mitte-cta">
+      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/issues" target="_blank" rel="noopener">Report a bug</a>
+      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">View source</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DOWNLOAD ══════════════ -->
+<section class="download" id="download">
+  <div class="wrap dl-in">
+    <img src="../assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
+    <h2>Go get it.</h2>
+    <p>One file, no installer, no cost. Runs beside the game and updates itself.</p>
+    <p class="dl-version">Current version <b>v<span data-gen="version">0.2.6</span></b></p>
+    <div class="cta cta-haupt">
+      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
+    </div>
+    <div class="cta">
+      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">All releases</a>
+      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Source on GitHub</a>
+    </div>
+  </div>
+</section>
+

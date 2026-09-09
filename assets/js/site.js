@@ -15,13 +15,52 @@
   navStand();
   window.addEventListener("scroll", navStand, { passive: true });
 
+  /* ── Sprachwahl merken ───────────────────────────────────────────────────── */
+  // Der Umschalter im Kopf ist ein normaler Link. Beim Klick wird die Wahl
+  // festgehalten - ohne das wuerde die Erkennung im <head> sofort zurueckleiten.
+  var sprachwahl = document.getElementById("sprachwahl");
+  if (sprachwahl) {
+    sprachwahl.addEventListener("click", function () {
+      try { localStorage.setItem("kers-sprache", sprachwahl.getAttribute("lang")); } catch (e) {}
+    });
+  }
+
+  // Wer automatisch umgeleitet wurde, bekommt einmal einen Hinweis mit dem Weg
+  // zurueck - stillschweigend die Sprache zu wechseln ist unhoeflich.
+  try {
+    if (sessionStorage.getItem("kers-umgeleitet") && sprachwahl) {
+      sessionStorage.removeItem("kers-umgeleitet");
+      var hinweis = document.createElement("div");
+      hinweis.className = "sprachhinweis";
+      hinweis.innerHTML = '<span></span><a href="' + sprachwahl.getAttribute("href") + '"></a>' +
+                          '<button type="button" aria-label="OK">×</button>';
+      var andere = sprachwahl.getAttribute("lang");
+      hinweis.querySelector("span").textContent = andere === "de"
+        ? "This page opened in English."
+        : "Diese Seite wurde auf Deutsch geöffnet.";
+      var zurueck = hinweis.querySelector("a");
+      zurueck.textContent = andere === "de" ? "Auf Deutsch ansehen" : "View in English";
+      zurueck.addEventListener("click", function () {
+        try { localStorage.setItem("kers-sprache", andere); } catch (e) {}
+      });
+      hinweis.querySelector("button").addEventListener("click", function () {
+        hinweis.classList.remove("da");
+        // Wer wegklickt, hat die Sprache angenommen - sonst käme der Hinweis wieder.
+        try { localStorage.setItem("kers-sprache", document.documentElement.lang); } catch (e) {}
+      });
+      document.body.appendChild(hinweis);
+      requestAnimationFrame(function () { hinweis.classList.add("da"); });
+    }
+  } catch (e) {}
+
   /* ── Menü auf schmalen Fenstern ──────────────────────────────────────────── */
   var burger = document.getElementById("burger");
   var menu = document.getElementById("menu");
   burger.addEventListener("click", function () {
     var offen = menu.classList.toggle("open");
     burger.setAttribute("aria-expanded", String(offen));
-    burger.setAttribute("aria-label", offen ? "Menü schließen" : "Menü öffnen");
+    burger.setAttribute("aria-label",
+      offen ? (burger.dataset.zu || "Menü schließen") : (burger.dataset.auf || "Menü öffnen"));
   });
   menu.addEventListener("click", function (e) {
     if (e.target.tagName === "A") {
@@ -31,7 +70,14 @@
   });
 
   /* ── Einblenden beim Scrollen ────────────────────────────────────────────── */
-  var zuZeigen = document.querySelectorAll(".card, .reveal");
+  // Alles, was weiter unten steht, kommt beim Herunterscrollen herein: die
+  // Karten und Kacheln einzeln, die uebrigen Abschnitte als Ganzes. Der
+  // Kopfbereich ist ausgenommen - der laeuft schon beim Laden per CSS.
+  document.querySelectorAll(".sec, .band, .download").forEach(function (abschnitt) {
+    if (abschnitt.closest(".hero")) return;
+    abschnitt.classList.add("reveal");
+  });
+  var zuZeigen = document.querySelectorAll(".card, .thema, .way, .reveal");
   if (sanft || !("IntersectionObserver" in window)) {
     zuZeigen.forEach(function (el) { el.classList.add("in"); });
   } else {
@@ -48,6 +94,42 @@
       });
     }, { rootMargin: "0px 0px -12% 0px", threshold: 0.1 });
     zuZeigen.forEach(function (el) { beobachter.observe(el); });
+  }
+
+  /* ── Die Eckdaten zaehlen einmal hoch ────────────────────────────────────── */
+  // Nur die reine Zahl wird hochgezaehlt; alles drumherum (Bindestrich, "Hz")
+  // bleibt stehen, sonst zappelt die Zeile in der Breite.
+  if (!sanft && "IntersectionObserver" in window) {
+    var zahlen = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        zahlen.unobserve(e.target);
+        zaehleHoch(e.target);
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll(".hero-facts strong").forEach(function (el) {
+      var text = el.textContent;
+      if (/\d/.test(text) && !/[-–]/.test(text)) zahlen.observe(el);
+    });
+  }
+
+  function zaehleHoch(el) {
+    var text = el.textContent;
+    // Die letzte Zahl im Text ist die, die zaehlt (bei "10-120 Hz" also 120).
+    var treffer = text.match(/(\d+)(?!.*\d)/);
+    if (!treffer) return;
+    var ziel = parseInt(treffer[1], 10);
+    if (ziel < 2) return;                        // bei 0 oder 1 lohnt es nicht
+    var vorher = text.slice(0, treffer.index), nachher = text.slice(treffer.index + treffer[1].length);
+    var start = performance.now(), dauer = 900;
+
+    (function schritt(jetzt) {
+      var t = Math.min(1, (jetzt - start) / dauer);
+      var weich = 1 - Math.pow(1 - t, 3);        // schnell los, sanft aus
+      el.textContent = vorher + Math.round(ziel * weich) + nachher;
+      if (t < 1) requestAnimationFrame(schritt);
+      else el.textContent = text;                // am Ende exakt der Originaltext
+    })(start);
   }
 
   /* ── Wechselnder Halbsatz in der Ueberschrift ────────────────────────────── */

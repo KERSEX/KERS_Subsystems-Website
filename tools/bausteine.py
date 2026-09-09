@@ -29,12 +29,20 @@ HIER = Path(__file__).resolve().parent.parent
 
 # Genug Zahlwoerter fuer eine Bausteinliste; darueber steht die Ziffer.
 ZAHLWORT = {
-    10: "Zehn", 11: "Elf", 12: "Zwoelf", 13: "Dreizehn", 14: "Vierzehn",
-    15: "Fuenfzehn", 16: "Sechzehn", 17: "Siebzehn", 18: "Achtzehn",
-    19: "Neunzehn", 20: "Zwanzig",
+    "de": {10: "Zehn", 11: "Elf", 12: "Zwölf", 13: "Dreizehn", 14: "Vierzehn",
+           15: "Fünfzehn", 16: "Sechzehn", 17: "Siebzehn", 18: "Achtzehn",
+           19: "Neunzehn", 20: "Zwanzig"},
+    "en": {10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen",
+           15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen",
+           19: "Nineteen", 20: "Twenty"},
 }
-ZAHLWORT[12] = "Zwölf"
-ZAHLWORT[15] = "Fünfzehn"
+
+# Steht fuer einen Baustein noch keine Beschreibung bereit, kommt dieser Text -
+# sichtbar, aber nicht falsch.
+PLATZHALTER = {
+    "de": "Neu in dieser Version — die Beschreibung folgt.",
+    "en": "New in this version — description to follow.",
+}
 
 
 def lies_bausteine(overlay: Path) -> list[tuple[str, str]]:
@@ -95,14 +103,14 @@ def lies_version(overlay: Path, repo: str) -> str:
     return (overlay / "static" / "version.txt").read_text(encoding="utf-8").strip()
 
 
-def baue_karten(teile, texte) -> tuple[str, list[str]]:
+def baue_karten(teile, texte, sprache) -> tuple[str, list[str]]:
     """Die Karten als HTML, dazu die Schluessel ohne eigene Beschreibung."""
     zeilen, fehlen = [], []
     for schluessel, name in teile:
         text = texte.get(schluessel)
         if not text:
             fehlen.append(schluessel)
-            text = "Neu in dieser Version — die Beschreibung folgt."
+            text = PLATZHALTER[sprache]
         zeilen.append(
             '      <details class="card">\n'
             f'        <summary><h3>{name}</h3></summary>\n'
@@ -142,35 +150,42 @@ def main() -> int:
 
     teile = lies_bausteine(a.overlay)
     version = lies_version(a.overlay, a.repo)
-    texte = json.loads((HIER / "bausteine.json").read_text(encoding="utf-8"))
-
-    karten, fehlen = baue_karten(teile, texte)
+    alle_texte = json.loads((HIER / "bausteine.json").read_text(encoding="utf-8"))
     anzahl = len(teile)
-    wort = ZAHLWORT.get(anzahl, str(anzahl))
-
-    for k in fehlen:
-        print(f"  ⚠ keine Beschreibung fuer '{k}' - bitte in bausteine.json ergaenzen",
-              file=sys.stderr)
-    for k in sorted(set(texte) - {s for s, _ in teile}):
-        print(f"  ⚠ '{k}' steht in bausteine.json, aber nicht mehr in LAYOUT_TEILE",
-              file=sys.stderr)
 
     # Die Marken und Felder liegen ueber mehrere Quelldateien verteilt: die Liste
-    # in seiten/bausteine.html, die Anzahl auch auf der Startseite, die Version
-    # im Download-Abschnitt. Jede Datei bekommt, was in ihr vorkommt.
+    # in bausteine.html, die Anzahl auch auf der Startseite, die Version im
+    # Download-Abschnitt. Jede Sprache hat ihren eigenen Ordner unter seiten/.
     geaendert = []
-    for quelle in sorted((HIER / "seiten").glob("*.html")):
-        alt = quelle.read_text(encoding="utf-8")
-        neu = alt
-        if "<!-- BAUSTEINE:START -->" in neu:
-            neu = ersetze_zwischen(neu, "BAUSTEINE", karten)
-        for feld, wert in (("anzahl", str(anzahl)), ("anzahl-wort", wort), ("version", version)):
-            if f'data-gen="{feld}"' in neu:
-                neu = ersetze_feld(neu, feld, wert)
-        if neu != alt:
-            geaendert.append(quelle.name)
-            if not a.pruefen:
-                quelle.write_text(neu, encoding="utf-8")
+    for sprache in sorted(d.name for d in (HIER / "seiten").iterdir() if d.is_dir()):
+        texte = alle_texte.get(sprache)
+        if texte is None:
+            print(f"  ⚠ bausteine.json kennt die Sprache '{sprache}' nicht", file=sys.stderr)
+            continue
+
+        karten, fehlen = baue_karten(teile, texte, sprache)
+        wort = ZAHLWORT[sprache].get(anzahl, str(anzahl))
+
+        for k in fehlen:
+            print(f"  ⚠ [{sprache}] keine Beschreibung fuer '{k}' - bitte in "
+                  f"bausteine.json ergaenzen", file=sys.stderr)
+        for k in sorted(set(texte) - {s for s, _ in teile}):
+            print(f"  ⚠ [{sprache}] '{k}' steht in bausteine.json, aber nicht mehr "
+                  f"in LAYOUT_TEILE", file=sys.stderr)
+
+        for quelle in sorted((HIER / "seiten" / sprache).glob("*.html")):
+            alt = quelle.read_text(encoding="utf-8")
+            neu = alt
+            if "<!-- BAUSTEINE:START -->" in neu:
+                neu = ersetze_zwischen(neu, "BAUSTEINE", karten)
+            for feld, wert in (("anzahl", str(anzahl)), ("anzahl-wort", wort),
+                               ("version", version)):
+                if f'data-gen="{feld}"' in neu:
+                    neu = ersetze_feld(neu, feld, wert)
+            if neu != alt:
+                geaendert.append(f"{sprache}/{quelle.name}")
+                if not a.pruefen:
+                    quelle.write_text(neu, encoding="utf-8")
 
     if not geaendert:
         print(f"Quellen sind aktuell: {anzahl} Bausteine, Version {version}")

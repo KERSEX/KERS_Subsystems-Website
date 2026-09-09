@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Control page — KERS Subsystems</title>
+<meta name="description" content="The control page: Director's Eye, set the camera in the game with a tap, steer cut-ins by hand — from your phone as well.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/icon.png">
+
+<link rel="alternate" hreflang="de" href="../regie.html">
+<link rel="alternate" hreflang="en" href="../en/regie.html">
+<link rel="alternate" hreflang="x-default" href="../regie.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Control page — KERS Subsystems">
+<meta property="og:description" content="The control page: Director's Eye, set the camera in the game with a tap, steer cut-ins by hand — from your phone as well.">
+<meta property="og:image" content="../assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="../assets/css/site.css?v=12">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "en", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("../regie.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Open menu" data-auf="Open menu" data-zu="Close menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Highlights</a>
+      <a href="bausteine.html">Modules</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html" aria-current="page">Control</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Quick start</a>
+      <a href="technik.html">Technical</a>
+      <a class="sprachwahl" href="../regie.html" id="sprachwahl"
+         title="Auf Deutsch wechseln" lang="de">DE</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>The control page</h1>
+    <p class="sub">A second page that never goes on screen — from here you steer what is to be seen.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="regie">
+  <div class="wrap">
+    <p class="sub">Under <code>/regie</code> runs a second page from which nothing goes into the
+      picture: the whole field with tyres, gaps and pit stops, race control, a pace comparison and
+      the live projection of the championship. From here you show and hide what is due.</p>
+
+    <div class="ways">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Director’s Eye</h3>
+        <p>The camera hint tells you where something is happening — which duel, which lap, which
+           stop is worth the look.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>Tap the driver</h3>
+        <p>Every row of the leaderboard is the button itself: tap it and the camera <em>in the
+           game</em> jumps to that driver — the row flashes briefly. Who you are on is shown by the
+           🎥 in the row. From your phone just the same.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Cut-ins</h3>
+        <p>Charts, championship standings, battle and hotlap boxes can be brought on screen by hand
+           instead of waiting for the automatic.</p>
+      </article>
+    </div>
+
+    <div class="callout">
+      <b>About the camera control:</b> it sends key presses into the running game, and the server
+      listens on the whole network. As long as the switch is on, anyone on the same Wi-Fi can move
+      the camera. The endpoint only accepts a position number — which key that is, the server looks
+      up itself — but the real protection is the switch: it can be turned off in
+      <code>/settings</code> and is on by default.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="../assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.</p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Project</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">This site</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js?v=12"></script>
+</body>
+</html>
