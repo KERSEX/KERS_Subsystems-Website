@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Einmal taeglich, damit Aenderungen am Overlay auch ohne Push hier ankommen:
+  # die Bausteinliste und die Versionsangabe zieht der Lauf unten frisch nach.
+  schedule:
+    - cron: "17 5 * * *"
   workflow_dispatch:
 
 permissions:
@@ -25,6 +29,22 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
+      # Das Hauptprojekt daneben legen - daraus kommen Namen und Reihenfolge der
+      # Bausteine sowie die laufende Fassung.
+      - uses: actions/checkout@v4
+        with:
+          repository: KERSEX/KERS_Overlay
+          path: .overlay
+          fetch-depth: 1
+
+      - name: Bausteinliste und Fassung nachziehen
+        run: python3 tools/bausteine.py --overlay .overlay
+
+      # Der Checkout des Overlays gehoert nicht in die veroeffentlichte Seite.
+      - name: Aufraeumen
+        run: rm -rf .overlay
+
       # Einmalig von Hand noetig: Settings -> Pages -> Source auf "GitHub Actions".
       # Der Workflow kann das nicht selbst nachholen - der Token darf Pages nicht
       # anlegen ("Resource not accessible by integration"). Solange es fehlt,

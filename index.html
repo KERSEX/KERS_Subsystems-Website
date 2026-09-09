@@ -17,7 +17,7 @@
 <meta property="og:image" content="assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="assets/css/site.css?v=4">
+<link rel="stylesheet" href="assets/css/site.css?v=5">
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body>
@@ -71,7 +71,7 @@
         <a class="btn btn-ghost btn-lg" href="#start">So läuft es in 4 Schritten</a>
       </div>
       <ul class="hero-facts">
-        <li><strong>13</strong><span>Bausteine, einzeln schaltbar</span></li>
+        <li><strong><span data-gen="anzahl">13</span></strong><span>Bausteine, einzeln schaltbar</span></li>
         <li><strong>0</strong><span>Installation — eine EXE</span></li>
         <li><strong>10–120&nbsp;Hz</strong><span>Overlay-Renderrate</span></li>
       </ul>
@@ -86,7 +86,8 @@
           <span class="lap">RUNDE <b id="lapNo">32</b>/57</span>
         </div>
         <div class="tower-cols">
-          <span>Pos</span><span></span><span>Fahrer</span><span>Leader</span><span>Interval</span><span>Reifen</span>
+          <span>Pos</span><span></span><span>Fahrer</span><span>Leader</span><span>Interval</span>
+          <span class="c-mid">Reifen</span><span class="c-sec">Sektoren</span><span class="c-drs">DRS</span>
         </div>
         <div class="tower-body" id="towerBody"></div>
       </div>
@@ -120,11 +121,12 @@
 <section class="sec" id="bausteine">
   <div class="wrap">
     <p class="kicker">Bausteine</p>
-    <h2>Dreizehn Teile. Du entscheidest, welche laufen.</h2>
+    <h2><span data-gen="anzahl-wort">Dreizehn</span> Teile. Du entscheidest, welche laufen.</h2>
     <p class="sub">Jeder Baustein rechnet für sich, lässt sich einzeln abschalten und frei platzieren.
        Was gerade nichts zu zeigen hat, bleibt still — die Hotlap-Boxen etwa laufen nur im Qualifying.</p>
 
     <div class="cards" id="cards">
+      <!-- BAUSTEINE:START -->
       <details class="card">
         <summary><h3>Timing Tower</h3></summary>
         <p>Die Rangliste mit Abstand zur Spitze, Intervall, Sektoren, Reifen und DRS. Positionswechsel gleiten, Strafen hängen als Pille an der Zeile.</p>
@@ -177,6 +179,7 @@
         <summary><h3>WM-Stand</h3></summary>
         <p>Fahrer- und Teamwertung aus deiner eigenen Meisterschaftsdatei, einblendbar über die Regie.</p>
       </details>
+      <!-- BAUSTEINE:ENDE -->
     </div>
   </div>
 </section>
@@ -450,6 +453,7 @@
     <div class="cta cta-haupt">
       <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
     </div>
+    <p class="dl-version">Aktuelle Fassung <b>v<span data-gen="version">0.2.6</span></b></p>
     <div class="cta">
       <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Alle Releases</a>
       <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quellcode auf GitHub</a>
@@ -474,6 +478,6 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=4"></script>
+<script src="assets/js/site.js?v=5"></script>
 </body>
 </html>

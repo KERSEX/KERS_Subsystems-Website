@@ -115,12 +115,13 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .hero-facts{list-style:none;display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:2.4rem;
   margin-top:2.8rem;padding-top:1.8rem;border-top:1px solid var(--line)}
 .hero-facts strong{display:block;font-family:'Teko',sans-serif;font-size:2.2rem;font-weight:700;line-height:1;color:#fff}
-.hero-facts span{font-size:.8rem;color:var(--muted)}
+.hero-facts>li>span{font-size:.8rem;color:var(--muted)}
+.hero-facts strong span{font:inherit;color:inherit}   /* Zahl kommt aus tools/bausteine.py */
 
 /* ── Tower-Nachbau ────────────────────────────────────────────────────────── */
 .hero-demo{perspective:1400px}
 .tower{
-  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:visible;
   transform:rotateY(-9deg) rotateX(3deg) translateZ(0);transform-origin:left center;
   background:rgba(14,14,19,.94);
 }
@@ -133,14 +134,23 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .lap{margin-left:auto;font-size:.72rem;font-weight:600;letter-spacing:1.5px;color:var(--muted)}
 .lap b{color:#fff}
 
-.tower-cols,.trow{display:grid;grid-template-columns:34px 6px 1fr 74px 74px 42px;align-items:center;gap:0 .5rem;padding:0 .8rem}
-.tower-cols{height:30px;font-size:.62rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+/* Spalten wie im Overlay (tower.css, .leaderboard-row):
+   POS | Streifen | Fahrer | Leader | Interval | Reifen | Sektoren | DRS */
+.tower-cols,.trow{display:grid;grid-template-columns:30px 5px minmax(0,1fr) 66px 62px 34px 62px 38px;
+  align-items:center;gap:0 .45rem;padding:0 .7rem}
+.tower-cols{height:30px;font-size:.58rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);
   background:rgba(10,10,15,.99);border-bottom:1px solid rgba(255,255,255,.1)}
+.tower-cols .c-mid,.tower-cols .c-drs{text-align:center}
+.tower-cols .c-sec{text-align:right}
 .tower-body{position:relative;height:0}
-.js .tower-body{height:calc(8 * 46px)}
-.trow{position:absolute;left:0;right:0;height:46px;border-bottom:1px solid rgba(255,255,255,.03);
+.js .tower-body{height:calc(8 * 54px)}
+/* Kein overflow:hidden auf der Zeile: die Strafen-Pille ragt links heraus -
+   genau wie .pen-stack im Overlay mit right:100%. */
+.trow{position:absolute;left:0;right:0;height:54px;border-bottom:1px solid rgba(255,255,255,.03);
   transition:transform .6s cubic-bezier(.65,0,.35,1),background-color .5s ease;will-change:transform}
 .trow[data-even="1"]{background:var(--panel)} .trow[data-even="0"]{background:var(--panel-alt)}
+/* Unterste Zeile schliesst den Rahmen ab - noetig, seit er overflow:visible hat. */
+.trow.letzte{border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius);border-bottom:0}
 
 .t-pos{font-family:'Teko',sans-serif;font-size:1.45rem;font-weight:700;line-height:1;display:flex;align-items:center;gap:2px}
 .t-pos .chg{font-size:.7rem;font-weight:700;width:9px;display:inline-block;color:transparent}
@@ -157,6 +167,27 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .t-tyre{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.62rem;font-weight:800;
   border:2px solid var(--ty,#fff);color:var(--ty,#fff);background:rgba(0,0,0,.35)}
 .ty-s{--ty:#e10600} .ty-m{--ty:#ffd800} .ty-h{--ty:#e8e8e8} .ty-i{--ty:#43b02a}
+
+/* Sektorzeiten: zwei Zeilen uebereinander, Farben aus dem Overlay */
+.t-sec{display:flex;flex-direction:column;gap:2px;font-size:.62rem;line-height:1.15;
+  font-variant-numeric:tabular-nums;color:#dcdce4;text-align:right}
+.t-sec .sp{color:#b14bff} .t-sec .sg{color:#00d56a} .t-sec .sy{color:#ffd000}
+
+/* DRS-Feld: unauffaellige Pille, die aufleuchtet, wenn es offen ist */
+.t-drs{text-align:center;font-size:.58rem;font-weight:800;letter-spacing:.2px;padding:2px 3px;
+  border-radius:3px;background:rgba(255,255,255,.04);color:var(--muted);
+  border:1px solid rgba(255,255,255,.08);transition:all .3s}
+.t-drs.an{background:rgba(0,255,136,.12);color:#00ff88;border-color:rgba(0,255,136,.35);
+  box-shadow:0 0 6px rgba(0,255,136,.2)}
+
+/* Zeitstrafe haengt links aus der Zeile */
+.t-pen{position:absolute;right:100%;top:50%;transform:translateY(-50%);margin-right:5px;
+  font-size:.62rem;font-weight:800;padding:2px 5px;border-radius:4px;color:#fff;
+  background:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.5);white-space:nowrap}
+
+/* Kamera-Fahrer: heller Rahmen wie .driver-row.focused */
+.trow.fokus{box-shadow:inset 0 0 0 2px rgba(255,255,255,.92),0 0 14px rgba(255,255,255,.2);
+  border-radius:5px;z-index:6}
 
 .demo-caption{margin-top:.9rem;font-size:.75rem;color:var(--muted);text-align:center;letter-spacing:.3px}
 
@@ -341,7 +372,7 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .specs>div{grid-template-columns:1fr;gap:.2rem}
   .steps li{padding:1.5rem 1.3rem 1.5rem 1.3rem}
   .steps li::before{position:static;display:block;margin-bottom:.4rem}
-  .tower-cols,.trow{grid-template-columns:28px 5px 1fr 62px 44px 34px}
-  .t-int{display:none}
+  .tower-cols,.trow{grid-template-columns:26px 4px minmax(0,1fr) 58px 34px}
+  .t-int,.t-sec,.t-drs,.tower-cols .c-sec,.tower-cols .c-drs{display:none}
   .foot-in{flex-direction:column;text-align:center}
 }

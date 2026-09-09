@@ -149,20 +149,28 @@
   var body = document.getElementById("towerBody");
   if (!body) return;
 
-  var ZEILE = 46;                       // Zeilenhöhe, muss zu .trow im CSS passen
+  var ZEILE = 54;                       // Zeilenhöhe, muss zu .trow im CSS passen
   var REIFEN = ["s", "m", "h"];
+  // Näher am Original (static/parts/tower.js): die Zeile trägt außer Platz und
+  // Abständen auch zwei Sektorzeiten, ein DRS-Feld und - wo fällig - die
+  // Strafen-Pille, die links aus der Zeile ragt.
   var FELD = [
     { kurz: "VER", team: "Red Bull",  farbe: "var(--t-redbull)" },
     { kurz: "NOR", team: "McLaren",   farbe: "var(--t-mclaren)" },
     { kurz: "LEC", team: "Ferrari",   farbe: "var(--t-ferrari)" },
     { kurz: "RUS", team: "Mercedes",  farbe: "var(--t-mercedes)" },
     { kurz: "PIA", team: "McLaren",   farbe: "var(--t-mclaren)" },
-    { kurz: "HAM", team: "Ferrari",   farbe: "var(--t-ferrari)" },
+    { kurz: "HAM", team: "Ferrari",   farbe: "var(--t-ferrari)", strafe: "+5s" },
     { kurz: "ALO", team: "Aston",     farbe: "var(--t-aston)" },
     { kurz: "SAI", team: "Williams",  farbe: "var(--t-williams)" }
   ];
+  // Sektorfarben wie im Overlay: sp lila (Bestzeit), sg grün (persönlich best), sy gelb.
+  var SEKTORFARBEN = ["sp", "sg", "sy", ""];
 
-  // Zustand je Fahrer: sichtbarer Platz, Abstände, Reifen.
+  function sektorzeit() { return (28 + Math.random() * 6).toFixed(3); }
+  function sektorfarbe() { return SEKTORFARBEN[Math.floor(Math.random() * SEKTORFARBEN.length)]; }
+
+  // Zustand je Fahrer: sichtbarer Platz, Abstände, Reifen, Sektoren, DRS.
   var fahrer = FELD.map(function (f, i) {
     return {
       daten: f,
@@ -170,6 +178,9 @@
       luecke: i === 0 ? 0 : 1.2 + i * 1.35 + Math.random(),
       intervall: i === 0 ? 0 : 0.4 + Math.random() * 1.8,
       reifen: REIFEN[i % 3],
+      sektor1: sektorzeit(), sektor2: sektorzeit(),
+      farbe1: sektorfarbe(), farbe2: sektorfarbe(),
+      drs: i % 3 === 1,
       el: null
     };
   });
@@ -182,12 +193,15 @@
     var el = document.createElement("div");
     el.className = "trow";
     el.innerHTML =
+      (f.daten.strafe ? '<span class="t-pen">' + f.daten.strafe + '</span>' : '') +
       '<div class="t-pos"><span class="num"></span><span class="chg"></span></div>' +
       '<div class="t-strip" style="--tc:' + f.daten.farbe + '"></div>' +
       '<div class="t-name">' + f.daten.kurz + '<small>' + f.daten.team + '</small></div>' +
       '<div class="t-gap"></div>' +
       '<div class="t-int"></div>' +
-      '<div class="t-tyre ty-' + f.reifen + '">' + f.reifen.toUpperCase() + '</div>';
+      '<div class="t-tyre ty-' + f.reifen + '">' + f.reifen.toUpperCase() + '</div>' +
+      '<div class="t-sec"><span class="s1"></span><span class="s2"></span></div>' +
+      '<div class="t-drs">DRS</div>';
     body.appendChild(el);
     f.el = el;
   });
@@ -197,10 +211,17 @@
       var el = f.el;
       el.style.transform = "translateY(" + (f.platz * ZEILE) + "px)";
       el.dataset.even = f.platz % 2 === 0 ? "1" : "0";
-      el.className = "trow rank-" + (f.platz + 1);
+      // Der Kamera-Fahrer ist im Overlay hell umrandet - hier fest der zweite Platz.
+      el.className = "trow rank-" + (f.platz + 1) + (f.platz === 1 ? " fokus" : "")
+                   + (f.platz === fahrer.length - 1 ? " letzte" : "");
       el.querySelector(".num").textContent = f.platz + 1;
       el.querySelector(".t-gap").textContent = f.platz === 0 ? "LEADER" : "+" + zeit(f.luecke);
       el.querySelector(".t-int").textContent = f.platz === 0 ? "—" : "+" + zeit(f.intervall);
+      el.querySelector(".s1").className = "s1 " + f.farbe1;
+      el.querySelector(".s2").className = "s2 " + f.farbe2;
+      el.querySelector(".s1").textContent = f.sektor1;
+      el.querySelector(".s2").textContent = f.sektor2;
+      el.querySelector(".t-drs").classList.toggle("an", f.drs);
     });
   }
   zeichne();
@@ -215,7 +236,13 @@
       f.intervall = Math.max(0.08, f.intervall + (Math.random() - 0.5) * 0.16);
       f.el.querySelector(".t-gap").textContent = "+" + zeit(f.luecke);
       f.el.querySelector(".t-int").textContent = "+" + zeit(f.intervall);
+      if (Math.random() < 0.25) {
+        f.sektor1 = sektorzeit(); f.farbe1 = sektorfarbe();
+        f.sektor2 = sektorzeit(); f.farbe2 = sektorfarbe();
+        f.drs = Math.random() < 0.4;
+      }
     });
+    zeichne();
   }, 900);
 
   // Ab und zu ein Überholmanöver: zwei benachbarte Plätze tauschen, mit Pfeil.

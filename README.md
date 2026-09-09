@@ -25,6 +25,8 @@ assets/css/site.css   Farben und Layout — Tokens 1:1 aus dem Overlay (core.css
 assets/js/site.js     Kopfzeile, Einblenden, Tower-Nachbau, Ankerraster
 assets/fonts/         Inter und Teko (woff2), aus dem Overlay übernommen
 assets/img/           Logo, Icon, Favicon
+bausteine.json        die Beschreibungen der Bausteine (Handarbeit)
+tools/bausteine.py    schreibt Bausteinliste und Fassung aus dem Overlay in die Seite
 ```
 
 ## Veröffentlichen
@@ -36,14 +38,39 @@ Damit das greift, muss unter **Settings → Pages → Source** einmalig *GitHub 
 ausgewählt sein; der Workflow kann das nicht selbst nachholen. Fehlt es, bricht der Lauf
 mit *„Get Pages site failed: Not Found"* ab.
 
-## Inhalte pflegen
+## Bausteinliste und Fassung
 
-Ändert sich etwas am Overlay, sind das die Stellen:
+Beides kommt aus dem Hauptprojekt, damit es nicht still veraltet:
 
-* **Bausteine** — die Karten unter `#bausteine`. Reihenfolge und Namen kommen aus
-  `LAYOUT_TEILE` in `main.py` des Hauptprojekts.
+* **Namen und Reihenfolge** der Bausteine aus `LAYOUT_TEILE` in dessen `main.py`
+* **die laufende Fassung** aus dessen `static/version.txt`
+
+`tools/bausteine.py` schreibt daraus die Karten zwischen den Marken
+`<!-- BAUSTEINE:START -->` und `<!-- BAUSTEINE:ENDE -->` sowie die Felder
+`data-gen="anzahl"`, `"anzahl-wort"` und `"version"`. Der Pages-Workflow ruft es
+bei jedem Deploy auf und zusätzlich einmal täglich — Änderungen am Overlay
+landen also auch ohne Push hier.
+
+Von Hand:
+
+```bash
+git clone --depth 1 https://github.com/KERSEX/KERS_Overlay /tmp/overlay
+python3 tools/bausteine.py --overlay /tmp/overlay
+python3 tools/bausteine.py --overlay /tmp/overlay --pruefen   # nur melden
+```
+
+Die **Beschreibungen** stehen in `bausteine.json`, mit dem Schlüssel aus
+`LAYOUT_TEILE`. Sie sind Prosa und können nicht aus dem Quelltext kommen — ein
+neuer Baustein bekommt deshalb zunächst einen Platzhalter, und das Skript meldet
+ihn auf stderr. Ein Schlüssel, den es im Overlay nicht mehr gibt, wird ebenfalls
+gemeldet.
+
+## Sonst noch pflegen
+
 * **Schnellstart** — die vier Schritte unter `#start`, Gegenstück zur README dort.
 * **Farben** — `:root` in `site.css`, gespiegelt aus `static/css/core.css`.
+* **Cache** — `?v=N` an CSS und JS in `index.html` hochzählen, sonst behalten
+  Browser nach einem Update die alten Dateien.
 
 ## Rechtliches
 
