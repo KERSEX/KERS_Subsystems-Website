@@ -17,7 +17,7 @@
 <meta property="og:image" content="assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="assets/css/site.css?v=3">
+<link rel="stylesheet" href="assets/css/site.css?v=4">
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body>
@@ -131,7 +131,7 @@
       </details>
       <details class="card">
         <summary><h3>Trackmap</h3></summary>
-        <p>Die Strecke lernt sich beim Fahren selbst an. Alle Autos als Punkte, der Kamera-Fahrer hervorgehoben.</p>
+        <p>Die Strecke wird an ihrer Kennung erkannt und die Kontur vorgeladen — gelernt wird nur, was noch fehlt, und einmal Gefahrenes schlägt das Mitgelieferte. Drehung und Spiegelung merkt sich das Overlay je Strecke. Alle Autos als Punkte, der Kamera-Fahrer hervorgehoben.</p>
       </details>
       <details class="card">
         <summary><h3>Meldungs-Banner</h3></summary>
@@ -234,9 +234,9 @@
       <article class="way">
         <span class="way-no">02</span>
         <h3>Kamera setzen</h3>
-        <p>Direkt darunter ein Knopf je Position, mit dem Fahrernamen daneben: antippen, und die
-           Kamera im Spiel springt dorthin. Der empfohlene Platz bekommt einen Rahmen, ausgefallene
-           Fahrer verschwinden.</p>
+        <p>Jede Zeile des Leaderboards ist selbst der Knopf: antippen, und die Kamera im Spiel
+           springt auf diesen Fahrer — die Zeile blitzt kurz auf. Auf wem du gerade bist, zeigt das
+           🎥 in der Zeile.</p>
       </article>
       <article class="way">
         <span class="way-no">03</span>
@@ -316,9 +316,10 @@
     <ol class="steps">
       <li>
         <h3>Herunterladen</h3>
-        <p>Die <code>KERS_Subsystems.exe</code> aus den Releases in einen eigenen Ordner legen.
+        <p>Die <code>KERS_Subsystems.exe</code> in einen eigenen Ordner legen — der Knopf oben lädt sie direkt.
            Keine Installation. Beim ersten Start entsteht daneben ein Ordner <code>data\</code> —
-           dort liegen deine Einstellungen, Fensterlage, WM-Stände und Aufzeichnungen.</p>
+           dort liegen deine Einstellungen, Fensterlage, WM-Stände, eigenen Layouts, die selbst
+           gefahrenen Streckenkonturen und die Aufzeichnungen.</p>
       </li>
       <li>
         <h3>Telemetrie einschalten</h3>
@@ -346,7 +347,7 @@
         <p>Zwei Seiten im Browser — im Schaltbrett je ein Knopf, oder direkt aufgerufen,
            sobald der Server läuft:</p>
         <div class="urls">
-          <div><code>/regie</code><span>Charts, WM-Stand, Battle- und Hotlap-Boxen von Hand einblenden</span></div>
+          <div><code>/regie</code><span>Das ganze Feld, Kamera-Tipp, Kamera setzen und die Einblendungen</span></div>
           <div><code>/settings</code><span>Branding, Farben, Deckkraft, Sichtbarkeit, Layout</span></div>
         </div>
         <p class="urls-note">Das Overlay selbst wird nicht im Browser aufgerufen — es läuft im HUD-Fenster
@@ -473,6 +474,6 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=3"></script>
+<script src="assets/js/site.js?v=4"></script>
 </body>
 </html>
