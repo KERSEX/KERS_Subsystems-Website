@@ -145,6 +145,88 @@
     });
   }
 
+  /* ── Battle-Box: der Countdown bis zum Zweikampf ─────────────────────────── */
+  // Zeigt, was den Baustein ausmacht: nicht der Abstand, sondern die Hochrechnung,
+  // in wie vielen Runden der Hintermann dran ist. Der Abstand schrumpft, der
+  // Zähler fällt, beim Überholen tauschen die Zeilen und es geht von vorn los.
+  (function () {
+    var rahmen = document.getElementById("bboxRows");
+    if (!rahmen) return;
+
+    var PAARE = [
+      [{ kurz: "Russell", farbe: "var(--t-mercedes)" }, { kurz: "Piastri", farbe: "var(--t-mclaren)" }],
+      [{ kurz: "Leclerc", farbe: "var(--t-ferrari)" },  { kurz: "Alonso",  farbe: "var(--t-aston)" }],
+      [{ kurz: "Norris",  farbe: "var(--t-mclaren)" },  { kurz: "Sainz",   farbe: "var(--t-williams)" }]
+    ];
+    var kopf = document.getElementById("bboxHead");
+    var zaehler = document.getElementById("bboxLaps");
+    var einheit = document.getElementById("bboxUnit");
+
+    var paar = 0, platz = 4, abstand = 1.4, runden = 3;
+
+    function baue() {
+      rahmen.innerHTML = "";
+      PAARE[paar].forEach(function (d, i) {
+        var el = document.createElement("div");
+        el.className = "brow";
+        el.style.setProperty("--tc", d.farbe);
+        el.style.transform = "translateY(" + (i * 44) + "px)";
+        el.innerHTML = (i === 1 ? '<span class="gap-bar"><i></i></span>' : '') +
+          '<span class="bd-pos">' + (platz + i) + '</span>' +
+          '<span class="bd-name">' + d.kurz + '</span>' +
+          '<span class="bd-gap' + (i === 0 ? ' fuehrt' : '') + '">' +
+          (i === 0 ? '—' : '+' + abstand.toFixed(3)) + '</span>';
+        rahmen.appendChild(el);
+      });
+      kopf.textContent = "Battle for P" + platz;
+    }
+
+    function zeigeAbstand() {
+      var g = rahmen.querySelectorAll(".bd-gap")[1];
+      if (g) g.textContent = "+" + abstand.toFixed(3);
+      var balken = rahmen.querySelector(".gap-bar i");
+      // Voll = dicht dran: 1,5 s Abstand entsprechen leerem Balken.
+      if (balken) balken.style.width = Math.max(0, Math.min(100, (1.5 - abstand) / 1.5 * 100)) + "%";
+    }
+
+    function setzeRunden(n) {
+      runden = n;
+      zaehler.textContent = n;
+      zaehler.classList.toggle("jetzt", n <= 1);
+      einheit.textContent = n === 1 ? "Runde" : "Runden";
+      zaehler.classList.remove("pop");
+      void zaehler.offsetWidth;      // Neustart der Animation erzwingen
+      zaehler.classList.add("pop");
+    }
+
+    baue();
+    zeigeAbstand();
+    if (sanft) return;
+
+    setInterval(function () {
+      abstand = Math.max(0.08, abstand - 0.16 - Math.random() * 0.1);
+      zeigeAbstand();
+
+      if (abstand < 0.3) {
+        // Überholt: die beiden tauschen, danach beginnt der nächste Kampf.
+        var zeilen = rahmen.querySelectorAll(".brow");
+        zeilen[0].style.transform = "translateY(44px)";
+        zeilen[1].style.transform = "translateY(0)";
+        setTimeout(function () {
+          paar = (paar + 1) % PAARE.length;
+          platz = [4, 6, 2][paar];
+          abstand = 1.2 + Math.random() * 0.5;
+          baue();
+          zeigeAbstand();
+          setzeRunden(3);
+        }, 900);
+      } else {
+        var ziel = abstand < 0.7 ? 1 : abstand < 1.1 ? 2 : 3;
+        if (ziel !== runden) setzeRunden(ziel);
+      }
+    }, 1600);
+  })();
+
   /* ── Timing-Tower-Nachbau ────────────────────────────────────────────────── */
   var body = document.getElementById("towerBody");
   if (!body) return;

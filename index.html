@@ -17,7 +17,7 @@
 <meta property="og:image" content="assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="assets/css/site.css?v=5">
+<link rel="stylesheet" href="assets/css/site.css?v=6">
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body>
@@ -36,6 +36,7 @@
     </button>
 
     <nav class="menu" id="menu">
+      <a href="#besonders">Besonders</a>
       <a href="#bausteine">Bausteine</a>
       <a href="#layout">Layout</a>
       <a href="#regie">Regie</a>
@@ -114,6 +115,43 @@
       <p>Regie und Einstellungen sind die beiden Seiten im Browser. Im selben WLAN steuerst du das
          Overlay vom Handy — bis hin zur <a href="#regie">Kamera im Spiel</a>.</p>
     </article>
+  </div>
+</section>
+
+<!-- ══════════════ BESONDERS ══════════════ -->
+<section class="sec" id="besonders">
+  <div class="wrap split">
+    <div>
+      <p class="kicker">Was es ausmacht</p>
+      <h2>Nicht nur, was ist.<br>Auch, was kommt.</h2>
+      <p class="sub">Abstände anzeigen kann jedes Overlay. Interessant wird es, wenn daraus eine
+        Vorhersage wird — und genau da steckt die Arbeit.</p>
+
+      <ul class="checks">
+        <li><b>Kampf in drei Runden.</b> Das Overlay erkennt Kampfgruppen und rechnet aus Rundenzeiten
+          und Abstand, wann der Hintermann wirklich dran ist. Der Countdown steht in der Battle-Box,
+          bevor der Zweikampf zu sehen ist.</li>
+        <li><b>Undercut erkannt.</b> Kippt ein Boxenstopp die Reihenfolge, sagt es das Meldungs-Banner —
+          nicht hinterher, sondern während der Stopp läuft.</li>
+        <li><b>Wo käme er raus?</b> Die Pit-Projektion setzt den Fahrer gedanklich an die Box und zeigt
+          die Position, auf die er zurückfiele.</li>
+        <li><b>Der letzte sichere Platz.</b> In der Quali läuft in der Gefahrenzone der Countdown für
+          den, der gerade rausfliegen würde.</li>
+      </ul>
+    </div>
+
+    <!-- Nachbau einer Battle-Box, wie sie das Overlay unten mittig einblendet -->
+    <div class="bbox-demo" aria-hidden="true">
+      <div class="bbox" id="bbox">
+        <div class="bbox-head" id="bboxHead">Battle for P4</div>
+        <div class="bbox-sub">
+          <span class="bs-ico">⚔</span><span class="bs-txt">Kampf in</span>
+          <b class="bs-laps" id="bboxLaps">3</b><span class="bs-unit" id="bboxUnit">Runden</span>
+        </div>
+        <div class="bbox-rows" id="bboxRows"></div>
+      </div>
+      <p class="demo-caption">Nachbau — der Countdown kommt im Betrieb aus den Rundenzeiten.</p>
+    </div>
   </div>
 </section>
 
@@ -236,10 +274,10 @@
       </article>
       <article class="way">
         <span class="way-no">02</span>
-        <h3>Kamera setzen</h3>
-        <p>Jede Zeile des Leaderboards ist selbst der Knopf: antippen, und die Kamera im Spiel
+        <h3>Auf den Fahrer tippen</h3>
+        <p>Jede Zeile des Leaderboards ist selbst der Knopf: antippen, und die Kamera <em>im Spiel</em>
            springt auf diesen Fahrer — die Zeile blitzt kurz auf. Auf wem du gerade bist, zeigt das
-           🎥 in der Zeile.</p>
+           🎥 in der Zeile. Vom Handy aus genauso.</p>
       </article>
       <article class="way">
         <span class="way-no">03</span>
@@ -444,12 +482,32 @@
   </div>
 </section>
 
+<!-- ══════════════ COMMUNITY ══════════════ -->
+<section class="sec alt" id="community">
+  <div class="wrap narrow mitte">
+    <p class="kicker">Kostenlos &amp; offen</p>
+    <h2>Gebaut mit denen, die es benutzen.</h2>
+    <p class="sub mitte-text">KERS Subsystems kostet nichts, kennt keine Konten und keine Werbung.
+      Der Quellcode liegt öffentlich einsehbar auf GitHub — was das Overlay rechnet, kann jeder
+      nachlesen.</p>
+    <p class="sub mitte-text">Der Weg dahin läuft über Discord: Wünsche, Fehlerberichte und Zurufe aus
+      laufenden Rennen landen dort und werden zu dem, was in der nächsten Fassung steckt. Vieles auf
+      dieser Seite steht genau deshalb drin.</p>
+
+    <!-- DISCORD-LINK HIER EINSETZEN: <a class="btn btn-lg" href="https://discord.gg/…">Discord beitreten</a> -->
+    <div class="cta mitte-cta">
+      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/issues" target="_blank" rel="noopener">Fehler melden</a>
+      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quellcode ansehen</a>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════ DOWNLOAD ══════════════ -->
 <section class="download" id="download">
   <div class="wrap dl-in">
     <img src="assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
     <h2>Hol es dir.</h2>
-    <p>Eine Datei, kein Installer. Läuft neben dem Spiel und aktualisiert sich selbst.</p>
+    <p>Eine Datei, kein Installer, keine Kosten. Läuft neben dem Spiel und aktualisiert sich selbst.</p>
     <div class="cta cta-haupt">
       <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
     </div>
@@ -478,6 +536,6 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=5"></script>
+<script src="assets/js/site.js?v=6"></script>
 </body>
 </html>
