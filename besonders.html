@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Was es ausmacht — KERS Subsystems</title>
+<meta name="description" content="Battles mit Überhol-Projektion, Undercut-Erkennung, Pit-Projektion und Gefahrenzone: wo das Overlay rechnet statt nur anzuzeigen.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Was es ausmacht — KERS Subsystems">
+<meta property="og:description" content="Battles mit Überhol-Projektion, Undercut-Erkennung, Pit-Projektion und Gefahrenzone: wo das Overlay rechnet statt nur anzuzeigen.">
+<meta property="og:image" content="assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="assets/css/site.css?v=8">
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html" aria-current="page">Besonders</a>
+      <a href="bausteine.html">Bausteine</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html">Regie</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Schnellstart</a>
+      <a href="technik.html">Technik</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Übersicht</a>
+    <h1>Was es ausmacht</h1>
+    <p class="sub">Abstände anzeigen kann jedes Overlay. Interessant wird es, wenn daraus eine Vorhersage wird.</p>
+  </div>
+</section>
+
+<!-- ══════════════ BESONDERS ══════════════ -->
+<section class="sec" id="besonders">
+  <div class="wrap split">
+    <div>
+          <p class="sub">Abstände anzeigen kann jedes Overlay. Interessant wird es, wenn daraus eine
+        Vorhersage wird — und genau da steckt die Arbeit.</p>
+
+      <ul class="checks">
+        <li><b>Kampf in drei Runden.</b> Das Overlay erkennt Kampfgruppen und rechnet aus Rundenzeiten
+          und Abstand, wann der Hintermann wirklich dran ist. Der Countdown steht in der Battle-Box,
+          bevor der Zweikampf zu sehen ist.</li>
+        <li><b>Undercut erkannt.</b> Kippt ein Boxenstopp die Reihenfolge, sagt es das Meldungs-Banner —
+          nicht hinterher, sondern während der Stopp läuft.</li>
+        <li><b>Wo käme er raus?</b> Die Pit-Projektion setzt den Fahrer gedanklich an die Box und zeigt
+          die Position, auf die er zurückfiele.</li>
+        <li><b>Der letzte sichere Platz.</b> In der Quali läuft in der Gefahrenzone der Countdown für
+          den, der gerade rausfliegen würde.</li>
+      </ul>
+    </div>
+
+    <!-- Nachbau einer Battle-Box, wie sie das Overlay unten mittig einblendet -->
+    <div class="bbox-demo" aria-hidden="true">
+      <div class="bbox" id="bbox">
+        <div class="bbox-head" id="bboxHead">Battle for P4</div>
+        <div class="bbox-sub">
+          <span class="bs-ico">⚔</span><span class="bs-txt">Kampf in</span>
+          <b class="bs-laps" id="bboxLaps">3</b><span class="bs-unit" id="bboxUnit">Runden</span>
+        </div>
+        <div class="bbox-rows" id="bboxRows"></div>
+      </div>
+      <p class="demo-caption">Nachbau — der Countdown kommt im Betrieb aus den Rundenzeiten.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">
+      Privates Projekt, kein offizielles Produkt von EA oder Codemasters.
+      Alle Marken gehören ihren jeweiligen Eigentümern.
+    </p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Projekt</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">Diese Seite</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js?v=8"></script>
+</body>
+</html>

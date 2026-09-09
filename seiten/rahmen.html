@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITEL}}</title>
+<meta name="description" content="{{BESCHREIBUNG}}">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="{{TITEL}}">
+<meta property="og:description" content="{{BESCHREIBUNG}}">
+<meta property="og:image" content="assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="assets/css/site.css?v={{V}}">
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html"{{AKTIV:besonders}}>Besonders</a>
+      <a href="bausteine.html"{{AKTIV:bausteine}}>Bausteine</a>
+      <a href="layout.html"{{AKTIV:layout}}>Layout</a>
+      <a href="regie.html"{{AKTIV:regie}}>Regie</a>
+      <a href="obs.html"{{AKTIV:obs}}>OBS</a>
+      <a href="start.html"{{AKTIV:start}}>Schnellstart</a>
+      <a href="technik.html"{{AKTIV:technik}}>Technik</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+{{INHALT}}
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">
+      Privates Projekt, kein offizielles Produkt von EA oder Codemasters.
+      Alle Marken gehören ihren jeweiligen Eigentümern.
+    </p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Projekt</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">Diese Seite</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js?v={{V}}"></script>
+</body>
+</html>

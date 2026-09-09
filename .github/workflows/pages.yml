@@ -41,6 +41,9 @@ jobs:
       - name: Bausteinliste und Fassung nachziehen
         run: python3 tools/bausteine.py --overlay .overlay
 
+      - name: Seiten aus dem Rahmen bauen
+        run: python3 tools/seiten.py
+
       # Der Checkout des Overlays gehoert nicht in die veroeffentlichte Seite.
       - name: Aufraeumen
         run: rm -rf .overlay

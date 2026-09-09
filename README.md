@@ -20,14 +20,32 @@ Dann `http://localhost:8000` öffnen. Ein Doppelklick auf `index.html` tut es au
 ## Aufbau
 
 ```
-index.html            die gesamte Seite
+seiten/rahmen.html    Kopfzeile, Navigation und Fußbereich — einmal für alle Seiten
+seiten/*.html         der Inhalt je Seite, mit Titel und Beschreibung im Kopf
+tools/seiten.py       setzt Rahmen und Inhalt zusammen → die *.html im Wurzelverzeichnis
+tools/bausteine.py    schreibt Bausteinliste und Fassung aus dem Overlay in seiten/
+bausteine.json        die Beschreibungen der Bausteine (Handarbeit)
 assets/css/site.css   Farben und Layout — Tokens 1:1 aus dem Overlay (core.css)
-assets/js/site.js     Kopfzeile, Einblenden, Tower-Nachbau, Ankerraster
+assets/js/site.js     Kopfzeile, Einblenden, Tower- und Battle-Nachbau, Ankerraster
 assets/fonts/         Inter und Teko (woff2), aus dem Overlay übernommen
 assets/img/           Logo, Icon, Favicon
-bausteine.json        die Beschreibungen der Bausteine (Handarbeit)
-tools/bausteine.py    schreibt Bausteinliste und Fassung aus dem Overlay in die Seite
+*.html                erzeugt — nicht von Hand ändern, sondern seiten/ bearbeiten
 ```
+
+Die Seite besteht aus einer Startseite mit den Themen als Kacheln und je einer
+Unterseite dahinter: `besonders`, `bausteine`, `layout`, `regie`, `obs`, `start`
+und `technik`.
+
+## Seiten bauen
+
+```bash
+python3 tools/seiten.py            # baut alle Seiten neu
+python3 tools/seiten.py --pruefen  # meldet nur, ob etwas abweicht
+```
+
+Geändert wird immer in `seiten/` — die Dateien im Wurzelverzeichnis werden dabei
+überschrieben. Das Cache-Kennzeichen `?v=N` steht als `VERSION` oben in
+`tools/seiten.py`; nach einer Änderung an CSS oder JS dort hochzählen.
 
 ## Veröffentlichen
 
@@ -47,16 +65,17 @@ Beides kommt aus dem Hauptprojekt, damit es nicht still veraltet:
 
 `tools/bausteine.py` schreibt daraus die Karten zwischen den Marken
 `<!-- BAUSTEINE:START -->` und `<!-- BAUSTEINE:ENDE -->` sowie die Felder
-`data-gen="anzahl"`, `"anzahl-wort"` und `"version"`. Der Pages-Workflow ruft es
-bei jedem Deploy auf und zusätzlich einmal täglich — Änderungen am Overlay
-landen also auch ohne Push hier.
+`data-gen="anzahl"`, `"anzahl-wort"` und `"version"` — in die Quellen unter
+`seiten/`, aus denen `tools/seiten.py` danach die Seiten baut. Der Pages-Workflow
+ruft beides bei jedem Deploy auf und zusätzlich einmal täglich — Änderungen am
+Overlay landen also auch ohne Push hier.
 
-Von Hand:
+Von Hand, in dieser Reihenfolge:
 
 ```bash
 git clone --depth 1 https://github.com/KERSEX/KERS_Overlay /tmp/overlay
 python3 tools/bausteine.py --overlay /tmp/overlay
-python3 tools/bausteine.py --overlay /tmp/overlay --pruefen   # nur melden
+python3 tools/seiten.py
 ```
 
 Die **Beschreibungen** stehen in `bausteine.json`, mit dem Schlüssel aus
@@ -69,8 +88,8 @@ gemeldet.
 
 * **Schnellstart** — die vier Schritte unter `#start`, Gegenstück zur README dort.
 * **Farben** — `:root` in `site.css`, gespiegelt aus `static/css/core.css`.
-* **Cache** — `?v=N` an CSS und JS in `index.html` hochzählen, sonst behalten
-  Browser nach einem Update die alten Dateien.
+* **Cache** — `VERSION` in `tools/seiten.py` hochzählen, sonst behalten Browser
+  nach einem Update die alten CSS- und JS-Dateien.
 
 ## Rechtliches
 

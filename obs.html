@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aufnahme & Stream — KERS Subsystems</title>
+<meta name="description" content="Das Overlay in OBS holen: eigenes Fenster in Canvas-Größe, Fensteraufnahme und Farbschlüssel auf Magenta.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Aufnahme & Stream — KERS Subsystems">
+<meta property="og:description" content="Das Overlay in OBS holen: eigenes Fenster in Canvas-Größe, Fensteraufnahme und Farbschlüssel auf Magenta.">
+<meta property="og:image" content="assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="assets/css/site.css?v=8">
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Besonders</a>
+      <a href="bausteine.html">Bausteine</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html">Regie</a>
+      <a href="obs.html" aria-current="page">OBS</a>
+      <a href="start.html">Schnellstart</a>
+      <a href="technik.html">Technik</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Übersicht</a>
+    <h1>Aufnahme & Stream</h1>
+    <p class="sub">Das durchsichtige HUD selbst aufzunehmen funktioniert nicht — deshalb gibt es ein zweites Fenster.</p>
+  </div>
+</section>
+
+<!-- ══════════════ OBS ══════════════ -->
+<section class="sec" id="obs">
+  <div class="wrap">
+    <p class="sub">Es friert in der Fensteraufnahme auf einem Bild ein. Deshalb zeichnet
+      KERS Subsystems dieselbe Szene ein zweites Mal: undurchsichtig, in Canvas-Größe,
+      eigens für die Aufnahme.</p>
+
+    <div class="ways">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Fenster einschalten</h3>
+        <p>Im Schaltbrett unter <em>OBS</em> das <em>eigene OBS-Fenster</em> anschalten und die
+           Canvas-Größe auf das stellen, was in OBS eingestellt ist — meist 1920×1080.</p>
+        <p class="way-note">Das Desktop-HUD darf dabei aus bleiben. Das OBS-Fenster läuft unabhängig.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>In OBS aufnehmen</h3>
+        <p><em>Fensteraufnahme</em> → Fenster <code>[KERS_Subsystems]: KERS OBS</code>,
+           Methode „Windows 10 (1903 und neuer)", <em>Fensterrahmen aufnehmen</em> aus.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Farbschlüssel</h3>
+        <p>Auf die Quelle einen Filter <em>Farbschlüssel</em> legen, Schlüsselfarbe <em>Magenta</em>.</p>
+        <p class="way-note">Kein Notbehelf, sondern der Plan: im OBS-Fenster sind alle Panels deckend,
+           damit der Schlüssel sie nicht anteilig mitfrisst. Magenta, weil die Farbe im Overlay nirgends
+           vorkommt — Grün kollidiert mit Sektoren und DRS, Blau mit Alpine, Williams und RB.</p>
+      </article>
+    </div>
+
+    <div class="callout">
+      <b>Und die Monitoraufnahme?</b> Das HUD liegt auf dem Desktop, also ist es bei einer
+      Bildschirmaufnahme automatisch mit im Bild. Zum Streamen taugt das trotzdem wenig: du bekommst
+      alles mit, was sonst noch auf dem Bildschirm liegt, das Overlay hängt an der Auflösung und Lage
+      deines Monitors statt an der OBS-Canvas, und einzeln ein- oder ausblenden lässt sich nichts mehr.
+      Das eigene OBS-Fenster ist deshalb der empfohlene Weg.
+    </div>
+
+    <div class="callout">
+      <b>Warum nicht das HUD-Fenster selbst?</b> Ein durchsichtiges Fenster zeichnet unter Windows über
+      DirectComposition unmittelbar in den Desktop. Die Windows Graphics Capture, aus der OBS seine
+      Fensteraufnahme speist, liest dagegen die DWM-Umleitungsfläche — und die bekommt bei so einem
+      Fenster keine neuen Bilder mehr. An einem Fenster ist das nicht lösbar: entweder durchsichtig für
+      den Desktop oder undurchsichtig für die Aufnahme. Deshalb zwei.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">
+      Privates Projekt, kein offizielles Produkt von EA oder Codemasters.
+      Alle Marken gehören ihren jeweiligen Eigentümern.
+    </p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Projekt</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">Diese Seite</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js?v=8"></script>
+</body>
+</html>

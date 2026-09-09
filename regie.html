@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regie — KERS Subsystems</title>
+<meta name="description" content="Das Regie-Panel: Director's Eye, Kamera im Spiel per Tipp setzen, Einblendungen von Hand steuern — auch vom Handy.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Regie — KERS Subsystems">
+<meta property="og:description" content="Das Regie-Panel: Director's Eye, Kamera im Spiel per Tipp setzen, Einblendungen von Hand steuern — auch vom Handy.">
+<meta property="og:image" content="assets/img/icon.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="assets/css/site.css?v=8">
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Besonders</a>
+      <a href="bausteine.html">Bausteine</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html" aria-current="page">Regie</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Schnellstart</a>
+      <a href="technik.html">Technik</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Übersicht</a>
+    <h1>Die Regie</h1>
+    <p class="sub">Eine zweite Seite, von der nichts ins Bild geht — von hier steuerst du, was zu sehen ist.</p>
+  </div>
+</section>
+
+<!-- ══════════════ REGIE ══════════════ -->
+<section class="sec" id="regie">
+  <div class="wrap">
+    <p class="sub">Unter <code>/regie</code> läuft eine zweite Seite, von der nichts ins Bild geht:
+      das ganze Feld mit Reifen, Abständen und Boxenstopps, die Rennleitung, ein Pace-Vergleich und die
+      Live-Projektion des WM-Stands. Von hier blendest du ein und aus, was gerade dran ist.</p>
+
+    <div class="ways">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Director's Eye</h3>
+        <p>Der Kamera-Tipp sagt dir, wo gerade etwas passiert — welcher Zweikampf, welche Runde,
+           welcher Stopp den Blick lohnt.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>Auf den Fahrer tippen</h3>
+        <p>Jede Zeile des Leaderboards ist selbst der Knopf: antippen, und die Kamera <em>im Spiel</em>
+           springt auf diesen Fahrer — die Zeile blitzt kurz auf. Auf wem du gerade bist, zeigt das
+           🎥 in der Zeile. Vom Handy aus genauso.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Einblenden</h3>
+        <p>Charts, WM-Stand, Battle- und Hotlap-Boxen lassen sich von Hand ins Bild holen, statt auf
+           die Automatik zu warten.</p>
+      </article>
+    </div>
+
+    <div class="callout">
+      <b>Zur Kamera-Steuerung:</b> Sie schickt Tastendrücke ins laufende Spiel, und der Server hört im
+      ganzen Netz. Solange der Schalter an ist, kann also jeder im selben WLAN die Kamera umschalten.
+      Der Endpunkt nimmt zwar nur eine Positionsnummer entgegen — welche Taste das ist, schlägt der
+      Server selbst nach —, aber der eigentliche Schutz ist der Schalter: in <code>/settings</code>
+      abschaltbar, ab Werk an.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">
+      Privates Projekt, kein offizielles Produkt von EA oder Codemasters.
+      Alle Marken gehören ihren jeweiligen Eigentümern.
+    </p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Projekt</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">Diese Seite</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js?v=8"></script>
+</body>
+</html>

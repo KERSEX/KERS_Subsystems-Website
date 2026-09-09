@@ -8,11 +8,11 @@ hiess, es bei jeder Aenderung nachzuziehen - und genau das ist zweimal
 liegengeblieben. Die Beschreibungen bleiben Handarbeit (`bausteine.json`), denn
 Prosa steht nirgends im Quellcode.
 
-    python tools/bausteine.py --overlay ../KERS_Overlay
+    python3 tools/bausteine.py --overlay ../KERS_Overlay
 
-Ohne Fund bleibt die Seite unveraendert und der Rueckgabewert ist 1 - beim
-Veroeffentlichen soll ein kaputter Lauf nicht stillschweigend eine leere Liste
-ausliefern.
+Geschrieben wird in die QUELLEN unter seiten/ - die fertigen HTML-Dateien baut
+danach tools/seiten.py daraus. Ohne Fund bricht der Lauf ab, statt still eine
+leere Liste auszuliefern.
 """
 
 import argparse
@@ -101,31 +101,37 @@ def main() -> int:
     anzahl = len(teile)
     wort = ZAHLWORT.get(anzahl, str(anzahl))
 
-    seite_datei = HIER / "index.html"
-    alt = seite_datei.read_text(encoding="utf-8")
-    neu = ersetze_zwischen(alt, "BAUSTEINE", karten)
-    neu = ersetze_feld(neu, "anzahl", str(anzahl))
-    neu = ersetze_feld(neu, "anzahl-wort", wort)
-    neu = ersetze_feld(neu, "version", version)
-
     for k in fehlen:
         print(f"  ⚠ keine Beschreibung fuer '{k}' - bitte in bausteine.json ergaenzen",
               file=sys.stderr)
-    verwaist = sorted(set(texte) - {s for s, _ in teile})
-    for k in verwaist:
+    for k in sorted(set(texte) - {s for s, _ in teile}):
         print(f"  ⚠ '{k}' steht in bausteine.json, aber nicht mehr in LAYOUT_TEILE",
               file=sys.stderr)
 
-    if neu == alt:
-        print(f"Seite ist aktuell: {anzahl} Bausteine, Fassung {version}")
+    # Die Marken und Felder liegen ueber mehrere Quelldateien verteilt: die Liste
+    # in seiten/bausteine.html, die Anzahl auch auf der Startseite, die Fassung
+    # im Download-Abschnitt. Jede Datei bekommt, was in ihr vorkommt.
+    geaendert = []
+    for quelle in sorted((HIER / "seiten").glob("*.html")):
+        alt = quelle.read_text(encoding="utf-8")
+        neu = alt
+        if "<!-- BAUSTEINE:START -->" in neu:
+            neu = ersetze_zwischen(neu, "BAUSTEINE", karten)
+        for feld, wert in (("anzahl", str(anzahl)), ("anzahl-wort", wort), ("version", version)):
+            if f'data-gen="{feld}"' in neu:
+                neu = ersetze_feld(neu, feld, wert)
+        if neu != alt:
+            geaendert.append(quelle.name)
+            if not a.pruefen:
+                quelle.write_text(neu, encoding="utf-8")
+
+    if not geaendert:
+        print(f"Quellen sind aktuell: {anzahl} Bausteine, Fassung {version}")
         return 0
-
     if a.pruefen:
-        print(f"Seite waere zu aendern: {anzahl} Bausteine, Fassung {version}")
+        print(f"Zu aendern waere: {', '.join(geaendert)} ({anzahl} Bausteine, Fassung {version})")
         return 1
-
-    seite_datei.write_text(neu, encoding="utf-8")
-    print(f"Seite aktualisiert: {anzahl} Bausteine, Fassung {version}")
+    print(f"Aktualisiert: {', '.join(geaendert)} ({anzahl} Bausteine, Fassung {version})")
     return 0
 
 

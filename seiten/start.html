@@ -1,0 +1,64 @@
+<!-- titel: Schnellstart — KERS Subsystems -->
+<!-- beschreibung: In vier Schritten im Bild: herunterladen, Telemetrie einschalten, starten, einrichten. -->
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Übersicht</a>
+    <h1>Schnellstart</h1>
+    <p class="sub">Vier Schritte, dann läuft es. Keine Installation, keine Konten.</p>
+  </div>
+</section>
+
+<!-- ══════════════ SCHNELLSTART ══════════════ -->
+<section class="sec alt" id="start">
+  <div class="wrap">
+
+    <ol class="steps">
+      <li>
+        <h3>Herunterladen</h3>
+        <p>Die <code>KERS_Subsystems.exe</code> in einen eigenen Ordner legen — der Knopf oben lädt sie direkt.
+           Keine Installation. Beim ersten Start entsteht daneben ein Ordner <code>data\</code> —
+           dort liegen deine Einstellungen, Fensterlage, WM-Stände, eigenen Layouts, die selbst
+           gefahrenen Streckenkonturen und die Aufzeichnungen.</p>
+      </li>
+      <li>
+        <h3>Telemetrie einschalten</h3>
+        <p>Im Spiel unter <em>Einstellungen → Telemetrie</em>:</p>
+        <div class="kv">
+          <div><span>UDP Telemetry</span><b>An</b></div>
+          <div><span>UDP Format</span><b>2026</b></div>
+          <div><span>IP</span><b>127.0.0.1</b></div>
+          <div><span>Port</span><b>20777</b></div>
+          <div><span>Spielernamen</span><b>An</b></div>
+        </div>
+        <p class="urls-note"><b>Im Rennen mit anderen:</b> Diese Einstellungen macht jeder Fahrer für
+           sich. Damit im Overlay Namen statt Platzhalter stehen, muss auch bei den anderen in der Lobby
+           <em>Spielernamen</em> auf <b>An</b> stehen. Wer seine Telemetrie zusätzlich von
+           <em>Eingeschränkt</em> auf <b>Öffentlich</b> stellt, liefert auch das, was Onboard und
+           Reifenanzeige brauchen — nötig ist das nicht, das Overlay läuft auch ohne.</p>
+      </li>
+      <li>
+        <h3>Starten</h3>
+        <p>EXE öffnen — es erscheint das Schaltbrett <em>KERS Subsystems</em>.
+           Dort <b>Start Server</b> drücken, dann <b>HUD IST AN</b>.</p>
+      </li>
+      <li>
+        <h3>Einrichten</h3>
+        <p>Zwei Seiten im Browser — im Schaltbrett je ein Knopf, oder direkt aufgerufen,
+           sobald der Server läuft:</p>
+        <div class="urls">
+          <div><code>/regie</code><span>Das ganze Feld, Kamera-Tipp, Kamera setzen und die Einblendungen</span></div>
+          <div><code>/settings</code><span>Branding, Farben, Deckkraft, Sichtbarkeit, Layout</span></div>
+        </div>
+        <p class="urls-note">Das Overlay selbst wird nicht im Browser aufgerufen — es läuft im HUD-Fenster
+           und für die Aufnahme im OBS-Fenster.</p>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <b>Selbst-Update.</b> Beim Start sieht das Programm still nach, ob es eine neuere Fassung gibt.
+      Der Download wird gegen Größe und SHA-256 geprüft, bevor er die laufende Datei ersetzt —
+      die alte bleibt als Rückfallebene liegen. Eine bestimmte Fassung wählst du im Schaltbrett gezielt aus.
+    </div>
+  </div>
+</section>

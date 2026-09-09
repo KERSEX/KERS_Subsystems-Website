@@ -207,6 +207,41 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .trio a{color:var(--accent);text-decoration:none;font-weight:600}
 .trio a:hover{text-decoration:underline}
 
+/* ── Startseite: das Themen-Raster ────────────────────────────────────────── */
+.themen{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));
+  gap:1.1rem;margin-top:3rem}
+.thema{display:flex;flex-direction:column;gap:.5rem;text-decoration:none;position:relative;
+  background:var(--panel-alt);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.6rem 1.5rem;overflow:hidden;
+  transition:transform .25s ease,border-color .25s ease,background .25s ease}
+.thema::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);
+  transform:scaleY(0);transform-origin:top;transition:transform .3s ease}
+.thema:hover,.thema:focus-visible{transform:translateY(-4px);border-color:rgba(255,255,255,.2);
+  background:var(--panel)}
+.thema:hover::before,.thema:focus-visible::before{transform:scaleY(1)}
+.thema h3{margin:0}
+.thema p{color:var(--muted);font-size:.92rem;flex:1}
+.thema-mehr{font-size:.78rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent)}
+.thema-mehr::after{content:" →";transition:margin-left .2s ease;display:inline-block}
+.thema:hover .thema-mehr::after{margin-left:.25rem}
+
+/* ── Unterseiten: der Kopf über dem Inhalt ────────────────────────────────── */
+.seitenkopf{padding:9rem 0 0;position:relative}
+.seitenkopf h1{font-family:'Teko',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1;margin:.6rem 0 .8rem}
+.seitenkopf .sub{max-width:44rem}
+.zurueck{display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.6px;
+  color:var(--muted);text-decoration:none;transition:color .2s}
+.zurueck:hover,.zurueck:focus-visible{color:var(--accent)}
+/* Der erste Abschnitt sitzt direkt unter dem Kopf - sonst klafft dort eine Lücke. */
+.seitenkopf+.sec{padding-top:2.5rem}
+
+/* Der aktive Punkt in der Navigation */
+.menu a[aria-current="page"]{color:#fff}
+.menu a[aria-current="page"]::after{content:"";display:block;height:2px;margin-top:3px;
+  background:var(--accent);border-radius:2px}
+
 /* Baustein-Karten - aufklappbar (<details>), zugeklappt passen alle 13 auf einen Blick */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:1.1rem;margin-top:3rem;
   align-items:start}   /* start, damit nur die geoeffnete Karte waechst und nicht die ganze Reihe */
@@ -411,6 +446,8 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .menu.open{transform:none;visibility:visible}
   .menu a{padding:.85rem 0;border-bottom:1px solid var(--line-soft);font-size:1rem}
   .menu .btn{margin-top:.9rem;text-align:center;border-bottom:0}
+  .menu a[aria-current="page"]::after{display:none}
+  .seitenkopf{padding-top:7rem}
 }
 
 @media (max-width:760px){

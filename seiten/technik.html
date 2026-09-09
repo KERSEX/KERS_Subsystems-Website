@@ -1,0 +1,83 @@
+<!-- titel: Technik & Hilfe — KERS Subsystems -->
+<!-- beschreibung: Wie das Overlay gebaut ist — Ports, Renderer, Renderrate — und was zu tun ist, wenn etwas klemmt. -->
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Übersicht</a>
+    <h1>Technik &amp; Hilfe</h1>
+    <p class="sub">Was unter der Haube läuft, und was hilft, wenn es klemmt.</p>
+  </div>
+</section>
+
+<!-- ══════════════ TECHNIK ══════════════ -->
+<section class="sec" id="technik">
+  <div class="wrap">
+
+    <div class="tech">
+      <div class="tech-flow">
+        <div class="node"><b>F1 26</b><span>UDP · Port 20777</span></div>
+        <div class="arrow" aria-hidden="true"></div>
+        <div class="node"><b>Parser + Flask</b><span>main.py · Port 5100</span></div>
+        <div class="arrow" aria-hidden="true"></div>
+        <div class="node split-node">
+          <div><b>HUD-Fenster</b><span>durchsichtig, immer oben</span></div>
+          <div><b>OBS-Fenster</b><span>deckend, Canvas-Größe</span></div>
+        </div>
+      </div>
+
+      <dl class="specs">
+        <div><dt>Spiel</dt><dd>F1 26, UDP-Format „2026". Ältere Titel senden ein anderes Format und werden nicht gelesen.</dd></div>
+        <div><dt>Ports</dt><dd><code>5100</code> Weboberfläche · <code>20777</code> Telemetrie</dd></div>
+        <div><dt>Renderer</dt><dd>Die QML-Szene. Die alten HTML-Seiten liegen als Rückfallebene daneben, die OBS-Schalter gelten aber nur für QML.</dd></div>
+        <div><dt>Renderrate</dt><dd>10 bis 120&nbsp;Hz. Das Spiel sendet höchstens 60 Pakete/s; darüber laufen nur noch die weichen Zähler flüssiger.</dd></div>
+        <div><dt>Quellcode</dt><dd>Python 3.13, Flask und PySide6. <code>run.bat</code> legt die venv an und startet den Server, <code>start_hud.bat</code> das Desktop-HUD.</dd></div>
+        <div><dt>Deine Daten</dt><dd>Alles Persönliche liegt in <code>data\</code> neben der EXE. Die EXE selbst enthält keine.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+<!-- ══════════════ HILFE ══════════════ -->
+<section class="sec alt" id="hilfe">
+  <div class="wrap narrow">
+
+    <div class="faq">
+      <details>
+        <summary>Es kommt nichts an.</summary>
+        <p>Die Statuszeile im Schaltbrett zeigt getrennt an, ob der Server läuft und ob UDP-Pakete
+           ankommen. Sendet das Spiel ein anderes Format als 2026, kommen zwar Pakete an, werden aber
+           nicht gelesen. Beim Testen darf außerdem nur <em>eine</em> Quelle auf Port 20777 senden —
+           entweder das Spiel oder ein Testsender, sonst mischen sich die Daten.</p>
+      </details>
+      <details>
+        <summary>Das HUD liegt hinter dem Spiel.</summary>
+        <p>Im randlosen Vollbild schiebt sich das Spiel manchmal nach vorn. Das HUD meldet sich alle
+           zwei Sekunden von selbst wieder oben an. Hilft das nicht, läuft das Spiel meist im echten
+           Vollbild — fürs Bild im Stream ist ohnehin das OBS-Fenster zuständig, und das läuft davon
+           unberührt weiter.</p>
+      </details>
+      <details>
+        <summary>OBS findet das Fenster nicht.</summary>
+        <p>Gesucht ist <code>[KERS_Subsystems]: KERS OBS</code> — nicht das HUD-Fenster. Willst du doch das
+           HUD selbst aufnehmen, muss <em>In OBS auffindbar</em> im Schaltbrett an: das HUD läuft sonst
+           als Werkzeugfenster, und genau die wirft OBS aus seiner Liste. Der Preis ist ein Eintrag in
+           der Taskleiste — beides hängt an derselben Eigenschaft.</p>
+      </details>
+      <details>
+        <summary>Ich bekomme das HUD nicht mit der Maus zu fassen.</summary>
+        <p>Ab Werk ist es gesperrt — genau das lässt die Klicks zum Spiel durch. Zum Verschieben erst
+           im Schaltbrett oder über das Symbol im Infobereich entsperren.</p>
+      </details>
+      <details>
+        <summary>Das Overlay sieht anders aus als erwartet.</summary>
+        <p>Beim Start aus dem Quellcode müssen die Schriften einmalig erzeugt werden:
+           <code>python tools\woff2_to_ttf.py</code>. Qt kann keine woff2-Dateien lesen und fällt sonst
+           auf die Systemschrift zurück.</p>
+      </details>
+    </div>
+
+    <p class="help-more">
+      Alles Weitere steht in der <a href="https://github.com/KERSEX/KERS_Overlay#readme" target="_blank" rel="noopener">README des Projekts</a>
+      und in den <a href="https://github.com/KERSEX/KERS_Overlay/blob/main/hud/README.md" target="_blank" rel="noopener">Technik-Notizen zum HUD</a>.
+    </p>
+  </div>
+</section>
