@@ -89,8 +89,9 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .btn-lg{padding:.85rem 1.7rem;font-size:1rem}
 .btn-ghost{background:transparent;border-color:var(--line);color:#fff}
 .btn-ghost:hover,.btn-ghost:focus-visible{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.3);box-shadow:none}
-.btn-dl{padding-block:.7rem;line-height:1.2}
+.btn-dl{padding-block:.7rem;line-height:1.2;min-width:14rem}
 .btn-dl small{display:block;font-size:.7rem;font-weight:500;letter-spacing:.4px;opacity:.85;margin-top:.15rem}
+@media (max-width:560px){ .btn-dl{min-width:0;width:100%} .download .cta-haupt{width:100%} }
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero{position:relative;padding:11rem 0 6rem;overflow:hidden}
@@ -359,12 +360,6 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   background:rgba(255,255,255,.07);overflow:hidden;z-index:1}
 .gap-bar i{display:block;height:100%;border-radius:2px;background:#ffcc00;transition:width .3s linear}
 
-/* Community-Abschnitt mittig */
-.mitte{text-align:center}
-.mitte .kicker,.mitte h2{text-align:center}
-.mitte-text{margin-inline:auto}
-.mitte-cta{justify-content:center}
-
 /* Layout-Abschnitt */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .checks{list-style:none;margin-top:2rem;display:grid;gap:1rem}
@@ -459,12 +454,20 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .help-more a{color:var(--accent);text-decoration:none;font-weight:600}
 .help-more a:hover{text-decoration:underline}
 
-/* Download */
-.download{padding:6.5rem 0;text-align:center;position:relative;overflow:hidden;
+/* ── Abschluss: Community und Download in einem Abschnitt ─────────────────── */
+.download{padding:6.5rem 0 7rem;text-align:center;position:relative;overflow:hidden;
   background:radial-gradient(ellipse 70% 130% at 50% 100%,rgba(225,6,0,.16),transparent 62%),var(--bg)}
 .dl-in{display:grid;justify-items:center;gap:.3rem}
-.dl-logo{filter:drop-shadow(0 0 26px var(--accent-glow));margin-bottom:1rem}
-.download p{color:var(--muted);max-width:32rem}
+.dl-text{color:var(--muted);max-width:38rem;font-size:.98rem}
+.dl-text+.dl-text{margin-top:.7rem}
+/* Zaesur zwischen dem Community-Teil und dem Download darunter */
+.dl-logo{filter:drop-shadow(0 0 26px var(--accent-glow));margin:3.2rem 0 1rem;position:relative}
+.dl-logo::before{content:"";position:absolute;left:50%;top:-1.9rem;transform:translateX(-50%);
+  width:min(28rem,60vw);height:1px;
+  background:linear-gradient(90deg,transparent,var(--line) 30%,var(--line) 70%,transparent)}
+.dl-titel{margin-bottom:.7rem}
+.download .cta-haupt{margin-top:2rem;gap:1rem}
+.download .cta-haupt+.dl-version{margin-top:1.4rem}
 
 /* Fuß */
 .foot{border-top:1px solid var(--line);padding:2.5rem 0;background:#0a0a0e}

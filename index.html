@@ -21,7 +21,7 @@
 <meta property="og:image" content="assets/img/icon.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="assets/css/site.css?v=12">
+<link rel="stylesheet" href="assets/css/site.css?v=13">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -194,40 +194,32 @@ document.documentElement.className += " js";
   </div>
 </section>
 
-<!-- ══════════════ COMMUNITY ══════════════ -->
-<section class="sec alt" id="community">
-  <div class="wrap narrow mitte">
+<!-- ══════════════ ABSCHLUSS: COMMUNITY + DOWNLOAD ══════════════ -->
+<section class="download" id="download">
+  <div class="wrap dl-in">
     <p class="kicker">Kostenlos &amp; offen</p>
     <h2>Gebaut mit denen, die es benutzen.</h2>
-    <p class="sub mitte-text">KERS Subsystems kostet nichts, kennt keine Konten und keine Werbung.
+    <p class="dl-text">KERS Subsystems kostet nichts, kennt keine Konten und keine Werbung.
       Der Quellcode liegt öffentlich einsehbar auf GitHub — was das Overlay rechnet, kann jeder
       nachlesen.</p>
-    <p class="sub mitte-text">Der Weg dahin läuft über Discord: Wünsche, Fehlerberichte und Zurufe aus
+    <p class="dl-text">Der Weg dahin läuft über Discord: Wünsche, Fehlerberichte und Zurufe aus
       laufenden Rennen landen dort und werden zu dem, was in der nächsten Version steckt. Vieles auf
       dieser Seite steht genau deshalb drin.</p>
 
-    <div class="cta mitte-cta cta-haupt">
-      <a class="btn btn-lg" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord beitreten</a>
-    </div>
-    <div class="cta mitte-cta">
-      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/issues" target="_blank" rel="noopener">Fehler melden</a>
-      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quellcode ansehen</a>
-    </div>
-  </div>
-</section>
-<!-- ══════════════ DOWNLOAD ══════════════ -->
-<section class="download" id="download">
-  <div class="wrap dl-in">
     <img src="assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
-    <h2>Hol es dir.</h2>
-    <p>Eine Datei, kein Installer, keine Kosten. Läuft neben dem Spiel und aktualisiert sich selbst.</p>
+    <h2 class="dl-titel">Hol es dir.</h2>
+    <p class="dl-text">Eine Datei, kein Installer, keine Kosten. Läuft neben dem Spiel und
+      aktualisiert sich selbst.</p>
+
     <div class="cta cta-haupt">
       <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
+      <a class="btn btn-lg btn-dl btn-ghost" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord beitreten<small>Fragen, Wünsche, Hilfe</small></a>
     </div>
     <p class="dl-version">Aktuelle Version <b>v<span data-gen="version">0.2.6</span></b></p>
     <div class="cta">
-      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Alle Releases</a>
-      <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quellcode auf GitHub</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Alle Releases</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/KERSEX/KERS_Overlay/issues" target="_blank" rel="noopener">Fehler melden</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Quellcode auf GitHub</a>
     </div>
   </div>
 </section>
@@ -247,6 +239,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=12"></script>
+<script src="assets/js/site.js?v=13"></script>
 </body>
 </html>
