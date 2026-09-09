@@ -38,7 +38,9 @@ jobs:
           path: .overlay
           fetch-depth: 1
 
-      - name: Bausteinliste und Fassung nachziehen
+      - name: Bausteinliste und Version nachziehen
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python3 tools/bausteine.py --overlay .overlay
 
       - name: Seiten aus dem Rahmen bauen

@@ -107,6 +107,14 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .lead strong{color:#fff;font-weight:600}
 
 .cta{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2rem}
+
+/* Drei Merkmale unter den Knoepfen im Kopfbereich */
+.merkmale{list-style:none;display:grid;gap:.45rem;margin-top:1.6rem}
+.merkmale li{position:relative;padding-left:1.5rem;font-size:.88rem;color:var(--muted)}
+.merkmale li::before{content:"";position:absolute;left:0;top:.42rem;width:7px;height:7px;
+  border-radius:2px;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
+.merkmale a{color:var(--accent);text-decoration:none;font-weight:600}
+.merkmale a:hover{text-decoration:underline}
 /* Der Hauptknopf steht allein in seiner Zeile - so sitzt er wirklich mittig
    und nicht nur als mittleres von drei verschieden breiten Elementen. */
 .cta-haupt{justify-content:center;margin-top:2.2rem}

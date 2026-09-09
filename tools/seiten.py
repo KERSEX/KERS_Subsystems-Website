@@ -30,9 +30,9 @@ WURZEL = Path(__file__).resolve().parent.parent
 QUELLEN = WURZEL / "seiten"
 
 # Cache-Kennzeichen an CSS und JS. Hochzaehlen, wenn sich eine der beiden Dateien
-# aendert - sonst behalten Browser die alte Fassung (GitHub Pages laesst sie
+# aendert - sonst behalten Browser die alte Version (GitHub Pages laesst sie
 # zwischenspeichern).
-VERSION = "8"
+VERSION = "9"
 
 
 def kopfdaten(text: str) -> tuple[str, str, str]:

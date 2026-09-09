@@ -3,7 +3,8 @@
 Bausteinliste und Versionsangabe aus dem Hauptprojekt in die Seite schreiben.
 
 Namen und Reihenfolge der Bausteine stehen in LAYOUT_TEILE in `main.py` des
-Overlays, die laufende Fassung in `static/version.txt`. Beides hier abzuschreiben
+Overlays; die Version kommt aus dem neuesten GitHub-Release, weil der
+Download-Knopf genau dessen Anhaengsel laedt. Beides hier abzuschreiben
 hiess, es bei jeder Aenderung nachzuziehen - und genau das ist zweimal
 liegengeblieben. Die Beschreibungen bleiben Handarbeit (`bausteine.json`), denn
 Prosa steht nirgends im Quellcode.
@@ -17,8 +18,11 @@ leere Liste auszuliefern.
 
 import argparse
 import json
+import os
 import re
 import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 HIER = Path(__file__).resolve().parent.parent
@@ -46,7 +50,48 @@ def lies_bausteine(overlay: Path) -> list[tuple[str, str]]:
     return paare
 
 
-def lies_version(overlay: Path) -> str:
+def _tag_zu_version(tag: str) -> str | None:
+    """Aus 'KERS_SubsystemsV0.2.6' die 0.2.6 holen."""
+    treffer = re.search(r"(\d+\.\d+\.\d+)", tag or "")
+    return treffer.group(1) if treffer else None
+
+
+def _neuester_release(repo: str) -> str | None:
+    """Den Tag des neuesten Releases holen; None, wenn das nicht geht."""
+    ziel = f"https://api.github.com/repos/{repo}/releases/latest"
+    bitte = urllib.request.Request(ziel, headers={
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "KERS-Subsystems-Website",
+    })
+    # In GitHub Actions liegt ein Token bereit; ohne ihn greift das Limit fuer
+    # anonyme Anfragen, was fuer einen Aufruf je Lauf reicht.
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        bitte.add_header("Authorization", f"Bearer {token}")
+    try:
+        with urllib.request.urlopen(bitte, timeout=20) as antwort:
+            return json.load(antwort).get("tag_name")
+    except (urllib.error.URLError, TimeoutError, ValueError, OSError) as fehler:
+        print(f"  ⚠ Release nicht abrufbar ({fehler}) - falle auf version.txt zurueck",
+              file=sys.stderr)
+        return None
+
+
+def lies_version(overlay: Path, repo: str) -> str:
+    """Die Version, die auch wirklich zum Download passt.
+
+    Der Knopf auf der Seite laedt das Anhaengsel des NEUESTEN RELEASES. Die
+    version.txt im Zweig main kann davon abweichen, sobald an der naechsten
+    Version gearbeitet wird - dann stuende auf der Seite eine Version, die es
+    zum Herunterladen noch gar nicht gibt. Deshalb zaehlt der Release; die
+    version.txt bleibt nur der Rueckfall, wenn die Anfrage scheitert.
+    """
+    tag = _neuester_release(repo)
+    if tag:
+        version = _tag_zu_version(tag)
+        if version:
+            return version
+        print(f"  ⚠ Aus dem Tag '{tag}' war keine Version zu lesen", file=sys.stderr)
     return (overlay / "static" / "version.txt").read_text(encoding="utf-8").strip()
 
 
@@ -57,7 +102,7 @@ def baue_karten(teile, texte) -> tuple[str, list[str]]:
         text = texte.get(schluessel)
         if not text:
             fehlen.append(schluessel)
-            text = "Neu in dieser Fassung — die Beschreibung folgt."
+            text = "Neu in dieser Version — die Beschreibung folgt."
         zeilen.append(
             '      <details class="card">\n'
             f'        <summary><h3>{name}</h3></summary>\n'
@@ -88,13 +133,15 @@ def main() -> int:
                    help="Pfad zum ausgecheckten KERS_Overlay")
     p.add_argument("--pruefen", action="store_true",
                    help="nur melden, ob die Seite aktuell waere, nichts schreiben")
+    p.add_argument("--repo", default="KERSEX/KERS_Overlay",
+                   help="woher der neueste Release kommt")
     a = p.parse_args()
 
     if not (a.overlay / "main.py").is_file():
         raise SystemExit(f"Kein Overlay unter {a.overlay}")
 
     teile = lies_bausteine(a.overlay)
-    version = lies_version(a.overlay)
+    version = lies_version(a.overlay, a.repo)
     texte = json.loads((HIER / "bausteine.json").read_text(encoding="utf-8"))
 
     karten, fehlen = baue_karten(teile, texte)
@@ -109,7 +156,7 @@ def main() -> int:
               file=sys.stderr)
 
     # Die Marken und Felder liegen ueber mehrere Quelldateien verteilt: die Liste
-    # in seiten/bausteine.html, die Anzahl auch auf der Startseite, die Fassung
+    # in seiten/bausteine.html, die Anzahl auch auf der Startseite, die Version
     # im Download-Abschnitt. Jede Datei bekommt, was in ihr vorkommt.
     geaendert = []
     for quelle in sorted((HIER / "seiten").glob("*.html")):
@@ -126,12 +173,12 @@ def main() -> int:
                 quelle.write_text(neu, encoding="utf-8")
 
     if not geaendert:
-        print(f"Quellen sind aktuell: {anzahl} Bausteine, Fassung {version}")
+        print(f"Quellen sind aktuell: {anzahl} Bausteine, Version {version}")
         return 0
     if a.pruefen:
-        print(f"Zu aendern waere: {', '.join(geaendert)} ({anzahl} Bausteine, Fassung {version})")
+        print(f"Zu aendern waere: {', '.join(geaendert)} ({anzahl} Bausteine, Version {version})")
         return 1
-    print(f"Aktualisiert: {', '.join(geaendert)} ({anzahl} Bausteine, Fassung {version})")
+    print(f"Aktualisiert: {', '.join(geaendert)} ({anzahl} Bausteine, Version {version})")
     return 0
 
 
