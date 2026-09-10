@@ -463,7 +463,7 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 
 /* Die vier harten Fakten als Reihe - kurz gesagt, was der Absatz erklaert */
 .fakten{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;
-  margin:1.5rem 0 1.8rem}
+  margin:1.8rem 0 0}
 .fakten li{font-size:.78rem;font-weight:600;letter-spacing:.6px;color:#dcdce6;
   border:1px solid var(--line);border-radius:999px;padding:.4rem .95rem;
   background:rgba(255,255,255,.03);transition:border-color .25s ease,background .25s ease}
@@ -472,14 +472,19 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .fakten a:hover{text-decoration:underline}
 /* Der erste Punkt bekommt die Akzentfarbe - er ist die Aussage, um die es geht */
 .fakten li:first-child{border-color:rgba(225,6,0,.4);background:rgba(225,6,0,.1);color:#fff}
-/* Zaesur zwischen dem Community-Teil und dem Download darunter */
-.dl-logo{filter:drop-shadow(0 0 26px var(--accent-glow));margin:2.8rem 0 1rem;position:relative}
-.dl-logo::before{content:"";position:absolute;left:50%;top:-1.9rem;transform:translateX(-50%);
+.dl-logo{filter:drop-shadow(0 0 26px var(--accent-glow));margin-bottom:1rem}
+.dl-titel{margin-bottom:.7rem}
+/* Die Version steht ueber den Knoepfen - sie gehoert zu dem, was man gleich laedt. */
+.dl-version{margin-top:1.1rem}
+.download .cta-haupt{margin-top:1.6rem;gap:1rem}
+
+/* Der Teil zu Lizenz und Discord kommt nach dem Download, abgesetzt durch eine
+   feine Kante statt durch eine Ueberschrift allein. */
+.dl-community{margin-top:4.5rem;padding-top:3.4rem;position:relative;display:grid;justify-items:center}
+.dl-community::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);
   width:min(28rem,60vw);height:1px;
   background:linear-gradient(90deg,transparent,var(--line) 30%,var(--line) 70%,transparent)}
-.dl-titel{margin-bottom:.7rem}
-.download .cta-haupt{margin-top:2rem;gap:1rem}
-.download .cta-haupt+.dl-version{margin-top:1.4rem}
+.dl-community h2{margin-bottom:1.1rem}
 
 /* Fuß */
 .foot{border-top:1px solid var(--line);padding:2.5rem 0;background:#0a0a0e}
