@@ -461,6 +461,10 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .callout{margin-top:1.8rem;padding:1.3rem 1.5rem;border-radius:var(--radius);font-size:.93rem;color:var(--muted);
   background:linear-gradient(90deg,rgba(225,6,0,.1),rgba(225,6,0,.02));border:1px solid rgba(225,6,0,.28)}
 .callout b{color:#fff}
+/* Ausblick: spannt im Split ueber beide Spalten, Punkt signalisiert "laeuft noch" */
+.callout.ausblick{grid-column:1/-1;margin-top:0;position:relative;padding-left:2.7rem}
+.callout.ausblick::before{content:"";position:absolute;left:1.3rem;top:1.72rem;width:9px;height:9px;
+  border-radius:50%;background:var(--accent);animation:pulse 2.8s ease-out infinite}
 
 /* Technik */
 .tech{margin-top:3rem;display:grid;gap:2.5rem}
