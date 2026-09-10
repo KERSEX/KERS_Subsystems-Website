@@ -457,6 +457,13 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 /* ── Abschluss: Community und Download in einem Abschnitt ─────────────────── */
 .download{padding:6.5rem 0 7rem;text-align:center;position:relative;overflow:hidden;
   background:radial-gradient(ellipse 70% 130% at 50% 100%,rgba(225,6,0,.16),transparent 62%),var(--bg)}
+/* Derselbe atmende Schein wie im Kopfbereich - der Abschluss soll genauso leben.
+   Er sitzt hinter dem Inhalt (z-index) und liegt ueber dem festen Verlauf oben. */
+.download::after{content:"";position:absolute;left:50%;bottom:-38%;width:1100px;height:1100px;
+  transform:translateX(-50%);pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(225,6,0,.15) 0%,rgba(225,6,0,.05) 38%,transparent 68%)}
+.js .download::after{animation:glut 14s ease-in-out infinite}
+.download>.wrap{position:relative;z-index:1}
 .dl-in{display:grid;justify-items:center;gap:.3rem}
 .dl-text{color:var(--muted);max-width:38rem;font-size:.98rem}
 .dl-text+.dl-text{margin-top:.7rem}
