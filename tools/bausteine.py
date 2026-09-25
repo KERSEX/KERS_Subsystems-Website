@@ -2,9 +2,12 @@
 """
 Bausteinliste und Versionsangabe aus dem Hauptprojekt in die Seite schreiben.
 
-Namen und Reihenfolge der Bausteine stehen in LAYOUT_TEILE in `main.py` des
-Overlays; die Version kommt aus dem neuesten GitHub-Release, weil der
-Download-Knopf genau dessen Anhaengsel laedt. Beides hier abzuschreiben
+Namen und Reihenfolge der Bausteine stehen in LAYOUT_TEILE des Overlays - seit
+0.3.0 in `src/server/constants.cpp`, davor in `main.py`. Version und Dateigroesse
+kommen aus dem neuesten GitHub-Release, weil der Download-Knopf genau dessen
+Anhaengsel laedt. Die Version landet ausserdem in `seiten/stand.json`; danach
+stellt tools/seiten.py die Weichen (<!-- AB x.y.z -->) fuer Text, der erst ab
+einer bestimmten Version stimmt. Beides hier abzuschreiben
 hiess, es bei jeder Aenderung nachzuziehen - und genau das ist zweimal
 liegengeblieben. Die Beschreibungen bleiben Handarbeit (`bausteine.json`), denn
 Prosa steht nirgends im Quellcode.
@@ -45,17 +48,35 @@ PLATZHALTER = {
 }
 
 
+# Wo LAYOUT_TEILE steht, in der Reihenfolge, in der gesucht wird. Die C++-Quelle
+# zuerst: ab 0.3.0 bleibt main.py nur als Vorlage im Stand von 0.2.6 liegen und
+# lernt neue Bausteine nicht mehr mit.
+FUNDORTE = (
+    ("src/server/constants.cpp",
+     re.compile(r"^const LayoutTeil LAYOUT_TEILE\[\d*\]\s*=\s*\{(.*?)^\};", re.S | re.M),
+     re.compile(r'\{\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\}')),
+    ("main.py",
+     re.compile(r"^LAYOUT_TEILE = \[(.*?)^\]", re.S | re.M),
+     re.compile(r'\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)')),
+)
+
+
 def lies_bausteine(overlay: Path) -> list[tuple[str, str]]:
-    """LAYOUT_TEILE aus main.py holen - Schluessel und Beschriftung, in Reihenfolge."""
-    quelle = overlay / "main.py"
-    text = quelle.read_text(encoding="utf-8")
-    block = re.search(r"^LAYOUT_TEILE = \[(.*?)^\]", text, re.S | re.M)
-    if not block:
-        raise SystemExit(f"LAYOUT_TEILE nicht gefunden in {quelle}")
-    paare = re.findall(r'\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)', block.group(1))
-    if not paare:
-        raise SystemExit(f"LAYOUT_TEILE ist leer in {quelle}")
-    return paare
+    """LAYOUT_TEILE holen - Schluessel und Beschriftung, in Reihenfolge."""
+    for pfad, block_muster, paar_muster in FUNDORTE:
+        quelle = overlay / pfad
+        if not quelle.is_file():
+            continue
+        block = block_muster.search(quelle.read_text(encoding="utf-8"))
+        if not block:
+            raise SystemExit(f"LAYOUT_TEILE nicht gefunden in {quelle}")
+        paare = paar_muster.findall(block.group(1))
+        if not paare:
+            raise SystemExit(f"LAYOUT_TEILE ist leer in {quelle}")
+        print(f"  Bausteine aus {pfad}")
+        return paare
+    raise SystemExit(f"Kein Overlay unter {overlay} - weder "
+                     + " noch ".join(p for p, _, _ in FUNDORTE) + " gefunden")
 
 
 def _tag_zu_version(tag: str) -> str | None:
@@ -64,8 +85,8 @@ def _tag_zu_version(tag: str) -> str | None:
     return treffer.group(1) if treffer else None
 
 
-def _neuester_release(repo: str) -> str | None:
-    """Den Tag des neuesten Releases holen; None, wenn das nicht geht."""
+def _neuester_release(repo: str) -> dict | None:
+    """Den neuesten Release holen (Tag, Anhaengsel); None, wenn das nicht geht."""
     ziel = f"https://api.github.com/repos/{repo}/releases/latest"
     bitte = urllib.request.Request(ziel, headers={
         "Accept": "application/vnd.github+json",
@@ -78,14 +99,14 @@ def _neuester_release(repo: str) -> str | None:
         bitte.add_header("Authorization", f"Bearer {token}")
     try:
         with urllib.request.urlopen(bitte, timeout=20) as antwort:
-            return json.load(antwort).get("tag_name")
+            return json.load(antwort)
     except (urllib.error.URLError, TimeoutError, ValueError, OSError) as fehler:
-        print(f"  ⚠ Release nicht abrufbar ({fehler}) - falle auf version.txt zurueck",
-              file=sys.stderr)
+        print(f"  ⚠ Release nicht abrufbar ({fehler}) - Version aus version.txt, "
+              f"Groesse bleibt, wie sie ist", file=sys.stderr)
         return None
 
 
-def lies_version(overlay: Path, repo: str) -> str:
+def lies_version(overlay: Path, release: dict | None) -> str:
     """Die Version, die auch wirklich zum Download passt.
 
     Der Knopf auf der Seite laedt das Anhaengsel des NEUESTEN RELEASES. Die
@@ -94,13 +115,33 @@ def lies_version(overlay: Path, repo: str) -> str:
     zum Herunterladen noch gar nicht gibt. Deshalb zaehlt der Release; die
     version.txt bleibt nur der Rueckfall, wenn die Anfrage scheitert.
     """
-    tag = _neuester_release(repo)
+    tag = (release or {}).get("tag_name")
     if tag:
         version = _tag_zu_version(tag)
         if version:
             return version
         print(f"  ⚠ Aus dem Tag '{tag}' war keine Version zu lesen", file=sys.stderr)
     return (overlay / "static" / "version.txt").read_text(encoding="utf-8").strip()
+
+
+# So heisst die Datei im Release - der Download-Knopf und der Updater im
+# Programm suchen genau diesen Namen.
+ANHAENGSEL = "KERS_Subsystems.exe"
+
+
+def lies_groesse(release: dict | None) -> str | None:
+    """Groesse der EXE im neuesten Release in MB, oder None.
+
+    Gerechnet wie im Programm selbst und im Explorer: 1 MB = 1024 x 1024 Byte.
+    So steht auf der Seite dieselbe Zahl wie auf dem Update-Knopf.
+    """
+    for anhang in (release or {}).get("assets", []):
+        if anhang.get("name") == ANHAENGSEL and anhang.get("size"):
+            return str(round(anhang["size"] / (1024 * 1024)))
+    if release:
+        print(f"  ⚠ {ANHAENGSEL} fehlt im Release - Groesse bleibt, wie sie ist",
+              file=sys.stderr)
+    return None
 
 
 def baue_karten(teile, texte, sprache) -> tuple[str, list[str]]:
@@ -145,11 +186,10 @@ def main() -> int:
                    help="woher der neueste Release kommt")
     a = p.parse_args()
 
-    if not (a.overlay / "main.py").is_file():
-        raise SystemExit(f"Kein Overlay unter {a.overlay}")
-
     teile = lies_bausteine(a.overlay)
-    version = lies_version(a.overlay, a.repo)
+    release = _neuester_release(a.repo)
+    version = lies_version(a.overlay, release)
+    groesse = lies_groesse(release)
     alle_texte = json.loads((HIER / "bausteine.json").read_text(encoding="utf-8"))
     anzahl = len(teile)
 
@@ -178,14 +218,25 @@ def main() -> int:
             neu = alt
             if "<!-- BAUSTEINE:START -->" in neu:
                 neu = ersetze_zwischen(neu, "BAUSTEINE", karten)
-            for feld, wert in (("anzahl", str(anzahl)), ("anzahl-wort", wort),
-                               ("version", version)):
+            felder = [("anzahl", str(anzahl)), ("anzahl-wort", wort), ("version", version)]
+            if groesse:
+                felder.append(("groesse", groesse))
+            for feld, wert in felder:
                 if f'data-gen="{feld}"' in neu:
                     neu = ersetze_feld(neu, feld, wert)
             if neu != alt:
                 geaendert.append(f"{sprache}/{quelle.name}")
                 if not a.pruefen:
                     quelle.write_text(neu, encoding="utf-8")
+
+    # Der Stand fuer die Weichen in tools/seiten.py.
+    stand_datei = HIER / "seiten" / "stand.json"
+    stand_neu = json.dumps({"version": version}, indent=2) + "\n"
+    stand_alt = stand_datei.read_text(encoding="utf-8") if stand_datei.is_file() else ""
+    if stand_neu != stand_alt:
+        geaendert.append("stand.json")
+        if not a.pruefen:
+            stand_datei.write_text(stand_neu, encoding="utf-8")
 
     if not geaendert:
         print(f"Quellen sind aktuell: {anzahl} Bausteine, Version {version}")

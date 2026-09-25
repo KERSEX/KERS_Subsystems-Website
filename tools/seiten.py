@@ -21,9 +21,23 @@ Platzhalter im Rahmen:
     {{V}}                                   Cache-Kennzeichen (VERSION unten)
     {{WURZEL}}                              "" oder "../", je nach Ebene
     {{ANDERE_SEITE}}                        dieselbe Seite in der anderen Sprache
-    {{ALT:de}} {{ALT:en}}                   fuer die hreflang-Angaben
+    {{ALT:de}} {{ALT:en}}                   fuer die hreflang-Angaben (absolut)
+    {{URL}} {{BASIS}}                       Adresse dieser Seite / der Seite (absolut)
     {{T:pfad.zum.text}}                     Text aus seiten/texte.json
     {{AKTIV:name}}                          aria-current auf der eigenen Seite
+
+Text, der erst ab einer bestimmten Version des Overlays stimmt, steht in einer
+Weiche - in Inhaltsdateien wie im Rahmen, auch mitten im Satz:
+
+    <!-- AB 0.3.0 -->so ist es ab 0.3.0<!-- SONST -->so ist es bisher<!-- ENDE -->
+
+Der SONST-Teil darf fehlen. Welche Version gilt, steht in seiten/stand.json -
+dort traegt tools/bausteine.py die des neuesten Releases ein. So steht Text fuer
+die naechste Version schon vorher bereit und geht mit dem Release von selbst
+live, ohne dass die Seite bis dahin verspricht, was der Download noch nicht
+kann. Weichen lassen sich nicht verschachteln.
+
+    python3 tools/seiten.py --stand 0.3.0   # Vorschau, als waere 0.3.0 draussen
 """
 
 import argparse
@@ -38,11 +52,74 @@ QUELLEN = WURZEL / "seiten"
 # Cache-Kennzeichen an CSS und JS. Hochzaehlen, wenn sich eine der beiden Dateien
 # aendert - sonst behalten Browser die alte Version (GitHub Pages laesst sie
 # zwischenspeichern).
-VERSION = "20"
+VERSION = "21"
 
 # Deutsch liegt oben, damit die Adresse ohne Sprachkuerzel auskommt; Englisch
 # darunter. Die Reihenfolge bestimmt auch, was x-default bekommt.
 SPRACHEN = {"de": "", "en": "en/"}
+
+# Wo die Seite liegt. Vorschaubild, hreflang und canonical brauchen volle
+# Adressen - Discord, WhatsApp und Suchmaschinen werten relative Pfade dort nicht.
+BASIS = "https://kersex.github.io/KERS_Subsystems-Website/"
+
+
+def adresse(ordner: str, name: str) -> str:
+    """Volle Adresse einer Seite; die Startseite ohne index.html."""
+    return BASIS + ordner + ("" if name == "index" else f"{name}.html")
+
+WEICHE = re.compile(
+    r"(?P<vor>^[ \t]*)?<!--\s*AB\s+(?P<ab>\d+(?:\.\d+)*)\s*-->(?P<neu>.*?)"
+    r"(?:<!--\s*SONST\s*-->(?P<bisher>.*?))?<!--\s*ENDE\s*-->(?P<nach>[ \t]*\n)?",
+    re.S | re.M)
+WEICHEN_REST = re.compile(r"<!--\s*(?:AB\s+[\d.]+|SONST|ENDE)\s*-->")
+
+
+def als_zahlen(version: str) -> tuple[int, ...]:
+    return tuple(int(t) for t in version.split("."))
+
+
+def stand_lesen() -> str:
+    """Die Version des neuesten Releases, wie tools/bausteine.py sie eingetragen hat."""
+    datei = QUELLEN / "stand.json"
+    if not datei.is_file():
+        raise SystemExit("seiten/stand.json fehlt - erst tools/bausteine.py laufen lassen")
+    version = json.loads(datei.read_text(encoding="utf-8")).get("version", "")
+    if not re.fullmatch(r"\d+(?:\.\d+)*", version):
+        raise SystemExit(f"seiten/stand.json: keine brauchbare Version ({version!r})")
+    return version
+
+
+def weichen_stellen(text: str, stand: str, ort: str, erfuellt: set) -> str:
+    """Jede Weiche auf den Zweig stellen, der zur Version passt."""
+    jetzt = als_zahlen(stand)
+
+    def stelle(m: re.Match) -> str:
+        ab, neu, bisher = m.group("ab"), m.group("neu"), m.group("bisher") or ""
+        if WEICHEN_REST.search(neu) or WEICHEN_REST.search(bisher):
+            raise SystemExit(f"{ort}: Weiche 'AB {ab}' enthaelt eine weitere - "
+                             "Weichen lassen sich nicht verschachteln")
+        if jetzt >= als_zahlen(ab):
+            erfuellt.add((ort, ab))
+            zweig = neu
+        else:
+            zweig = bisher
+
+        vor, nach = m.group("vor"), m.group("nach")
+        if vor is None or nach is None:                 # mitten in einer Zeile
+            return (vor or "") + zweig + (nach or "")
+        # Die Weiche nimmt ganze Zeilen ein - dann auch ganze Zeilen einsetzen,
+        # sonst bleiben leere, eingerueckte Zeilen im fertigen HTML zurueck.
+        if not zweig.strip():
+            return ""
+        if zweig.startswith("\n"):                     # Marken auf eigenen Zeilen
+            return zweig[1:].rstrip(" \t")
+        return vor + zweig.strip() + "\n"              # alles auf einer Zeile
+
+    text = WEICHE.sub(stelle, text)
+    rest = WEICHEN_REST.search(text)
+    if rest:
+        raise SystemExit(f"{ort}: '{rest.group(0)}' ohne Gegenstueck")
+    return text
 
 
 def kopfdaten(text: str) -> tuple[str, str, str]:
@@ -64,7 +141,10 @@ def hole(texte: dict, pfad: str) -> str:
     return str(wert)
 
 
-def baue(rahmen: str, sprache: str, name: str, inhalt: str, texte: dict) -> str:
+def baue(rahmen: str, sprache: str, name: str, inhalt: str, texte: dict,
+         stand: str, erfuellt: set) -> str:
+    rahmen = weichen_stellen(rahmen, stand, "rahmen.html", erfuellt)
+    inhalt = weichen_stellen(inhalt, stand, f"{sprache}/{name}.html", erfuellt)
     titel, beschreibung, rumpf = kopfdaten(inhalt)
     unterordner = SPRACHEN[sprache]
     andere = texte[sprache]["andere"]
@@ -77,13 +157,13 @@ def baue(rahmen: str, sprache: str, name: str, inhalt: str, texte: dict) -> str:
     seite = rahmen
     for marke, wert in (("{{TITEL}}", titel), ("{{BESCHREIBUNG}}", beschreibung),
                         ("{{INHALT}}", rumpf), ("{{V}}", VERSION),
-                        ("{{WURZEL}}", hoch), ("{{ANDERE_SEITE}}", andere_seite)):
+                        ("{{WURZEL}}", hoch), ("{{ANDERE_SEITE}}", andere_seite),
+                        ("{{URL}}", adresse(unterordner, name)), ("{{BASIS}}", BASIS)):
         seite = seite.replace(marke, wert)
 
-    # hreflang braucht Adressen, die von dieser Seite aus stimmen.
+    # hreflang verlangt volle Adressen.
     for kuerzel, ordner in SPRACHEN.items():
-        ziel = (f"{hoch}{ordner}{name}.html").replace("//", "/")
-        seite = seite.replace(f"{{{{ALT:{kuerzel}}}}}", ziel)
+        seite = seite.replace(f"{{{{ALT:{kuerzel}}}}}", adresse(ordner, name))
 
     seite = re.sub(r"\{\{T:([a-z_.]+)\}\}", lambda m: hole(texte[sprache], m.group(1)), seite)
     seite = re.sub(r"\{\{AKTIV:([a-z]+)\}\}",
@@ -99,7 +179,14 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--pruefen", action="store_true",
                    help="nur melden, ob eine Seite abweicht, nichts schreiben")
+    p.add_argument("--stand", metavar="VERSION",
+                   help="so bauen, als waere diese Version die neueste (Vorschau); "
+                        "ohne Angabe gilt seiten/stand.json")
     a = p.parse_args()
+    stand = a.stand or stand_lesen()
+    if not re.fullmatch(r"\d+(?:\.\d+)*", stand):
+        raise SystemExit(f"--stand: keine Version ({stand!r})")
+    erfuellt: set = set()
 
     rahmen = (QUELLEN / "rahmen.html").read_text(encoding="utf-8")
     texte = json.loads((QUELLEN / "texte.json").read_text(encoding="utf-8"))
@@ -119,7 +206,8 @@ def main() -> int:
         ziel_ordner = WURZEL / ordner if ordner else WURZEL
         ziel_ordner.mkdir(parents=True, exist_ok=True)
         for quelle in sorted((QUELLEN / sprache).glob("*.html")):
-            neu = baue(rahmen, sprache, quelle.stem, quelle.read_text(encoding="utf-8"), texte)
+            neu = baue(rahmen, sprache, quelle.stem, quelle.read_text(encoding="utf-8"), texte,
+                       stand, erfuellt)
             ziel = ziel_ordner / f"{quelle.stem}.html"
             alt = ziel.read_text(encoding="utf-8") if ziel.is_file() else None
             if alt == neu:
@@ -128,14 +216,22 @@ def main() -> int:
             if not a.pruefen:
                 ziel.write_text(neu, encoding="utf-8")
 
+    # Ist eine Weiche erfuellt, wird ihr SONST-Teil nie wieder gebraucht - ein
+    # Hinweis, damit alte Zweige nicht ewig im Quelltext mitlaufen.
+    for ab in sorted({ab for _, ab in erfuellt}, key=als_zahlen):
+        orte = sorted({o for o, v in erfuellt if v == ab and o != "rahmen.html"}
+                      | ({"rahmen.html"} if ("rahmen.html", ab) in erfuellt else set()))
+        print(f"  Hinweis: Weichen 'AB {ab}' greifen (Stand {stand}) - die SONST-Teile "
+              f"koennen raus: {', '.join(orte)}")
+
     gesamt = sum(len(s) for s in namen.values())
     if not geaendert:
-        print(f"{gesamt} Seiten sind aktuell (Kennzeichen v={VERSION})")
+        print(f"{gesamt} Seiten sind aktuell (Stand {stand}, Kennzeichen v={VERSION})")
         return 0
     if a.pruefen:
         print("Zu bauen: " + ", ".join(geaendert))
         return 1
-    print(f"{len(geaendert)} von {gesamt} Seiten gebaut: " + ", ".join(geaendert))
+    print(f"{len(geaendert)} von {gesamt} Seiten gebaut (Stand {stand}): " + ", ".join(geaendert))
     return 0
 
 

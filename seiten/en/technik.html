@@ -1,5 +1,5 @@
 <!-- titel: Technical &amp; help — KERS Subsystems -->
-<!-- beschreibung: How the overlay is built — ports, renderer, render rate — and what to do when something goes wrong. -->
+<!-- AB 0.3.0 --><!-- beschreibung: How the overlay is built — one program in C++, ports, render rate — and what to do when something goes wrong. --><!-- SONST --><!-- beschreibung: How the overlay is built — ports, renderer, render rate — and what to do when something goes wrong. --><!-- ENDE -->
 
 <section class="seitenkopf">
   <div class="wrap">
@@ -16,21 +16,37 @@
       <div class="tech-flow">
         <div class="node"><b>F1 26</b><span>UDP · port 20777</span></div>
         <div class="arrow" aria-hidden="true"></div>
+        <!-- AB 0.3.0 -->
+        <div class="node"><b>KERS_Subsystems.exe</b><span>server and HUD in one process · port 5100</span></div>
+        <!-- SONST -->
         <div class="node"><b>Parser + Flask</b><span>main.py · port 5100</span></div>
+        <!-- ENDE -->
         <div class="arrow" aria-hidden="true"></div>
         <div class="node split-node">
           <div><b>HUD window</b><span>transparent, always on top</span></div>
           <div><b>OBS window</b><span>opaque, canvas size</span></div>
+          <div><b>Control &amp; settings</b><span>in the browser, from your phone too</span></div>
         </div>
       </div>
 
       <dl class="specs">
         <div><dt>Game</dt><dd>F1 26, UDP format “2026”. Older titles send a different format and are not read.</dd></div>
         <div><dt>Ports</dt><dd><code>5100</code> web interface · <code>20777</code> telemetry</dd></div>
+        <!-- AB 0.3.0 -->
+        <div><dt>Program</dt><dd>One EXE of about <span data-gen="groesse">55</span>&nbsp;MB — C++20 and Qt&nbsp;6, statically linked. No Python, no Chromium, no DLLs alongside. Server and HUD run in the same process.</dd></div>
+        <div><dt>Rendering</dt><dd>The QML scene, straight from the EXE. The renderer choice from 0.2.x is gone.</dd></div>
+        <!-- SONST -->
         <div><dt>Renderer</dt><dd>The QML scene. The old HTML pages sit alongside as a fallback, but the OBS switches only apply to QML.</dd></div>
+        <!-- ENDE -->
         <div><dt>Render rate</dt><dd>10 to 120&nbsp;Hz. The game sends at most 60 packets/s; above that only the smooth counters run more fluidly.</dd></div>
+        <!-- AB 0.3.0 -->
+        <div><dt>Source</dt><dd>C++20 with Qt 6.11. <code>packaging\build.bat</code> builds the EXE; eight test suites cover everything from the parser to the updater. Checked against the old Python version over roughly 20,000 packets each from a race and a qualifying session — no deviation.</dd></div>
+        <div><dt>Your data</dt><dd>Everything personal lives in <code>data\</code> next to the EXE — settings, championship standings and window position from 0.2.x carry over unchanged. The EXE itself contains none.</dd></div>
+        <div><dt>Licences</dt><dd>The project's own source is MIT. The EXE contains Qt&nbsp;6 statically linked (LGPL-3.0); since everything is open, it can be rebuilt against another Qt version.</dd></div>
+        <!-- SONST -->
         <div><dt>Source</dt><dd>Python 3.13, Flask and PySide6. <code>run.bat</code> creates the venv and starts the server, <code>start_hud.bat</code> the desktop HUD.</dd></div>
         <div><dt>Your data</dt><dd>Everything personal lives in <code>data\</code> next to the EXE. The EXE itself contains none.</dd></div>
+        <!-- ENDE -->
       </dl>
     </div>
   </div>
@@ -68,12 +84,33 @@
         <p>It is locked by default — which is what lets clicks through to the game. To move it,
            unlock it first on the control panel or via the tray icon.</p>
       </details>
+      <!-- AB 0.3.0 -->
+      <details>
+        <summary>The control panel says “port in use”.</summary>
+        <p>Something is already running on 5100 or 20777 — usually an old 0.2.x or a second
+           KERS. The server takes the UDP port for itself, so two programs never split the game's
+           packets between them. Close the other program, then press <b>Start Server</b>.</p>
+      </details>
+      <details>
+        <summary>My phone can't reach the control page.</summary>
+        <p>On the first start the Windows firewall asks whether the program may be reached on the
+           network. If that was declined, allow <code>KERS_Subsystems.exe</code> for
+           <em>private networks</em> in the firewall settings. On the PC itself it works without.</p>
+      </details>
+      <details>
+        <summary>Where do I see what the program reports?</summary>
+        <p>On the control panel under <b>Log</b> — what server and HUD report, i.e. what used to be in
+           the server's console window. The same lines go to <code>data\kers.log</code>; the file is
+           also what helps on Discord.</p>
+      </details>
+      <!-- SONST -->
       <details>
         <summary>The overlay looks different than expected.</summary>
         <p>When starting from source the fonts have to be generated once:
            <code>python tools\woff2_to_ttf.py</code>. Qt cannot read woff2 files and otherwise falls
            back to the system font.</p>
       </details>
+      <!-- ENDE -->
     </div>
 
     <p class="help-more">

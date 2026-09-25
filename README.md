@@ -80,19 +80,23 @@ Damit das greift, muss unter **Settings → Pages → Source** einmalig *GitHub 
 ausgewählt sein; der Workflow kann das nicht selbst nachholen. Fehlt es, bricht der Lauf
 mit *„Get Pages site failed: Not Found"* ab.
 
-## Bausteinliste und Fassung
+## Bausteinliste, Version und Größe
 
-Beides kommt aus dem Hauptprojekt, damit es nicht still veraltet:
+Das kommt aus dem Hauptprojekt, damit es nicht still veraltet:
 
-* **Namen und Reihenfolge** der Bausteine aus `LAYOUT_TEILE` in dessen `main.py`
-* **die laufende Fassung** aus dessen `static/version.txt`
+* **Namen und Reihenfolge** der Bausteine aus `LAYOUT_TEILE` — seit 0.3.0 in
+  `src/server/constants.cpp`, davor in `main.py` (das ab 0.3.0 nur noch als
+  Vorlage im Stand von 0.2.6 liegen bleibt)
+* **die Version** und **die Dateigröße** der EXE aus dem neuesten GitHub-Release —
+  der Download-Knopf lädt genau dessen Anhängsel
 
 `tools/bausteine.py` schreibt daraus die Karten zwischen den Marken
-`<!-- BAUSTEINE:START -->` und `<!-- BAUSTEINE:ENDE -->` sowie die Felder
-`data-gen="anzahl"`, `"anzahl-wort"` und `"version"` — in die Quellen unter
-`seiten/`, aus denen `tools/seiten.py` danach die Seiten baut. Der Pages-Workflow
-ruft beides bei jedem Deploy auf und zusätzlich einmal täglich — Änderungen am
-Overlay landen also auch ohne Push hier.
+`<!-- BAUSTEINE:START -->` und `<!-- BAUSTEINE:ENDE -->`, die Felder
+`data-gen="anzahl"`, `"anzahl-wort"`, `"version"` und `"groesse"` sowie
+`seiten/stand.json` — in die Quellen unter `seiten/`, aus denen `tools/seiten.py`
+danach die Seiten baut. Der Pages-Workflow holt das Overlay dafür im Stand des
+neuesten Releases, nicht des Standardzweigs, und ruft beides bei jedem Deploy auf
+und zusätzlich einmal täglich.
 
 Von Hand, in dieser Reihenfolge:
 
@@ -102,15 +106,45 @@ python3 tools/bausteine.py --overlay /tmp/overlay
 python3 tools/seiten.py
 ```
 
-Die Version kommt dabei aus dem neuesten GitHub-Release (der Download-Knopf lädt
-genau dessen Anhängsel); scheitert die Anfrage, fällt das Skript auf
-`static/version.txt` zurück und sagt es auf stderr.
+Scheitert die Anfrage an GitHub, fällt das Skript für die Version auf
+`static/version.txt` zurück, lässt die Größe stehen, wie sie ist, und sagt es auf
+stderr. Die Größe rechnet es wie das Programm selbst und der Explorer
+(1 MB = 1024 × 1024 Byte), damit auf der Seite dieselbe Zahl steht wie auf dem
+Update-Knopf.
 
 Die **Beschreibungen** stehen in `bausteine.json`, je Sprache und mit dem
 Schlüssel aus `LAYOUT_TEILE`. Sie sind Prosa und können nicht aus dem Quelltext kommen — ein
 neuer Baustein bekommt deshalb zunächst einen Platzhalter, und das Skript meldet
 ihn auf stderr. Ein Schlüssel, den es im Overlay nicht mehr gibt, wird ebenfalls
 gemeldet.
+
+## Text für die nächste Version vorab
+
+Was erst ab einer bestimmten Version stimmt, steht in einer Weiche — als ganze
+Zeilen oder mitten im Satz, in Inhaltsdateien wie im Rahmen:
+
+```html
+<!-- AB 0.3.0 -->so ist es ab 0.3.0<!-- SONST -->so ist es bisher<!-- ENDE -->
+```
+
+Der `SONST`-Teil darf fehlen; verschachteln geht nicht. `tools/seiten.py` stellt
+jede Weiche nach der Version in `seiten/stand.json`. So kann der Text für die
+nächste Version schon auf `main` liegen, ohne dass die Seite etwas verspricht,
+was der Download noch nicht kann — mit dem Release springt sie beim nächsten
+Tageslauf von selbst um, sofort über *Actions → Deploy to GitHub Pages → Run
+workflow*. Eine **Vorabversion** (Pre-release) zählt dabei nicht: GitHub nennt
+sie nicht „latest", also bleiben Seite und Download-Knopf auf dem letzten
+richtigen Release.
+
+Vorschau, als wäre die Version schon draußen (danach normal neu bauen):
+
+```bash
+python3 tools/seiten.py --stand 0.3.0
+python3 tools/seiten.py
+```
+
+Ist eine Weiche erfüllt, meldet `tools/seiten.py` das bei jedem Lauf — dann
+können die `SONST`-Teile raus.
 
 ## Sonst noch pflegen
 

@@ -23,12 +23,12 @@
       </div>
       <ul class="merkmale">
         <li>Free, no account</li>
-        <li>Lightweight — runs alongside without taking performance from the game</li>
+        <!-- AB 0.3.0 --><li>Lightweight — native C++, a single file of about <span data-gen="groesse">55</span>&nbsp;MB, no browser running in the background</li><!-- SONST --><li>Lightweight — runs alongside without taking performance from the game</li><!-- ENDE -->
         <li>Direct support from the developer via <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a></li>
       </ul>
       <ul class="hero-facts">
         <li><strong><span data-gen="anzahl">13</span></strong><span>modules, each switchable</span></li>
-        <li><strong>0</strong><span>installation — one EXE</span></li>
+        <!-- AB 0.3.0 --><li><strong><span data-gen="groesse">55</span>&nbsp;MB</strong><span>one EXE, no installation</span></li><!-- SONST --><li><strong>0</strong><span>installation — one EXE</span></li><!-- ENDE -->
         <li><strong>10–120&nbsp;Hz</strong><span>overlay render rate</span></li>
       </ul>
     </div>
@@ -72,6 +72,71 @@
   </div>
 </section>
 
+<!-- ══════════════ IM BILD ══════════════ -->
+<section class="sec" id="bilder">
+  <div class="wrap">
+    <p class="kicker">On screen</p>
+    <h2>This is what it looks like.</h2>
+    <p class="sub">Captured from the overlay itself — in its built-in demo race, so with made-up data rather than a recording from the game.</p>
+
+    <div class="galerie">
+      <nav class="galerie-reiter" aria-label="Screenshots">
+        <a href="#bild-rennen" aria-current="true">Race</a>
+        <a href="#bild-quali">Qualifying</a>
+        <a href="#bild-wm-stand">Standings</a>
+        <a href="#bild-gap-verlauf">Gap chart</a>
+        <a href="#bild-regie">Control page</a>
+      </nav>
+      <div class="galerie-streifen" tabindex="0">
+        <figure class="galerie-bild" id="bild-rennen">
+          <a href="../assets/img/bilder/rennen-1600.webp" data-lupe>
+            <img src="../assets/img/bilder/rennen-800.webp"
+                 srcset="../assets/img/bilder/rennen-800.webp 800w, ../assets/img/bilder/rennen-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="The HUD in a race: timing tower on the left, track map top right, two battle boxes at the bottom" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>In a race.</b> Timing tower with penalty pills, lapped cars and retirements, plus the track map and two battle boxes.</figcaption>
+        </figure>
+        <figure class="galerie-bild" id="bild-quali">
+          <a href="../assets/img/bilder/quali-1600.webp" data-lupe>
+            <img src="../assets/img/bilder/quali-800.webp"
+                 srcset="../assets/img/bilder/quali-800.webp 800w, ../assets/img/bilder/quali-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="The HUD in qualifying with elimination zone, onboard, hot lap boxes and danger zone" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>In qualifying.</b> Hot lap and in-lap status, the elimination zone, onboard, hot lap boxes — and who is in the danger zone right now.</figcaption>
+        </figure>
+        <figure class="galerie-bild" id="bild-wm-stand">
+          <a href="../assets/img/bilder/wm-stand-1600.webp" data-lupe>
+            <img src="../assets/img/bilder/wm-stand-800.webp"
+                 srcset="../assets/img/bilder/wm-stand-800.webp 800w, ../assets/img/bilder/wm-stand-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="The HUD with the drivers' championship bottom right, as it would stand after this race" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>Championship.</b> The drivers' standings as they would be if the race ended now.</figcaption>
+        </figure>
+        <figure class="galerie-bild" id="bild-gap-verlauf">
+          <a href="../assets/img/bilder/gap-verlauf-1600.webp" data-lupe>
+            <img src="../assets/img/bilder/gap-verlauf-800.webp"
+                 srcset="../assets/img/bilder/gap-verlauf-800.webp 800w, ../assets/img/bilder/gap-verlauf-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="Chart: every driver's gap to the leader over the whole race" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>Gap chart.</b> Every driver's gap to the leader over the whole race — cut in from the control page.</figcaption>
+        </figure>
+        <figure class="galerie-bild oben" id="bild-regie">
+          <a href="../assets/img/bilder/regie-1600.webp" data-lupe>
+            <img src="../assets/img/bilder/regie-800.webp"
+                 srcset="../assets/img/bilder/regie-800.webp 800w, ../assets/img/bilder/regie-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1100"
+                 alt="The control page in the browser with camera hint, the whole field, battles, pace comparison and race control" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>The control page.</b> Camera hint, the whole field, battles, pace comparison and race control — in the browser, from your phone too.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ══════════════ THEMEN ══════════════ -->
 <section class="sec" id="themen">
   <div class="wrap">
@@ -113,7 +178,7 @@
       </a>
       <a class="thema" href="technik.html">
         <h3>Technical &amp; help</h3>
-        <p>Ports, renderer, render rate — and what to do when nothing arrives or OBS can’t find the window.</p>
+        <p><!-- AB 0.3.0 -->One program in C++, ports, render rate<!-- SONST -->Ports, renderer, render rate<!-- ENDE --> — and what to do when nothing arrives or OBS can’t find the window.</p>
         <span class="thema-mehr">View</span>
       </a>
     </div>
@@ -125,11 +190,11 @@
   <div class="wrap dl-in">
     <img src="../assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
     <h2 class="dl-titel">Go get it.</h2>
-    <p class="dl-text">One file, no installer, no cost. Runs beside the game and updates itself.</p>
+    <p class="dl-text">One file<!-- AB 0.3.0 --> of about <span data-gen="groesse">55</span>&nbsp;MB<!-- ENDE -->, no installer, no cost. Runs beside the game and updates itself.</p>
     <p class="dl-version">Current version <b>v<span data-gen="version">0.2.6</span></b></p>
 
     <div class="cta cta-haupt">
-      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
+      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · <!-- AB 0.3.0 --><span data-gen="groesse">55</span>&nbsp;MB · <!-- ENDE -->Windows</small></a>
       <a class="btn btn-lg btn-dl btn-ghost" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Join Discord<small>Direct support</small></a>
     </div>
     <div class="cta">

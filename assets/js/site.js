@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    KERS Subsystems — Projektseite
-   Drei kleine Dinge: Kopfzeile, Einblenden beim Scrollen, und die beiden
-   Schaustücke (Timing-Tower-Nachbau, Ankerraster).
+   Kopfzeile, Einblenden beim Scrollen, die Galerie mit ihrer Lupe und die
+   Schaustücke (Timing-Tower-Nachbau, Ankerraster, Battle-Box).
    Kein Framework, keine externen Quellen — die Seite lädt komplett aus sich selbst.
    ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
@@ -308,6 +308,89 @@
       }
     }, 1600);
   })();
+
+  /* ── Galerie: Reiter folgen dem Streifen ─────────────────────────────────── */
+  // Ohne Skript sind die Reiter Sprungmarken in einen wischbaren Streifen. Hier
+  // scrollt ein Klick nur den Streifen (nicht die Seite), und wer wischt, sieht
+  // den passenden Reiter hervorgehoben.
+  document.querySelectorAll(".galerie").forEach(function (galerie) {
+    var streifen = galerie.querySelector(".galerie-streifen");
+    var reiter = Array.prototype.slice.call(galerie.querySelectorAll(".galerie-reiter a"));
+    if (!streifen || !reiter.length) return;
+
+    function markiere(nr) {
+      reiter.forEach(function (r, i) {
+        if (i === nr) {
+          r.setAttribute("aria-current", "true");
+          // Den Reiter selbst sichtbar halten, wenn die Leiste schmaler ist als alle zusammen
+          var leiste = r.parentNode;
+          var links = r.offsetLeft - leiste.offsetLeft, rechts = links + r.offsetWidth;
+          if (links < leiste.scrollLeft || rechts > leiste.scrollLeft + leiste.clientWidth)
+            leiste.scrollTo({ left: links - 12, behavior: sanft ? "auto" : "smooth" });
+        } else {
+          r.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    reiter.forEach(function (r, i) {
+      r.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        streifen.scrollTo({ left: i * streifen.clientWidth, behavior: sanft ? "auto" : "smooth" });
+        markiere(i);
+      });
+    });
+
+    var wartet = null;
+    streifen.addEventListener("scroll", function () {
+      if (wartet) cancelAnimationFrame(wartet);
+      wartet = requestAnimationFrame(function () {
+        markiere(Math.round(streifen.scrollLeft / Math.max(1, streifen.clientWidth)));
+      });
+    }, { passive: true });
+
+    // Pfeiltasten, solange der Fokus in der Galerie liegt
+    galerie.addEventListener("keydown", function (ev) {
+      if (ev.key !== "ArrowRight" && ev.key !== "ArrowLeft") return;
+      var jetzt = Math.round(streifen.scrollLeft / Math.max(1, streifen.clientWidth));
+      var ziel = Math.max(0, Math.min(reiter.length - 1, jetzt + (ev.key === "ArrowRight" ? 1 : -1)));
+      if (ziel === jetzt) return;
+      ev.preventDefault();
+      reiter[ziel].click();
+      reiter[ziel].focus();
+    });
+  });
+
+  /* ── Lupe: ein Bild gross ansehen ────────────────────────────────────────── */
+  // Ohne Skript oeffnet der Link das Bild selbst. Mit Skript kommt es in einen
+  // <dialog> ueber die Seite - Esc, Klick daneben oder das Kreuz schliessen ihn.
+  var lupeLinks = document.querySelectorAll("a[data-lupe]");
+  if (lupeLinks.length && typeof HTMLDialogElement === "function") {
+    var lupe = document.createElement("dialog");
+    lupe.className = "lupe";
+    var schliessen = document.documentElement.lang === "de" ? "Schließen" : "Close";
+    lupe.innerHTML = '<button class="lupe-zu" type="button" aria-label="' + schliessen + '">✕</button>' +
+                     '<img alt=""><p></p>';
+    document.body.appendChild(lupe);
+    var lupeBild = lupe.querySelector("img"), lupeText = lupe.querySelector("p");
+
+    lupeLinks.forEach(function (link) {
+      link.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        var bild = link.querySelector("img");
+        var unterschrift = link.parentNode.querySelector("figcaption");
+        lupeBild.src = link.getAttribute("href");
+        lupeBild.alt = bild ? bild.alt : "";
+        lupeText.textContent = unterschrift ? unterschrift.textContent : "";
+        lupeText.hidden = !unterschrift;
+        lupe.showModal();
+      });
+    });
+    lupe.querySelector(".lupe-zu").addEventListener("click", function () { lupe.close(); });
+    // Klick auf den abgedunkelten Rand (den Dialog selbst, nicht das Bild) schliesst
+    lupe.addEventListener("click", function (ev) { if (ev.target === lupe) lupe.close(); });
+    lupe.addEventListener("close", function () { lupeBild.removeAttribute("src"); });
+  }
 
   /* ── Timing-Tower-Nachbau ────────────────────────────────────────────────── */
   var body = document.getElementById("towerBody");

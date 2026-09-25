@@ -23,12 +23,12 @@
       </div>
       <ul class="merkmale">
         <li>Kostenlos, ohne Konto</li>
-        <li>Leichtgewichtig — läuft nebenher, ohne dem Spiel Leistung zu nehmen</li>
+        <!-- AB 0.3.0 --><li>Leichtgewichtig — natives C++, eine Datei mit rund <span data-gen="groesse">55</span>&nbsp;MB, kein Browser im Hintergrund</li><!-- SONST --><li>Leichtgewichtig — läuft nebenher, ohne dem Spiel Leistung zu nehmen</li><!-- ENDE -->
         <li>Direkter Support vom Entwickler über <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a></li>
       </ul>
       <ul class="hero-facts">
         <li><strong><span data-gen="anzahl">13</span></strong><span>Bausteine, einzeln schaltbar</span></li>
-        <li><strong>0</strong><span>Installation — eine EXE</span></li>
+        <!-- AB 0.3.0 --><li><strong><span data-gen="groesse">55</span>&nbsp;MB</strong><span>eine EXE, ohne Installation</span></li><!-- SONST --><li><strong>0</strong><span>Installation — eine EXE</span></li><!-- ENDE -->
         <li><strong>10–120&nbsp;Hz</strong><span>Overlay-Renderrate</span></li>
       </ul>
     </div>
@@ -69,6 +69,71 @@
       <p>Regie und Einstellungen sind die beiden Seiten im Browser. Im selben WLAN steuerst du das
          Overlay vom Handy — bis hin zur <a href="#regie">Kamera im Spiel</a>.</p>
     </article>
+  </div>
+</section>
+<!-- ══════════════ IM BILD ══════════════ -->
+<section class="sec" id="bilder">
+  <div class="wrap">
+    <p class="kicker">Im Bild</p>
+    <h2>So sieht es aus.</h2>
+    <p class="sub">Aufnahmen aus dem Overlay selbst — im eingebauten Demo-Rennen, also mit erfundenen Daten statt einer Aufnahme aus dem Spiel.</p>
+
+    <div class="galerie">
+      <nav class="galerie-reiter" aria-label="Aufnahmen">
+        <a href="#bild-rennen" aria-current="true">Rennen</a>
+        <a href="#bild-quali">Quali</a>
+        <a href="#bild-wm-stand">WM-Stand</a>
+        <a href="#bild-gap-verlauf">Gap-Verlauf</a>
+        <a href="#bild-regie">Regie</a>
+      </nav>
+      <div class="galerie-streifen" tabindex="0">
+        <figure class="galerie-bild" id="bild-rennen">
+          <a href="assets/img/bilder/rennen-1600.webp" data-lupe>
+            <img src="assets/img/bilder/rennen-800.webp"
+                 srcset="assets/img/bilder/rennen-800.webp 800w, assets/img/bilder/rennen-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="Das HUD im Rennen: links der Timing Tower, rechts oben die Trackmap, unten zwei Battle-Boxen" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>Im Rennen.</b> Timing Tower mit Strafen-Pillen, Überrundeten und Ausfällen, dazu die Trackmap und zwei Battle-Boxen.</figcaption>
+        </figure>
+        <figure class="galerie-bild" id="bild-quali">
+          <a href="assets/img/bilder/quali-1600.webp" data-lupe>
+            <img src="assets/img/bilder/quali-800.webp"
+                 srcset="assets/img/bilder/quali-800.webp 800w, assets/img/bilder/quali-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="Das HUD in der Quali mit Eliminierungszone, Onboard, Hot-Lap-Boxen und Gefahrenzone" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>In der Quali.</b> Hotlap- und Inlap-Status, die Eliminierungszone, Onboard, Hot-Lap-Boxen — und wer gerade in der Gefahrenzone steht.</figcaption>
+        </figure>
+        <figure class="galerie-bild" id="bild-wm-stand">
+          <a href="assets/img/bilder/wm-stand-1600.webp" data-lupe>
+            <img src="assets/img/bilder/wm-stand-800.webp"
+                 srcset="assets/img/bilder/wm-stand-800.webp 800w, assets/img/bilder/wm-stand-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="Das HUD mit der Fahrerwertung rechts unten, so wie sie nach diesem Rennen stünde" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>WM-Stand.</b> Die Fahrerwertung, wie sie stünde, wenn das Rennen jetzt endet.</figcaption>
+        </figure>
+        <figure class="galerie-bild" id="bild-gap-verlauf">
+          <a href="assets/img/bilder/gap-verlauf-1600.webp" data-lupe>
+            <img src="assets/img/bilder/gap-verlauf-800.webp"
+                 srcset="assets/img/bilder/gap-verlauf-800.webp 800w, assets/img/bilder/gap-verlauf-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="900"
+                 alt="Diagramm: der Abstand jedes Fahrers zum Führenden über das ganze Rennen" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>Gap-Verlauf.</b> Der Abstand jedes Fahrers zum Führenden über das ganze Rennen — aus der Regie eingeblendet.</figcaption>
+        </figure>
+        <figure class="galerie-bild oben" id="bild-regie">
+          <a href="assets/img/bilder/regie-1600.webp" data-lupe>
+            <img src="assets/img/bilder/regie-800.webp"
+                 srcset="assets/img/bilder/regie-800.webp 800w, assets/img/bilder/regie-1600.webp 1600w"
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1100"
+                 alt="Die Regie-Seite im Browser mit Kamera-Tipp, dem ganzen Feld, Battles, Pace-Vergleich und Rennleitung" loading="lazy" decoding="async">
+          </a>
+          <figcaption><b>Die Regie.</b> Kamera-Tipp, das ganze Feld, Battles, Pace-Vergleich und Rennleitung — im Browser, auch vom Handy.</figcaption>
+        </figure>
+      </div>
+    </div>
   </div>
 </section>
 <!-- ══════════════ THEMEN ══════════════ -->
@@ -112,7 +177,7 @@
       </a>
       <a class="thema" href="technik.html">
         <h3>Technik &amp; Hilfe</h3>
-        <p>Ports, Renderer, Renderrate — und was zu tun ist, wenn nichts ankommt oder OBS das Fenster nicht findet.</p>
+        <p><!-- AB 0.3.0 -->Ein Programm in C++, Ports, Renderrate<!-- SONST -->Ports, Renderer, Renderrate<!-- ENDE --> — und was zu tun ist, wenn nichts ankommt oder OBS das Fenster nicht findet.</p>
         <span class="thema-mehr">Ansehen</span>
       </a>
     </div>
@@ -124,12 +189,12 @@
   <div class="wrap dl-in">
     <img src="assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
     <h2 class="dl-titel">Hol es dir.</h2>
-    <p class="dl-text">Eine Datei, kein Installer, keine Kosten. Läuft neben dem Spiel und
+    <p class="dl-text">Eine Datei<!-- AB 0.3.0 --> mit rund <span data-gen="groesse">55</span>&nbsp;MB<!-- ENDE -->, kein Installer, keine Kosten. Läuft neben dem Spiel und
       aktualisiert sich selbst.</p>
     <p class="dl-version">Aktuelle Version <b>v<span data-gen="version">0.2.6</span></b></p>
 
     <div class="cta cta-haupt">
-      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
+      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · <!-- AB 0.3.0 --><span data-gen="groesse">55</span>&nbsp;MB · <!-- ENDE -->Windows</small></a>
       <a class="btn btn-lg btn-dl btn-ghost" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord beitreten<small>Direkter Support</small></a>
     </div>
     <div class="cta">

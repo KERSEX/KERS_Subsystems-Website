@@ -24,7 +24,9 @@
       "projekt": "Projekt",
       "releases": "Releases",
       "seite": "Diese Seite"
-    }
+    },
+    "og_locale": "de_DE",
+    "vorschau_alt": "KERS Subsystems — Live-Telemetrie-Overlay für F1 26, daneben der Timing Tower und zwei Battle-Boxen"
   },
   "en": {
     "sprache": "en",
@@ -51,6 +53,8 @@
       "projekt": "Project",
       "releases": "Releases",
       "seite": "This site"
-    }
+    },
+    "og_locale": "en_US",
+    "vorschau_alt": "KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes"
   }
 }

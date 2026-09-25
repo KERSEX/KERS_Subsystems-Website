@@ -12,8 +12,6 @@
 
 <section class="sec" id="start">
   <div class="wrap">
-    <h2>In four steps.</h2>
-
     <ol class="steps">
       <li>
         <h3>Download</h3>
@@ -40,8 +38,15 @@
       </li>
       <li>
         <h3>Start</h3>
+        <!-- AB 0.3.0 -->
+        <p>Open the EXE — control panel, HUD and server come up together. Nothing to press.</p>
+        <p class="urls-note"><b>On the first start</b> the Windows firewall asks whether the program
+           may be reached on the network. For the control page and settings from your phone or a
+           second PC, allow <b>private networks</b> — on the PC itself it works without.</p>
+        <!-- SONST -->
         <p>Open the EXE — the <em>KERS Subsystems</em> control panel appears.
            Press <b>Start Server</b> there, then <b>HUD IS ON</b>.</p>
+        <!-- ENDE -->
       </li>
       <li>
         <h3>Set up</h3>
@@ -59,8 +64,16 @@
     <div class="callout">
       <b>Self-update.</b> On start the program quietly checks whether a newer version exists. The
       download is verified against size and SHA-256 before it replaces the running file — the old
-      one stays behind as a fallback. A specific version can be picked on the control panel.
+      one stays behind as a fallback<!-- AB 0.3.0 --> until the new one has started once<!-- ENDE -->.
+      A specific version can be picked on the control panel.
     </div>
+    <!-- AB 0.3.0 -->
+    <div class="callout">
+      <b>Already on 0.2.x?</b> Then the update button takes you to 0.3.0 as usual.
+      Settings, championship standings and window position stay; the new file clears away the old one
+      on its first start. Going back to a 0.2.x works the same way on the control panel.
+    </div>
+    <!-- ENDE -->
   </div>
 </section>
 
