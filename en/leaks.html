@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leaks — KERS Subsystems</title>
+<meta name="description" content="What is being built at KERS Subsystems before it is out — right now version 0.3.0: rebuilt in C++, about 55 MB, Twitch chat on the control page.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/icon.png">
+
+<link rel="alternate" hreflang="de" href="https://kersex.github.io/KERS_Subsystems-Website/leaks.html">
+<link rel="alternate" hreflang="en" href="https://kersex.github.io/KERS_Subsystems-Website/en/leaks.html">
+<link rel="alternate" hreflang="x-default" href="https://kersex.github.io/KERS_Subsystems-Website/leaks.html">
+
+<link rel="canonical" href="https://kersex.github.io/KERS_Subsystems-Website/en/leaks.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Leaks — KERS Subsystems">
+<meta property="og:description" content="What is being built at KERS Subsystems before it is out — right now version 0.3.0: rebuilt in C++, about 55 MB, Twitch chat on the control page.">
+<meta property="og:url" content="https://kersex.github.io/KERS_Subsystems-Website/en/leaks.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kersex.github.io/KERS_Subsystems-Website/assets/img/vorschau-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="../assets/css/site.css?v=23">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "en", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("../leaks.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html">
+      <img src="../assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Open menu" data-auf="Open menu" data-zu="Close menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Highlights</a>
+      <a href="bausteine.html">Modules</a>
+      <a href="layout.html">Layout</a>
+      <a href="regie.html">Control</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Quick start</a>
+      <a href="technik.html">Technical</a>
+      <a class="menu-leaks" href="leaks.html" aria-current="page">Leaks<i class="menu-punkt" title="New in the leaks"></i></a>
+      <a class="sprachwahl" href="../leaks.html" id="sprachwahl"
+         title="Auf Deutsch wechseln" lang="de">DE</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Leaks</h1>
+    <p class="sub">What is being built, before it is out. Everything here is work in progress — things can still change before the release.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 0.3.0 ══════════════ -->
+<section class="sec vorschau" id="v030">
+  <div class="wrap">
+    <p class="kicker">Version 0.3.0</p>
+    <h2>Rebuilt. <em>In C++.</em></h2>
+    <p class="sub">Server and overlay become one single program in C++ and Qt&nbsp;6. No Python, no Chromium, no second program in the background — and an EXE a quarter of the size.</p>
+    <ul class="leak-stand">
+      <li class="im-test"><span>Status</span> in testing</li>
+      <li><span>Arrives as</span> update via the button on the control panel</li>
+      <li><span>Source</span> <a href="https://github.com/KERSEX/KERS_Overlay/tree/cpp-0.3.0" target="_blank" rel="noopener">branch cpp-0.3.0 ↗</a></li>
+    </ul>
+
+    <div class="galerie bild-einzeln" id="regie">
+      <figure class="galerie-bild">
+        <a href="../assets/img/bilder/regie-neu-1600.webp" data-lupe>
+          <img src="../assets/img/bilder/regie-neu-800.webp"
+               srcset="../assets/img/bilder/regie-neu-800.webp 800w, ../assets/img/bilder/regie-neu-1600.webp 1600w"
+               sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1000"
+               alt="The new control page in the browser, on the right the open drawer with Twitch chat and mini stream" loading="lazy" decoding="async">
+        </a>
+        <figcaption><b>The new control page.</b> On the right, the Twitch chat slides open with a mini stream — enter a channel name or link and that's it; the channel is remembered. The race is the built-in demo race; chat and stream are recreated for the picture.</figcaption>
+      </figure>
+    </div>
+
+    <div class="vorschau-raster leak-teil">
+      <div class="vergleich">
+        <h3>The download</h3>
+        <div class="balken-block">
+          <div class="balken-zeile">
+            <span class="balken-name">0.2.6<small>today</small></span>
+            <div class="balken"><i></i></div>
+            <b><span data-gen="groesse">232</span> MB</b>
+          </div>
+          <div class="balken-zeile neu">
+            <span class="balken-name">0.3.0<small>coming</small></span>
+            <div class="balken"><i style="--w:24%"></i></div>
+            <b>about 55 MB</b>
+          </div>
+        </div>
+        <ul class="tausch">
+          <li><span>Python + Chromium</span><i aria-hidden="true">→</i><b>native C++ with Qt&nbsp;6</b></li>
+          <li><span>Server and HUD separate</span><i aria-hidden="true">→</i><b>one program, one process</b></li>
+          <li><span>Console window</span><i aria-hidden="true">→</i><b>Log on the control panel</b></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="leak-h3">What changes for you</h3>
+        <ul class="checks">
+        <li><b>Starts completely.</b> Open the EXE — control panel, HUD and server come up together. If you don't want the server, start with <code>--no-server</code>.</li>
+        <li><b>One question on the first start.</b> The Windows firewall asks about the network. For the control page and settings from your phone, allow <em>private networks</em>.</li>
+        <li><b>No console window any more.</b> What server and HUD report is under <em>Log</em> on the control panel and in <code>data\kers.log</code>.</li>
+        <li><b>No browser opens by itself.</b> You open the control page and settings via the buttons on the control panel.</li>
+        <li><b>One way of drawing.</b> The renderer choice goes — the HUD is the QML scene, the same one as before.</li>
+        <li><b>Track map stays put.</b> After switching from qualifying to the race, a known circuit's map is there right away.</li>
+        <li><b>One program per port.</b> If an old 0.2.x is still running, the control panel says <em>port in use</em> instead of two programs splitting the packets.</li>
+        <li><b>Your data stays.</b> Settings, championship standings and window position from 0.2.x carry on unchanged. Going back to 0.2.x works via the control panel.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="leak-h3 leak-teil">Under the hood</h3>
+    <dl class="specs">
+      <div><dt>Language</dt><dd>C++20 with Qt 6.11, statically linked.</dd></div>
+      <div><dt>File</dt><dd>One EXE, currently 57,897,984 bytes — about 55&nbsp;MB, no DLLs alongside.</dd></div>
+      <div><dt>Structure</dt><dd>Server, HUD and control panel in one process. The HUD gets its data directly; browser, phone and OBS still via port 5100.</dd></div>
+      <div><dt>Tests</dt><dd>Eight Qt test suites, from the parser to the updater.</dd></div>
+      <div><dt>Cross-check</dt><dd>Roughly 20,000 packets each from a race and a qualifying session through the old and the new version — no deviation.</dd></div>
+      <div><dt>Licence</dt><dd>Own code under MIT. Qt&nbsp;6 is in the EXE under LGPL-3.0; since everything is open, it can be rebuilt against another Qt version.</dd></div>
+    </dl>
+
+    <div class="leak-cta">
+      <p>When it ships and what comes next — you hear it on Discord first.</p>
+      <div class="cta">
+        <a class="btn" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Join Discord</a>
+        <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/tree/cpp-0.3.0" target="_blank" rel="noopener">See the current state on GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="../assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.</p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Project</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">This site</a>
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js?v=23"></script>
+</body>
+</html>

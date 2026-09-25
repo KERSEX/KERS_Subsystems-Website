@@ -16,6 +16,7 @@
       "obs": "OBS",
       "start": "Schnellstart",
       "technik": "Technik",
+      "leaks": "Leaks",
       "download": "Download"
     },
     "fuss_recht": "Privates Projekt, kein offizielles Produkt von EA oder Codemasters. Alle Marken gehören ihren jeweiligen Eigentümern.",
@@ -26,7 +27,8 @@
       "seite": "Diese Seite"
     },
     "og_locale": "de_DE",
-    "vorschau_alt": "KERS Subsystems — Live-Telemetrie-Overlay für F1 26, daneben der Timing Tower und zwei Battle-Boxen"
+    "vorschau_alt": "KERS Subsystems — Live-Telemetrie-Overlay für F1 26, daneben der Timing Tower und zwei Battle-Boxen",
+    "leaks_punkt": "Neues in den Leaks"
   },
   "en": {
     "sprache": "en",
@@ -45,6 +47,7 @@
       "obs": "OBS",
       "start": "Quick start",
       "technik": "Technical",
+      "leaks": "Leaks",
       "download": "Download"
     },
     "fuss_recht": "Private project, not an official product of EA or Codemasters. All trademarks belong to their respective owners.",
@@ -55,6 +58,7 @@
       "seite": "This site"
     },
     "og_locale": "en_US",
-    "vorschau_alt": "KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes"
+    "vorschau_alt": "KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes",
+    "leaks_punkt": "New in the leaks"
   }
 }

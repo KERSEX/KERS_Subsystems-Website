@@ -63,6 +63,9 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .menu a{text-decoration:none;font-size:.9rem;font-weight:500;color:var(--muted);transition:color .2s}
 .menu a:hover,.menu a:focus-visible{color:#fff}
 .menu .btn{color:#fff}
+/* Leaks: ein pulsierender Punkt, solange dort etwas Unveroeffentlichtes steht */
+.menu-punkt{display:inline-block;width:7px;height:7px;margin-left:.4rem;border-radius:50%;vertical-align:.18em;
+  background:var(--accent);animation:pulse 2.4s ease-out infinite}
 
 .burger{display:none;background:none;border:0;padding:.5rem;cursor:pointer}
 .burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .25s,opacity .25s}
@@ -611,6 +614,8 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .vorschau-fuss{margin-top:1.8rem;font-size:.88rem;color:var(--muted);display:flex;gap:.7rem;align-items:baseline}
 .vorschau-fuss::before{content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:#f5b400;
   box-shadow:0 0 10px rgba(245,180,0,.6);transform:translateY(-1px)}
+.vorschau .bild-einzeln{margin-top:1.6rem}
+.vorschau-weiter{margin-top:1.4rem}
 .vorschau-fuss a,.dl-naechste a{color:var(--accent);text-decoration:none;font-weight:600}
 .vorschau-fuss a:hover,.dl-naechste a:hover{text-decoration:underline}
 
@@ -619,9 +624,32 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .dl-naechste b{color:#fff;font-weight:600}
 
 /* Kleines Etikett "Ab 0.3.0" an einer Karte */
-.etikett{display:inline-block;margin-left:.55rem;padding:.1rem .5rem .05rem;border-radius:5px;vertical-align:.18em;
+.etikett{display:inline-block;white-space:nowrap;margin-left:.55rem;padding:.1rem .5rem .05rem;border-radius:5px;vertical-align:.18em;
   font-family:'Inter',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
   color:#fff;background:rgba(225,6,0,.85)}
+
+/* ── Leaks: was gerade entsteht ──────────────────────────────────────────── */
+.leak-stand{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.leak-stand li{display:inline-flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:#e8e8ef;
+  border:1px solid var(--line);border-radius:999px;padding:.4rem .95rem;background:rgba(255,255,255,.03)}
+.leak-stand li span{color:var(--muted);font-weight:500}
+.leak-stand li.im-test{border-color:rgba(245,180,0,.35);background:rgba(245,180,0,.07)}
+.leak-stand li.im-test::before{content:"";width:8px;height:8px;border-radius:50%;background:#f5b400;
+  box-shadow:0 0 10px rgba(245,180,0,.6)}
+.leak-stand a{color:var(--accent);text-decoration:none}
+.leak-stand a:hover{text-decoration:underline}
+.leak-teil{margin-top:3rem}
+.leak-h3{font-family:'Teko',sans-serif;font-size:1.7rem;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;line-height:1.1;margin-bottom:.4rem}
+.leak-teil .checks{margin-top:1rem}
+.leak-cta{margin-top:3rem;padding:1.6rem 1.8rem;border-radius:var(--radius);border:1px solid rgba(225,6,0,.3);
+  background:linear-gradient(90deg,rgba(225,6,0,.1),rgba(225,6,0,.02));display:flex;flex-wrap:wrap;
+  align-items:center;justify-content:space-between;gap:1rem 2rem}
+.leak-cta p{color:#e8e8ef;font-size:1rem;max-width:34rem}
+.leak-cta .cta{margin-top:0}
+.leak-leer{text-align:center}
+.leak-leer .sub{margin-inline:auto}
+.leak-leer .cta{justify-content:center}
 
 @media (max-width:1000px){
   .vorschau-raster{grid-template-columns:1fr}
@@ -713,7 +741,9 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .ways{grid-template-columns:1fr}
   .hero{padding:8.5rem 0 4.5rem}
 }
-@media (max-width:880px){
+/* Das Menue klappt ein, sobald die acht Eintraege nicht mehr in eine Zeile passen
+   (mit "Leaks" ist das knapp unter 1100 px). */
+@media (max-width:1100px){
   .burger{display:block}
   .menu{position:fixed;inset:68px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;
     background:rgba(11,11,15,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
@@ -723,6 +753,8 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .menu .btn{margin-top:.9rem;text-align:center;border-bottom:0}
   .menu .sprachwahl{margin-top:.9rem;align-self:flex-start;border-bottom:0}
   .menu a[aria-current="page"]::after{display:none}
+}
+@media (max-width:880px){
   .seitenkopf{padding-top:7rem}
 }
 

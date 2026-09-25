@@ -1,0 +1,104 @@
+<!-- titel: Leaks — KERS Subsystems -->
+<!-- AB 0.3.0 --><!-- beschreibung: Everything that was here is out by now. What comes next shows up on Discord first — and then here. --><!-- SONST --><!-- beschreibung: What is being built at KERS Subsystems before it is out — right now version 0.3.0: rebuilt in C++, about 55 MB, Twitch chat on the control page. --><!-- ENDE -->
+
+<section class="seitenkopf">
+  <div class="wrap">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Leaks</h1>
+    <p class="sub">What is being built, before it is out. Everything here is work in progress — things can still change before the release.</p>
+  </div>
+</section>
+
+<!-- VOR 0.3.0 -->
+<!-- ══════════════ 0.3.0 ══════════════ -->
+<section class="sec vorschau" id="v030">
+  <div class="wrap">
+    <p class="kicker">Version 0.3.0</p>
+    <h2>Rebuilt. <em>In C++.</em></h2>
+    <p class="sub">Server and overlay become one single program in C++ and Qt&nbsp;6. No Python, no Chromium, no second program in the background — and an EXE a quarter of the size.</p>
+    <ul class="leak-stand">
+      <li class="im-test"><span>Status</span> in testing</li>
+      <li><span>Arrives as</span> update via the button on the control panel</li>
+      <li><span>Source</span> <a href="https://github.com/KERSEX/KERS_Overlay/tree/cpp-0.3.0" target="_blank" rel="noopener">branch cpp-0.3.0 ↗</a></li>
+    </ul>
+
+    <div class="galerie bild-einzeln" id="regie">
+      <figure class="galerie-bild">
+        <a href="../assets/img/bilder/regie-neu-1600.webp" data-lupe>
+          <img src="../assets/img/bilder/regie-neu-800.webp"
+               srcset="../assets/img/bilder/regie-neu-800.webp 800w, ../assets/img/bilder/regie-neu-1600.webp 1600w"
+               sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1000"
+               alt="The new control page in the browser, on the right the open drawer with Twitch chat and mini stream" loading="lazy" decoding="async">
+        </a>
+        <figcaption><b>The new control page.</b> On the right, the Twitch chat slides open with a mini stream — enter a channel name or link and that's it; the channel is remembered. The race is the built-in demo race; chat and stream are recreated for the picture.</figcaption>
+      </figure>
+    </div>
+
+    <div class="vorschau-raster leak-teil">
+      <div class="vergleich">
+        <h3>The download</h3>
+        <div class="balken-block">
+          <div class="balken-zeile">
+            <span class="balken-name">0.2.6<small>today</small></span>
+            <div class="balken"><i></i></div>
+            <b><span data-gen="groesse">232</span> MB</b>
+          </div>
+          <div class="balken-zeile neu">
+            <span class="balken-name">0.3.0<small>coming</small></span>
+            <div class="balken"><i style="--w:24%"></i></div>
+            <b>about 55 MB</b>
+          </div>
+        </div>
+        <ul class="tausch">
+          <li><span>Python + Chromium</span><i aria-hidden="true">→</i><b>native C++ with Qt&nbsp;6</b></li>
+          <li><span>Server and HUD separate</span><i aria-hidden="true">→</i><b>one program, one process</b></li>
+          <li><span>Console window</span><i aria-hidden="true">→</i><b>Log on the control panel</b></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="leak-h3">What changes for you</h3>
+        <ul class="checks">
+        <li><b>Starts completely.</b> Open the EXE — control panel, HUD and server come up together. If you don't want the server, start with <code>--no-server</code>.</li>
+        <li><b>One question on the first start.</b> The Windows firewall asks about the network. For the control page and settings from your phone, allow <em>private networks</em>.</li>
+        <li><b>No console window any more.</b> What server and HUD report is under <em>Log</em> on the control panel and in <code>data\kers.log</code>.</li>
+        <li><b>No browser opens by itself.</b> You open the control page and settings via the buttons on the control panel.</li>
+        <li><b>One way of drawing.</b> The renderer choice goes — the HUD is the QML scene, the same one as before.</li>
+        <li><b>Track map stays put.</b> After switching from qualifying to the race, a known circuit's map is there right away.</li>
+        <li><b>One program per port.</b> If an old 0.2.x is still running, the control panel says <em>port in use</em> instead of two programs splitting the packets.</li>
+        <li><b>Your data stays.</b> Settings, championship standings and window position from 0.2.x carry on unchanged. Going back to 0.2.x works via the control panel.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="leak-h3 leak-teil">Under the hood</h3>
+    <dl class="specs">
+      <div><dt>Language</dt><dd>C++20 with Qt 6.11, statically linked.</dd></div>
+      <div><dt>File</dt><dd>One EXE, currently 57,897,984 bytes — about 55&nbsp;MB, no DLLs alongside.</dd></div>
+      <div><dt>Structure</dt><dd>Server, HUD and control panel in one process. The HUD gets its data directly; browser, phone and OBS still via port 5100.</dd></div>
+      <div><dt>Tests</dt><dd>Eight Qt test suites, from the parser to the updater.</dd></div>
+      <div><dt>Cross-check</dt><dd>Roughly 20,000 packets each from a race and a qualifying session through the old and the new version — no deviation.</dd></div>
+      <div><dt>Licence</dt><dd>Own code under MIT. Qt&nbsp;6 is in the EXE under LGPL-3.0; since everything is open, it can be rebuilt against another Qt version.</dd></div>
+    </dl>
+
+    <div class="leak-cta">
+      <p>When it ships and what comes next — you hear it on Discord first.</p>
+      <div class="cta">
+        <a class="btn" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Join Discord</a>
+        <a class="btn btn-ghost" href="https://github.com/KERSEX/KERS_Overlay/tree/cpp-0.3.0" target="_blank" rel="noopener">See the current state on GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- SONST -->
+<section class="sec" id="leer">
+  <div class="wrap narrow leak-leer">
+    <p class="kicker">Nothing right now</p>
+    <h2>The pipeline is empty.</h2>
+    <p class="sub">Everything that was here is out by now. What comes next shows up on Discord first — and then here.</p>
+    <div class="cta">
+      <a class="btn btn-lg" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Join Discord</a>
+    </div>
+  </div>
+</section>
+<!-- ENDE -->

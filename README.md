@@ -156,6 +156,12 @@ können die `SONST`-Teile hinter `AB` und die `VOR`-Blöcke raus.
 
 ## Sonst noch pflegen
 
+* **Leaks** — `seiten/{de,en}/leaks.html` zeigt, was gerade entsteht. Ein neuer
+  Eintrag steht in einer `VOR`-Weiche auf die kommende Version, dann verschwindet
+  er mit dem Release von selbst. Solange einer drin steht, trägt der Eintrag
+  „Leaks" im Menü einen roten Punkt (`seiten/rahmen.html`, ebenfalls per
+  `VOR`-Weiche); ist die Seite leer, zeigt sie den Hinweis aus dem `SONST`-Teil.
+
 * **Schnellstart** — die vier Schritte unter `#start`, Gegenstück zur README dort.
 * **Farben** — `:root` in `site.css`, gespiegelt aus `static/css/core.css`.
 * **Cache** — `VERSION` in `tools/seiten.py` hochzählen, sonst behalten Browser
