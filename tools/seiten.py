@@ -31,6 +31,11 @@ Weiche - in Inhaltsdateien wie im Rahmen, auch mitten im Satz:
 
     <!-- AB 0.3.0 -->so ist es ab 0.3.0<!-- SONST -->so ist es bisher<!-- ENDE -->
 
+Das Gegenstueck ist VOR: Inhalt, der nur gilt, solange die Version noch NICHT
+draussen ist - eine Ankuendigung, die mit dem Release von selbst verschwindet:
+
+    <!-- VOR 0.3.0 -->Bald: 0.3.0<!-- ENDE -->
+
 Der SONST-Teil darf fehlen. Welche Version gilt, steht in seiten/stand.json -
 dort traegt tools/bausteine.py die des neuesten Releases ein. So steht Text fuer
 die naechste Version schon vorher bereit und geht mit dem Release von selbst
@@ -52,7 +57,7 @@ QUELLEN = WURZEL / "seiten"
 # Cache-Kennzeichen an CSS und JS. Hochzaehlen, wenn sich eine der beiden Dateien
 # aendert - sonst behalten Browser die alte Version (GitHub Pages laesst sie
 # zwischenspeichern).
-VERSION = "21"
+VERSION = "22"
 
 # Deutsch liegt oben, damit die Adresse ohne Sprachkuerzel auskommt; Englisch
 # darunter. Die Reihenfolge bestimmt auch, was x-default bekommt.
@@ -68,10 +73,10 @@ def adresse(ordner: str, name: str) -> str:
     return BASIS + ordner + ("" if name == "index" else f"{name}.html")
 
 WEICHE = re.compile(
-    r"(?P<vor>^[ \t]*)?<!--\s*AB\s+(?P<ab>\d+(?:\.\d+)*)\s*-->(?P<neu>.*?)"
+    r"(?P<vor>^[ \t]*)?<!--\s*(?P<art>AB|VOR)\s+(?P<ab>\d+(?:\.\d+)*)\s*-->(?P<neu>.*?)"
     r"(?:<!--\s*SONST\s*-->(?P<bisher>.*?))?<!--\s*ENDE\s*-->(?P<nach>[ \t]*\n)?",
     re.S | re.M)
-WEICHEN_REST = re.compile(r"<!--\s*(?:AB\s+[\d.]+|SONST|ENDE)\s*-->")
+WEICHEN_REST = re.compile(r"<!--\s*(?:(?:AB|VOR)\s+[\d.]+|SONST|ENDE)\s*-->")
 
 
 def als_zahlen(version: str) -> tuple[int, ...]:
@@ -94,15 +99,16 @@ def weichen_stellen(text: str, stand: str, ort: str, erfuellt: set) -> str:
     jetzt = als_zahlen(stand)
 
     def stelle(m: re.Match) -> str:
-        ab, neu, bisher = m.group("ab"), m.group("neu"), m.group("bisher") or ""
+        art, ab = m.group("art"), m.group("ab")
+        neu, bisher = m.group("neu"), m.group("bisher") or ""
         if WEICHEN_REST.search(neu) or WEICHEN_REST.search(bisher):
-            raise SystemExit(f"{ort}: Weiche 'AB {ab}' enthaelt eine weitere - "
+            raise SystemExit(f"{ort}: Weiche '{art} {ab}' enthaelt eine weitere - "
                              "Weichen lassen sich nicht verschachteln")
-        if jetzt >= als_zahlen(ab):
+        erschienen = jetzt >= als_zahlen(ab)
+        if erschienen:
             erfuellt.add((ort, ab))
-            zweig = neu
-        else:
-            zweig = bisher
+        # AB: der erste Teil ab dieser Version. VOR: der erste Teil bis dahin.
+        zweig = neu if erschienen == (art == "AB") else bisher
 
         vor, nach = m.group("vor"), m.group("nach")
         if vor is None or nach is None:                 # mitten in einer Zeile
@@ -216,13 +222,13 @@ def main() -> int:
             if not a.pruefen:
                 ziel.write_text(neu, encoding="utf-8")
 
-    # Ist eine Weiche erfuellt, wird ihr SONST-Teil nie wieder gebraucht - ein
-    # Hinweis, damit alte Zweige nicht ewig im Quelltext mitlaufen.
+    # Ist eine Version draussen, sind ihre Weichen entschieden: SONST-Teile hinter
+    # AB und ganze VOR-Bloecke werden nie wieder gebraucht. Ein Hinweis, damit
+    # alte Zweige nicht ewig im Quelltext mitlaufen.
     for ab in sorted({ab for _, ab in erfuellt}, key=als_zahlen):
-        orte = sorted({o for o, v in erfuellt if v == ab and o != "rahmen.html"}
-                      | ({"rahmen.html"} if ("rahmen.html", ab) in erfuellt else set()))
-        print(f"  Hinweis: Weichen 'AB {ab}' greifen (Stand {stand}) - die SONST-Teile "
-              f"koennen raus: {', '.join(orte)}")
+        orte = sorted({o for o, v in erfuellt if v == ab})
+        print(f"  Hinweis: {ab} ist draussen (Stand {stand}) - in den Weichen dazu koennen "
+              f"die SONST-Teile hinter AB und die VOR-Bloecke raus: {', '.join(orte)}")
 
     gesamt = sum(len(s) for s in namen.values())
     if not geaendert:

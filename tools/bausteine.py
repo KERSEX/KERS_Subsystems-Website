@@ -229,6 +229,8 @@ def main() -> int:
                 if not a.pruefen:
                     quelle.write_text(neu, encoding="utf-8")
 
+    mb = f", EXE {groesse} MB" if groesse else ""
+
     # Der Stand fuer die Weichen in tools/seiten.py.
     stand_datei = HIER / "seiten" / "stand.json"
     stand_neu = json.dumps({"version": version}, indent=2) + "\n"
@@ -239,12 +241,12 @@ def main() -> int:
             stand_datei.write_text(stand_neu, encoding="utf-8")
 
     if not geaendert:
-        print(f"Quellen sind aktuell: {anzahl} Bausteine, Version {version}")
+        print(f"Quellen sind aktuell: {anzahl} Bausteine, Version {version}{mb}")
         return 0
     if a.pruefen:
-        print(f"Zu aendern waere: {', '.join(geaendert)} ({anzahl} Bausteine, Version {version})")
+        print(f"Zu aendern waere: {', '.join(geaendert)} ({anzahl} Bausteine, Version {version}{mb})")
         return 1
-    print(f"Aktualisiert: {', '.join(geaendert)} ({anzahl} Bausteine, Version {version})")
+    print(f"Aktualisiert: {', '.join(geaendert)} ({anzahl} Bausteine, Version {version}{mb})")
     return 0
 
 

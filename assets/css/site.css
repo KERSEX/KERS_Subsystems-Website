@@ -462,6 +462,8 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .callout{margin-top:1.8rem;padding:1.3rem 1.5rem;border-radius:var(--radius);font-size:.93rem;color:var(--muted);
   background:linear-gradient(90deg,rgba(225,6,0,.1),rgba(225,6,0,.02));border:1px solid rgba(225,6,0,.28)}
 .callout b{color:#fff}
+.callout a,.urls-note a{color:var(--accent);font-weight:600;text-decoration:none;white-space:nowrap}
+.callout a:hover,.urls-note a:hover{text-decoration:underline}
 /* Ausblick: spannt im Split ueber beide Spalten, Punkt signalisiert "laeuft noch" */
 .callout.ausblick{grid-column:1/-1;margin-top:0;position:relative;padding-left:2.7rem}
 .callout.ausblick::before{content:"";position:absolute;left:1.3rem;top:1.72rem;width:9px;height:9px;
@@ -547,6 +549,90 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .foot-links a{font-size:.82rem;color:var(--muted);text-decoration:none}
 .foot-links a:hover{color:#fff}
 
+/* ── Demnaechst: die naechste Version ankuendigen ─────────────────────────── */
+/* Steht nur, solange die Version noch nicht draussen ist (<!-- VOR x -->). */
+.bald{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.4rem;padding:.3rem .95rem .3rem .32rem;
+  border-radius:999px;border:1px solid rgba(225,6,0,.45);background:rgba(225,6,0,.08);
+  font-size:.86rem;font-weight:500;color:#e8e8ef;text-decoration:none;
+  transition:border-color .25s ease,background .25s ease,box-shadow .3s ease}
+.bald b{background:var(--accent);color:#fff;border-radius:999px;padding:.18rem .62rem;
+  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.9px}
+.bald i{font-style:normal;color:var(--accent);transition:transform .25s ease}
+.bald:hover,.bald:focus-visible{border-color:var(--accent);background:rgba(225,6,0,.14);
+  box-shadow:0 0 22px rgba(225,6,0,.22)}
+.bald:hover i,.bald:focus-visible i{transform:translateX(3px)}
+
+.vorschau{position:relative;overflow:hidden;
+  background:linear-gradient(180deg,var(--bg) 0%,#140c10 45%,#120b0f 60%,var(--bg) 100%)}
+.vorschau::before{content:"";position:absolute;right:-18%;top:-30%;width:900px;height:900px;pointer-events:none;
+  background:radial-gradient(circle,rgba(225,6,0,.14) 0%,rgba(225,6,0,.04) 40%,transparent 68%)}
+.js .vorschau::before{animation:glut 16s ease-in-out infinite}
+.vorschau>.wrap{position:relative}
+.vorschau h2 em{font-style:normal;color:var(--accent);text-shadow:0 0 28px var(--accent-glow)}
+.vorschau-raster{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1.6rem;margin-top:2.6rem;align-items:start}
+
+/* Vorher / nachher als Panel */
+.vergleich{background:linear-gradient(180deg,rgba(26,26,35,.92),rgba(16,16,23,.92));
+  border:1px solid rgba(225,6,0,.3);border-radius:var(--radius);overflow:hidden;
+  box-shadow:0 14px 34px rgba(0,0,0,.5),0 0 30px rgba(225,6,0,.1)}
+.vergleich>h3{margin:0;padding:.85rem 1.3rem;background:linear-gradient(90deg,rgba(24,24,32,1) 0%,rgba(40,40,50,1) 100%);
+  border-bottom:2px solid var(--accent)}
+.balken-block{padding:1.3rem 1.3rem .4rem;display:grid;gap:1rem}
+.balken-zeile{display:grid;grid-template-columns:5.2rem minmax(0,1fr) auto;align-items:center;gap:.9rem}
+.balken-name{font-family:'Teko',sans-serif;font-size:1.25rem;font-weight:600;letter-spacing:1px;line-height:1}
+.balken-name small{display:block;font-family:'Inter',sans-serif;font-size:.68rem;font-weight:500;
+  letter-spacing:.3px;color:var(--muted);text-transform:none;margin-top:.2rem}
+.balken{height:14px;border-radius:7px;background:rgba(255,255,255,.06);overflow:hidden}
+.balken>i{display:block;height:100%;width:var(--w,100%);border-radius:7px;
+  background:linear-gradient(90deg,#4d4d58,#777784)}
+.balken-zeile.neu .balken>i{background:linear-gradient(90deg,#b00500,#ff3b2f);box-shadow:0 0 18px rgba(225,6,0,.55)}
+.balken-zeile>b{font-family:'Teko',sans-serif;font-size:1.45rem;font-weight:600;letter-spacing:.5px;
+  font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;min-width:5.5rem}
+.balken-zeile.neu>b{color:var(--accent)}
+.balken-zeile:not(.neu)>b{color:var(--muted)}
+/* Mit Skript wachsen die Balken, sobald der Abschnitt ins Bild kommt */
+.js .vorschau .balken>i{width:0;transition:width 1.5s cubic-bezier(.2,.8,.3,1) .35s}
+.js .vorschau.in .balken>i{width:var(--w,100%)}
+.js .vorschau.in .balken-zeile.neu .balken>i{transition-delay:.75s}
+
+.tausch{list-style:none;padding:.6rem 1.3rem 1.2rem}
+.tausch li{display:grid;grid-template-columns:minmax(0,1fr) 1.4rem minmax(0,1fr);align-items:baseline;gap:.4rem;
+  padding:.62rem 0;border-top:1px solid var(--line-soft);font-size:.9rem}
+.tausch li>span{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(225,6,0,.55)}
+.tausch li>i{font-style:normal;color:var(--accent);text-align:center}
+.tausch li>b{font-weight:600;color:#fff}
+
+.neuheiten{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.neuheiten .way>h3{padding-right:1.3rem;font-size:1.05rem}
+.neuheiten .way p{font-size:.9rem}
+.neuheiten .way>p:first-of-type{padding-top:.9rem}
+.neuheiten .way>p:last-child{padding-bottom:1.1rem}
+
+.vorschau-fuss{margin-top:1.8rem;font-size:.88rem;color:var(--muted);display:flex;gap:.7rem;align-items:baseline}
+.vorschau-fuss::before{content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:#f5b400;
+  box-shadow:0 0 10px rgba(245,180,0,.6);transform:translateY(-1px)}
+.vorschau-fuss a,.dl-naechste a{color:var(--accent);text-decoration:none;font-weight:600}
+.vorschau-fuss a:hover,.dl-naechste a:hover{text-decoration:underline}
+
+/* Im Abschluss: was als Naechstes kommt, unter der aktuellen Version */
+.dl-naechste{margin-top:.35rem;font-size:.86rem;color:var(--muted)}
+.dl-naechste b{color:#fff;font-weight:600}
+
+/* Kleines Etikett "Ab 0.3.0" an einer Karte */
+.etikett{display:inline-block;margin-left:.55rem;padding:.1rem .5rem .05rem;border-radius:5px;vertical-align:.18em;
+  font-family:'Inter',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:#fff;background:rgba(225,6,0,.85)}
+
+@media (max-width:1000px){
+  .vorschau-raster{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .neuheiten{grid-template-columns:1fr}
+  .balken-zeile{grid-template-columns:4.4rem minmax(0,1fr) auto;gap:.7rem}
+  .balken-zeile>b{min-width:4.6rem;font-size:1.3rem}
+  .tausch li{font-size:.85rem}
+}
+
 /* ── Galerie: echte Aufnahmen aus dem Overlay ─────────────────────────────── */
 /* Ohne Skript ein Streifen, der sich wischen laesst, und die Reiter sind Sprung-
    marken; mit Skript folgen die Reiter dem Streifen, und ein Klick aufs Bild
@@ -616,6 +702,7 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .js .hero-copy>*:nth-child(3){animation-delay:.26s}
 .js .hero-copy>*:nth-child(4){animation-delay:.36s}
 .js .hero-copy>*:nth-child(5){animation-delay:.46s}
+.js .hero-copy>*:nth-child(6){animation-delay:.56s}
 .js .hero-demo{opacity:0;animation:herein 1s cubic-bezier(.2,.8,.3,1) .35s forwards}
 
 /* ── Schmalere Fenster ────────────────────────────────────────────────────── */

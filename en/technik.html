@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="../assets/css/site.css?v=21">
+<link rel="stylesheet" href="../assets/css/site.css?v=22">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -116,6 +116,12 @@ document.documentElement.className += " js";
         <div><dt>Your data</dt><dd>Everything personal lives in <code>data\</code> next to the EXE. The EXE itself contains none.</dd></div>
       </dl>
     </div>
+    <div class="callout">
+      <b>A lot of this changes with 0.3.0.</b> Server and HUD become one program in C++ and
+      Qt&nbsp;6 — about 55&nbsp;MB, no Python, no Chromium, no renderer choice any more. What the
+      program reports is then under <em>Log</em> on the control panel.
+      <a href="index.html#v030">All about 0.3.0</a>
+    </div>
   </div>
 </section>
 
@@ -181,6 +187,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="../assets/js/site.js?v=21"></script>
+<script src="../assets/js/site.js?v=22"></script>
 </body>
 </html>

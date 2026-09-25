@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="../assets/css/site.css?v=21">
+<link rel="stylesheet" href="../assets/css/site.css?v=22">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -90,6 +90,7 @@ document.documentElement.className += " js";
 
   <div class="wrap hero-in">
     <div class="hero-copy">
+      <a class="bald" href="#v030"><b>Soon</b>0.3.0 — rebuilt in C++ <i aria-hidden="true">→</i></a>
       <h1>Your race,<br><em id="wechsel">in numbers.</em></h1>
       <p class="lead">
         KERS Subsystems listens to the telemetry stream from <strong>F1&nbsp;26</strong> and turns it
@@ -154,6 +155,66 @@ document.documentElement.className += " js";
   </div>
 </section>
 
+<!-- ══════════════ DEMNÄCHST: 0.3.0 ══════════════ -->
+<section class="sec vorschau" id="v030">
+  <div class="wrap">
+    <p class="kicker">Coming soon · version 0.3.0</p>
+    <h2>Rebuilt. <em>In C++.</em></h2>
+    <p class="sub">Server and overlay become one single program — no Python and no Chromium running in the background. Same overlay, same settings, just far lighter.</p>
+
+    <div class="vorschau-raster">
+      <div class="vergleich">
+        <h3>The download</h3>
+        <div class="balken-block">
+          <div class="balken-zeile">
+            <span class="balken-name">0.2.6<small>today</small></span>
+            <div class="balken"><i></i></div>
+            <b><span data-gen="groesse">243</span> MB</b>
+          </div>
+          <div class="balken-zeile neu">
+            <span class="balken-name">0.3.0<small>coming</small></span>
+            <div class="balken"><i style="--w:23%"></i></div>
+            <b>about 55 MB</b>
+          </div>
+        </div>
+        <ul class="tausch">
+          <li><span>Python + Chromium</span><i aria-hidden="true">→</i><b>native C++ with Qt&nbsp;6</b></li>
+          <li><span>Server and HUD separate</span><i aria-hidden="true">→</i><b>one program, one process</b></li>
+          <li><span>Start the server by hand</span><i aria-hidden="true">→</i><b>starts on its own</b></li>
+        </ul>
+      </div>
+
+      <div class="neuheiten">
+        <article class="way">
+          <h3>Twitch chat on the control page</h3>
+          <p>Enter a channel and chat plus a mini stream slide open beside the control page — on your phone too.</p>
+        </article>
+        <article class="way">
+          <h3>Log at a click</h3>
+          <p>What server and HUD report is under <em>Log</em> on the control panel — and in <code>data\kers.log</code> for support.</p>
+        </article>
+        <article class="way">
+          <h3>Track map stays put</h3>
+          <p>After switching from qualifying to the race, a known circuit's map is back right away.</p>
+        </article>
+        <article class="way">
+          <h3>One source on the port</h3>
+          <p>If a second program is still on 20777, the control panel says <em>port in use</em> instead of two programs splitting the packets.</p>
+        </article>
+        <article class="way">
+          <h3>Update with one button</h3>
+          <p>From 0.2.6 it's the update button on the control panel. Going back to 0.2.x works the same way.</p>
+        </article>
+        <article class="way">
+          <h3>Everything stays as it is</h3>
+          <p>Same modules, same layout, your settings and championship standings — only the engine underneath is new.</p>
+        </article>
+      </div>
+    </div>
+
+    <p class="vorschau-fuss"><span>Still in testing — it ships once it holds up in races and with OBS, as an update straight from the button on the control panel. You can already <a href="https://github.com/KERSEX/KERS_Overlay/tree/cpp-0.3.0" target="_blank" rel="noopener">follow it on GitHub</a>.</span></p>
+  </div>
+</section>
 <!-- ══════════════ IM BILD ══════════════ -->
 <section class="sec" id="bilder">
   <div class="wrap">
@@ -274,6 +335,7 @@ document.documentElement.className += " js";
     <h2 class="dl-titel">Go get it.</h2>
     <p class="dl-text">One file, no installer, no cost. Runs beside the game and updates itself.</p>
     <p class="dl-version">Current version <b>v<span data-gen="version">0.2.6</span></b></p>
+    <p class="dl-naechste">Up next: <b>0.3.0 in C++</b> — arrives as an update via the button on the control panel. <a href="#v030">What’s new</a></p>
 
     <div class="cta cta-haupt">
       <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
@@ -319,6 +381,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="../assets/js/site.js?v=21"></script>
+<script src="../assets/js/site.js?v=22"></script>
 </body>
 </html>

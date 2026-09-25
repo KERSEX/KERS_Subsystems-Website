@@ -309,6 +309,24 @@
     }, 1600);
   })();
 
+  /* ── Vorher/nachher: Balken im Verhaeltnis der Groessen ─────────────────── */
+  // Die heutige Groesse traegt der Bau aus dem Release ein, die kommende steht
+  // fest im Text - das Verhaeltnis rechnet deshalb erst der Browser aus. Ohne
+  // Skript gilt, was im HTML als Naeherung steht.
+  document.querySelectorAll(".balken-block").forEach(function (block) {
+    var zeilen = Array.prototype.slice.call(block.querySelectorAll(".balken-zeile"));
+    var werte = zeilen.map(function (z) {
+      var zahl = z.querySelector("b") && z.querySelector("b").textContent.match(/\d+/);
+      return zahl ? parseInt(zahl[0], 10) : 0;
+    });
+    var groesste = Math.max.apply(null, werte);
+    if (!groesste) return;
+    zeilen.forEach(function (z, i) {
+      var balken = z.querySelector(".balken>i");
+      if (balken) balken.style.setProperty("--w", Math.max(3, werte[i] / groesste * 100).toFixed(1) + "%");
+    });
+  });
+
   /* ── Galerie: Reiter folgen dem Streifen ─────────────────────────────────── */
   // Ohne Skript sind die Reiter Sprungmarken in einen wischbaren Streifen. Hier
   // scrollt ein Klick nur den Streifen (nicht die Seite), und wer wischt, sieht

@@ -127,7 +127,15 @@ Zeilen oder mitten im Satz, in Inhaltsdateien wie im Rahmen:
 <!-- AB 0.3.0 -->so ist es ab 0.3.0<!-- SONST -->so ist es bisher<!-- ENDE -->
 ```
 
-Der `SONST`-Teil darf fehlen; verschachteln geht nicht. `tools/seiten.py` stellt
+Das Gegenstück ist `VOR`: Inhalt, der nur gilt, solange die Version noch
+*nicht* draußen ist — eine Ankündigung, die mit dem Release von selbst
+verschwindet:
+
+```html
+<!-- VOR 0.3.0 -->Bald: 0.3.0<!-- ENDE -->
+```
+
+Der `SONST`-Teil darf bei beiden fehlen; verschachteln geht nicht. `tools/seiten.py` stellt
 jede Weiche nach der Version in `seiten/stand.json`. So kann der Text für die
 nächste Version schon auf `main` liegen, ohne dass die Seite etwas verspricht,
 was der Download noch nicht kann — mit dem Release springt sie beim nächsten
@@ -143,8 +151,8 @@ python3 tools/seiten.py --stand 0.3.0
 python3 tools/seiten.py
 ```
 
-Ist eine Weiche erfüllt, meldet `tools/seiten.py` das bei jedem Lauf — dann
-können die `SONST`-Teile raus.
+Ist eine Version draußen, meldet `tools/seiten.py` das bei jedem Lauf — dann
+können die `SONST`-Teile hinter `AB` und die `VOR`-Blöcke raus.
 
 ## Sonst noch pflegen
 
