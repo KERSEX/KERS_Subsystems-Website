@@ -40,15 +40,35 @@ jobs:
         id: release
         env:
           GH_TOKEN: ${{ github.token }}
+        # Zeigt der Tag auf aelteren Code als die Release-Version (so bei 0.3.1:
+        # der Tag sitzt auf dem 0.3.0-Commit, die EXE kam von main), steht im
+        # Tag eine falsche version.txt und ggf. eine alte Bausteinliste. Dann
+        # zaehlt der Standardzweig - aber nur, wenn dort genau diese Version steht.
         run: |
-          tag=$(gh release view --repo KERSEX/KERS_Overlay --json tagName --jq .tagName 2>/dev/null || true)
+          repo=KERSEX/KERS_Overlay
+          tag=$(gh release view --repo "$repo" --json tagName --jq .tagName 2>/dev/null || true)
           echo "Neuester Release: ${tag:-keiner gefunden - nehme den Standardzweig}"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          ref="$tag"
+          if [ -n "$tag" ]; then
+            lies() { gh api "repos/$repo/contents/static/version.txt$1" --jq .content 2>/dev/null | base64 -d 2>/dev/null | tr -d '[:space:]' || true; }
+            version=$(echo "$tag" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' || true)
+            am_tag=$(lies "?ref=$tag")
+            if [ -n "$version" ] && [ "$am_tag" != "$version" ]; then
+              am_zweig=$(lies "")
+              if [ "$am_zweig" = "$version" ]; then
+                echo "::warning::Tag $tag zeigt auf Code mit version.txt '$am_tag' - nehme den Standardzweig, dort steht $version."
+                ref=""
+              else
+                echo "::warning::Tag $tag: version.txt sagt '$am_tag', der Standardzweig '$am_zweig' - bleibe beim Tag."
+              fi
+            fi
+          fi
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
         with:
           repository: KERSEX/KERS_Overlay
-          ref: ${{ steps.release.outputs.tag }}
+          ref: ${{ steps.release.outputs.ref }}
           path: .overlay
           fetch-depth: 1
 

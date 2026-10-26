@@ -43,6 +43,7 @@ live, ohne dass die Seite bis dahin verspricht, was der Download noch nicht
 kann. Weichen lassen sich nicht verschachteln.
 
     python3 tools/seiten.py --stand 0.3.0   # Vorschau, als waere 0.3.0 draussen
+    python3 tools/seiten.py --aufraeumen    # entschiedene Weichen aus den Quellen nehmen
 """
 
 import argparse
@@ -57,7 +58,7 @@ QUELLEN = WURZEL / "seiten"
 # Cache-Kennzeichen an CSS und JS. Hochzaehlen, wenn sich eine der beiden Dateien
 # aendert - sonst behalten Browser die alte Version (GitHub Pages laesst sie
 # zwischenspeichern).
-VERSION = "23"
+VERSION = "24"
 
 # Deutsch liegt oben, damit die Adresse ohne Sprachkuerzel auskommt; Englisch
 # darunter. Die Reihenfolge bestimmt auch, was x-default bekommt.
@@ -94,8 +95,13 @@ def stand_lesen() -> str:
     return version
 
 
-def weichen_stellen(text: str, stand: str, ort: str, erfuellt: set) -> str:
-    """Jede Weiche auf den Zweig stellen, der zur Version passt."""
+def weichen_stellen(text: str, stand: str, ort: str, erfuellt: set,
+                    nur_entschiedene: bool = False) -> str:
+    """Jede Weiche auf den Zweig stellen, der zur Version passt.
+
+    Mit nur_entschiedene bleiben Weichen fuer noch nicht erschienene Versionen
+    unberuehrt stehen - so raeumt --aufraeumen die Quellen auf.
+    """
     jetzt = als_zahlen(stand)
 
     def stelle(m: re.Match) -> str:
@@ -107,6 +113,8 @@ def weichen_stellen(text: str, stand: str, ort: str, erfuellt: set) -> str:
         erschienen = jetzt >= als_zahlen(ab)
         if erschienen:
             erfuellt.add((ort, ab))
+        elif nur_entschiedene:
+            return m.group(0)
         # AB: der erste Teil ab dieser Version. VOR: der erste Teil bis dahin.
         zweig = neu if erschienen == (art == "AB") else bisher
 
@@ -123,7 +131,7 @@ def weichen_stellen(text: str, stand: str, ort: str, erfuellt: set) -> str:
 
     text = WEICHE.sub(stelle, text)
     rest = WEICHEN_REST.search(text)
-    if rest:
+    if rest and not nur_entschiedene:
         raise SystemExit(f"{ort}: '{rest.group(0)}' ohne Gegenstueck")
     return text
 
@@ -185,6 +193,9 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--pruefen", action="store_true",
                    help="nur melden, ob eine Seite abweicht, nichts schreiben")
+    p.add_argument("--aufraeumen", action="store_true",
+                   help="Weichen, ueber die der Stand schon entschieden hat, dauerhaft "
+                        "in den Quellen aufloesen (danach wird normal gebaut)")
     p.add_argument("--stand", metavar="VERSION",
                    help="so bauen, als waere diese Version die neueste (Vorschau); "
                         "ohne Angabe gilt seiten/stand.json")
@@ -193,6 +204,15 @@ def main() -> int:
     if not re.fullmatch(r"\d+(?:\.\d+)*", stand):
         raise SystemExit(f"--stand: keine Version ({stand!r})")
     erfuellt: set = set()
+
+    if a.aufraeumen:
+        quellen = [QUELLEN / "rahmen.html"] + sorted(QUELLEN.glob("*/*.html"))
+        for quelle in quellen:
+            alt = quelle.read_text(encoding="utf-8")
+            neu = weichen_stellen(alt, stand, quelle.name, set(), nur_entschiedene=True)
+            if neu != alt:
+                quelle.write_text(neu, encoding="utf-8")
+                print(f"  aufgeraeumt: {quelle.relative_to(QUELLEN)}")
 
     rahmen = (QUELLEN / "rahmen.html").read_text(encoding="utf-8")
     texte = json.loads((QUELLEN / "texte.json").read_text(encoding="utf-8"))

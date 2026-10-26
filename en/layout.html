@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free layout — KERS Subsystems</title>
-<meta name="description" content="Place modules on nine anchor points, set size and layer, save several arrangements.">
+<title>Layout & designs — KERS Subsystems</title>
+<meta name="description" content="Place modules on nine anchor points, set size and layer, save several arrangements — and pick the design: KERS, F1 TV or your own.">
 <meta name="theme-color" content="#0e0e13">
 <link rel="icon" href="../assets/img/favicon.ico" sizes="any">
 <link rel="icon" href="../assets/img/icon.png" type="image/png">
@@ -18,8 +18,8 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KERS Subsystems">
-<meta property="og:title" content="Free layout — KERS Subsystems">
-<meta property="og:description" content="Place modules on nine anchor points, set size and layer, save several arrangements.">
+<meta property="og:title" content="Layout & designs — KERS Subsystems">
+<meta property="og:description" content="Place modules on nine anchor points, set size and layer, save several arrangements — and pick the design: KERS, F1 TV or your own.">
 <meta property="og:url" content="https://kersex.github.io/KERS_Subsystems-Website/en/layout.html">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://kersex.github.io/KERS_Subsystems-Website/assets/img/vorschau-en.jpg">
@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="../assets/css/site.css?v=23">
+<link rel="stylesheet" href="../assets/css/site.css?v=24">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -74,7 +74,7 @@ document.documentElement.className += " js";
       <a href="obs.html">OBS</a>
       <a href="start.html">Quick start</a>
       <a href="technik.html">Technical</a>
-      <a class="menu-leaks" href="leaks.html">Leaks<i class="menu-punkt" title="New in the leaks"></i></a>
+      <a class="menu-leaks" href="leaks.html">Leaks</a>
       <a class="sprachwahl" href="../layout.html" id="sprachwahl"
          title="Auf Deutsch wechseln" lang="de">DE</a>
       <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
@@ -87,7 +87,7 @@ document.documentElement.className += " js";
 <section class="seitenkopf">
   <div class="wrap">
     <a class="zurueck" href="index.html">← Overview</a>
-    <h1>Free layout</h1>
+    <h1>Layout &amp; designs</h1>
     <p class="sub">A module doesn't hang on fixed pixels but on one of nine anchor points plus an offset.</p>
   </div>
 </section>
@@ -129,6 +129,35 @@ document.documentElement.className += " js";
   </div>
 </section>
 
+<!-- ══════════════ DESIGNS ══════════════ -->
+<section class="sec" id="designs">
+  <div class="wrap">
+    <p class="kicker">Designs</p>
+    <h2>Two designs. And yours.</h2>
+    <p class="sub">What the HUD and the OBS window look like is set by a design — chosen in <code>/settings</code> under <em>Design</em>.</p>
+    <div class="split designs-split">
+      <ul class="checks">
+        <li><b>KERS.</b> The look it all started with: tower with sectors and DRS, battle boxes, track map.</li>
+        <li><b>F1 TV.</b> A recreation of the F1 TV graphics: tower with full names and a red P1, “LAP 32 / 57”, yellow safety car banner, tyres as a round disc with their age in laps. Gap and interval take turns every 8 s, a purple stopwatch marks the fastest lap. Instead of an F1 logo, your own from the branding settings sits on top.</li>
+        <li><b>Target time like on TV.</b> In qualifying, whoever would go through runs against pole — whoever would drop out runs against the time at the cut line, as a split at the next sector. After the line the card shows time, delta and new position for 5 s.</li>
+        <li><b>The camera driver</b> gets a brighter row with a white stripe, a small arrow next to the tower and a white frame around their hot lap card.</li>
+        <li><b>Everything in the same style:</b> battle boxes, fastest lap, “DROP ZONE”, “RACE CONTROL” and “STRATEGY”, the standings with live points and “PIT STOP” with stationary time, tyre change and exit position.</li>
+        <li><b>Your own design.</b> In <code>/settings</code>, copy a design as your own. The folder <code>data\designs\&lt;name&gt;</code> then holds <code>design.json</code> (colours, opacity, corners, fonts), a folder for your own fonts and the complete scene; every file there replaces the built-in one. Then press <em>Reload</em> on the control panel.</li>
+      </ul>
+      <div class="f1tv-demo" aria-hidden="true">
+        <div class="f1tv" data-f1tv>
+          <div class="f1-kopf">Grand Prix</div>
+          <div class="f1-lap">LAP <b data-runde>32</b> / 57</div>
+          <div class="f1-band">SAFETY CAR</div>
+          <div class="f1-body"></div>
+        </div>
+        <p class="demo-caption">Recreation of the “F1 TV” design — in use the values come from the game.</p>
+      </div>
+    </div>
+    <div class="callout"><b>Only from people you trust.</b> A design contains QML, i.e. program code — so only install other people's designs if you know where they come from.</div>
+  </div>
+</section>
+
 </main>
 
 <footer class="foot">
@@ -144,6 +173,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="../assets/js/site.js?v=23"></script>
+<script src="../assets/js/site.js?v=24"></script>
 </body>
 </html>

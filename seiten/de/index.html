@@ -8,8 +8,8 @@
 
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <!-- VOR 0.3.0 -->
-      <a class="bald" href="leaks.html"><b>Bald</b>0.3.0 — neu gebaut in C++ <i aria-hidden="true">→</i></a>
+      <!-- VOR 0.3.2 -->
+      <a class="bald" href="#neu"><b>Neu</b>0.3.1 — F1-TV-Design, OBS-Steuerung &amp; mehr <i aria-hidden="true">→</i></a>
       <!-- ENDE -->
       <h1>Dein Rennen,<br><em id="wechsel">in Zahlen.</em></h1>
       <p class="lead">
@@ -26,12 +26,12 @@
       </div>
       <ul class="merkmale">
         <li>Kostenlos, ohne Konto</li>
-        <!-- AB 0.3.0 --><li>Leichtgewichtig — natives C++, eine Datei mit rund <span data-gen="groesse">55</span>&nbsp;MB, kein Browser im Hintergrund</li><!-- SONST --><li>Leichtgewichtig — läuft nebenher, ohne dem Spiel Leistung zu nehmen</li><!-- ENDE -->
+        <li>Leichtgewichtig — natives C++, eine Datei mit rund <span data-gen="groesse">56</span>&nbsp;MB, kein Browser im Hintergrund</li>
         <li>Direkter Support vom Entwickler über <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a></li>
       </ul>
       <ul class="hero-facts">
         <li><strong><span data-gen="anzahl">13</span></strong><span>Bausteine, einzeln schaltbar</span></li>
-        <!-- AB 0.3.0 --><li><strong><span data-gen="groesse">55</span>&nbsp;MB</strong><span>eine EXE, ohne Installation</span></li><!-- SONST --><li><strong>0</strong><span>Installation — eine EXE</span></li><!-- ENDE -->
+        <li><strong><span data-gen="groesse">56</span>&nbsp;MB</strong><span>eine EXE, ohne Installation</span></li>
         <li><strong>10–120&nbsp;Hz</strong><span>Overlay-Renderrate</span></li>
       </ul>
     </div>
@@ -70,82 +70,57 @@
     <article>
       <h3>Vom Handy</h3>
       <p>Regie und Einstellungen sind die beiden Seiten im Browser. Im selben WLAN steuerst du das
-         Overlay vom Handy — bis hin zur <a href="#regie">Kamera im Spiel</a>.</p>
+         Overlay vom Handy — einmal mit dem Code aus dem Schaltbrett freigegeben, bis hin zur
+         <a href="regie.html">Kamera im Spiel</a>.</p>
     </article>
   </div>
 </section>
-<!-- VOR 0.3.0 -->
-<!-- ══════════════ DEMNÄCHST: 0.3.0 ══════════════ -->
-<section class="sec vorschau" id="v030">
+<!-- VOR 0.3.2 -->
+<!-- ══════════════ NEU IN 0.3.1 ══════════════ -->
+<section class="sec vorschau" id="neu">
   <div class="wrap">
-    <p class="kicker">Demnächst · Version 0.3.0</p>
-    <h2>Neu gebaut. <em>In C++.</em></h2>
-    <p class="sub">Server und Overlay werden ein einziges Programm — ohne Python und ohne Chromium im Hintergrund. Dasselbe Overlay, dieselben Einstellungen, nur viel leichter.</p>
+    <p class="kicker">Neu in Version 0.3.1</p>
+    <h2>Jetzt auch im <em>F1-TV-Look.</em></h2>
+    <p class="sub">Ein zweites Design baut die Grafik aus dem Fernsehen nach. Dazu steuerst du OBS direkt aus der Regie, zählst die WM nach eigenen Punkten — und fremde Geräte brauchen einen Code.</p>
 
-    <div class="vorschau-raster">
-      <div class="vergleich">
-        <h3>Der Download</h3>
-        <div class="balken-block">
-          <div class="balken-zeile">
-            <span class="balken-name">0.2.6<small>heute</small></span>
-            <div class="balken"><i></i></div>
-            <b><span data-gen="groesse">232</span> MB</b>
-          </div>
-          <div class="balken-zeile neu">
-            <span class="balken-name">0.3.0<small>demnächst</small></span>
-            <div class="balken"><i style="--w:24%"></i></div>
-            <b>rund 55 MB</b>
-          </div>
+    <div class="vorschau-raster neu-raster">
+      <div class="f1tv-demo" aria-hidden="true">
+        <div class="f1tv" data-f1tv>
+          <div class="f1-kopf">Grand Prix</div>
+          <div class="f1-lap">LAP <b data-runde>32</b> / 57</div>
+          <div class="f1-band">SAFETY CAR</div>
+          <div class="f1-body"></div>
         </div>
-        <ul class="tausch">
-          <li><span>Python + Chromium</span><i aria-hidden="true">→</i><b>natives C++ mit Qt&nbsp;6</b></li>
-          <li><span>Server und HUD getrennt</span><i aria-hidden="true">→</i><b>ein Programm, ein Prozess</b></li>
-          <li><span>Server von Hand starten</span><i aria-hidden="true">→</i><b>startet von selbst</b></li>
-        </ul>
+        <p class="demo-caption">Nachbau des Designs „F1 TV“ — im Betrieb kommen die Werte aus dem Spiel.</p>
       </div>
-
       <div class="neuheiten">
         <article class="way">
-          <h3>Twitch-Chat in der Regie</h3>
-          <p>Kanal eingeben, und Chat samt Mini-Stream klappen neben der Regie auf — auch auf dem Handy.</p>
+          <h3>Zwei Designs</h3>
+          <p>KERS oder F1 TV: volle Namen, Reifen als runde Scheibe mit Alter, Abstand und Intervall im Wechsel, Zielzeit wie im Fernsehen. Oder ein eigenes Design aus einer Kopie.</p>
         </article>
         <article class="way">
-          <h3>Log auf Knopfdruck</h3>
-          <p>Was Server und HUD melden, steht im Schaltbrett unter <em>Log</em> — und in <code>data\kers.log</code> für den Support.</p>
+          <h3>OBS aus der Regie</h3>
+          <p>Szenen, Quellen, Audio, Übergänge, Stream und Aufnahme — über den WebSocket-Server von OBS, direkt aus der Regie. Auch vom Handy.</p>
         </article>
         <article class="way">
-          <h3>Trackmap bleibt stehen</h3>
-          <p>Nach dem Wechsel von der Quali ins Rennen ist die Karte einer bekannten Strecke sofort wieder da.</p>
+          <h3>Team-WM, eigene Punkte</h3>
+          <p>Fahrer, Teams oder beides im Wechsel. Das Punkteschema P1–P20 trägst du in den Einstellungen ein, es reist mit der WM-Datei.</p>
         </article>
         <article class="way">
-          <h3>Eine Quelle auf dem Port</h3>
-          <p>Läuft noch ein zweites Programm auf 20777, sagt das Schaltbrett <em>Port belegt</em>, statt dass sich zwei die Pakete teilen.</p>
+          <h3>Zugriff mit Code</h3>
+          <p>Nur dieser PC kommt so dran. Jedes andere Gerät gibt einmal den 6-stelligen Code aus dem Schaltbrett ein; Geräte und IPs lassen sich sperren.</p>
         </article>
         <article class="way">
-          <h3>Update per Knopf</h3>
-          <p>Von 0.2.6 geht es über den Update-Knopf im Schaltbrett. Zurück auf 0.2.x geht genauso.</p>
+          <h3>Twitch-Chat direkt</h3>
+          <p>KERS liest den Chat jetzt selbst — das klappt auch in Browsern, die die Twitch-Einbettung sperren.</p>
         </article>
         <article class="way">
-          <h3>Alles bleibt, wie es ist</h3>
-          <p>Dieselben Bausteine, dasselbe Layout, deine Einstellungen und WM-Stände — nur der Motor darunter ist neu.</p>
+          <h3>Hotlaps bleiben stehen</h3>
+          <p>Nach der Linie steht die Zeit 5 s lang da, auch wenn gleich die nächste schnelle Runde folgt. Und kein erfundener lila S3 mehr.</p>
         </article>
       </div>
     </div>
-
-    <div class="galerie bild-einzeln">
-      <figure class="galerie-bild">
-          <a href="assets/img/bilder/regie-neu-1600.webp" data-lupe>
-            <img src="assets/img/bilder/regie-neu-800.webp"
-                 srcset="assets/img/bilder/regie-neu-800.webp 800w, assets/img/bilder/regie-neu-1600.webp 1600w"
-                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1000"
-                 alt="Die neue Regie im Browser, rechts das aufgeklappte Fach mit Twitch-Chat und Mini-Stream" loading="lazy" decoding="async">
-          </a>
-          <figcaption><b>Die neue Regie</b> mit Twitch-Chat und Mini-Stream im Seitenfach. Demo-Rennen; Chat und Stream sind fürs Bild nachgestellt.</figcaption>
-        </figure>
-    </div>
-
-    <p class="vorschau-fuss"><span>Noch im Test — kommt, sobald es im Rennen und mit OBS sitzt, als Update direkt über den Knopf im Schaltbrett. Den Stand kannst du schon <a href="https://github.com/KERSEX/KERS_Overlay/tree/cpp-0.3.0" target="_blank" rel="noopener">auf GitHub verfolgen</a>.</span></p>
-    <div class="cta vorschau-weiter"><a class="btn" href="leaks.html">Alles zu 0.3.0 in den Leaks →</a></div>
+    <div class="cta vorschau-weiter"><a class="btn btn-ghost" href="layout.html#designs">Die Designs →</a><a class="btn btn-ghost" href="regie.html">Die Regie →</a></div>
   </div>
 </section>
 <!-- ENDE -->
@@ -201,27 +176,15 @@
           </a>
           <figcaption><b>Gap-Verlauf.</b> Der Abstand jedes Fahrers zum Führenden über das ganze Rennen — aus der Regie eingeblendet.</figcaption>
         </figure>
-        <!-- AB 0.3.0 -->
-        <figure class="galerie-bild oben" id="bild-regie">
-          <a href="assets/img/bilder/regie-neu-1600.webp" data-lupe>
-            <img src="assets/img/bilder/regie-neu-800.webp"
-                 srcset="assets/img/bilder/regie-neu-800.webp 800w, assets/img/bilder/regie-neu-1600.webp 1600w"
-                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1000"
-                 alt="Die neue Regie im Browser, rechts das aufgeklappte Fach mit Twitch-Chat und Mini-Stream" loading="lazy" decoding="async">
-          </a>
-          <figcaption><b>Die Regie.</b> Kamera-Tipp, das ganze Feld, Battles und Rennleitung — rechts der Twitch-Chat mit Mini-Stream. Chat und Stream fürs Bild nachgestellt.</figcaption>
-        </figure>
-        <!-- SONST -->
         <figure class="galerie-bild oben" id="bild-regie">
           <a href="assets/img/bilder/regie-1600.webp" data-lupe>
             <img src="assets/img/bilder/regie-800.webp"
                  srcset="assets/img/bilder/regie-800.webp 800w, assets/img/bilder/regie-1600.webp 1600w"
-                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1100"
-                 alt="Die Regie-Seite im Browser mit Kamera-Tipp, dem ganzen Feld, Battles, Pace-Vergleich und Rennleitung" loading="lazy" decoding="async">
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1000"
+                 alt="Die neue Regie im Browser, rechts das aufgeklappte Fach mit Twitch-Chat und Mini-Stream" loading="lazy" decoding="async">
           </a>
-          <figcaption><b>Die Regie.</b> Kamera-Tipp, das ganze Feld, Battles, Pace-Vergleich und Rennleitung — im Browser, auch vom Handy.</figcaption>
+          <figcaption><b>Die Regie.</b> Kamera-Tipp, das ganze Feld und die OBS-Steuerung mit Szenen, Quellen und Audio — rechts der Twitch-Chat mit Mini-Stream. OBS, Chat und Stream sind fürs Bild nachgestellt.</figcaption>
         </figure>
-        <!-- ENDE -->
       </div>
     </div>
   </div>
@@ -246,18 +209,18 @@
         <span class="thema-mehr">Ansehen</span>
       </a>
       <a class="thema" href="layout.html">
-        <h3>Freies Layout</h3>
-        <p>Neun Ankerpunkte, Größe und Ebene je Baustein, mehrere Anordnungen unter Namen gespeichert.</p>
+        <h3>Layout &amp; Designs</h3>
+        <p>Neun Ankerpunkte, Größe und Ebene je Baustein — und zwei Designs: KERS oder F1 TV.</p>
         <span class="thema-mehr">Ansehen</span>
       </a>
       <a class="thema" href="regie.html">
         <h3>Die Regie</h3>
-        <p>Director’s Eye, Charts und Boxen von Hand einblenden — vom zweiten Bildschirm oder vom Handy.</p>
+        <p>Director’s Eye, Einblendungen von Hand und OBS-Steuerung — vom zweiten Bildschirm oder vom Handy.</p>
         <span class="thema-mehr">Ansehen</span>
       </a>
       <a class="thema" href="obs.html">
         <h3>Aufnahme &amp; Stream</h3>
-        <p>Das eigene OBS-Fenster, die Fensteraufnahme und der Farbschlüssel — in drei Handgriffen.</p>
+        <p>Das eigene OBS-Fenster, die Fensteraufnahme und der Farbschlüssel — in drei Handgriffen. Dazu OBS aus der Regie steuern.</p>
         <span class="thema-mehr">Ansehen</span>
       </a>
       <a class="thema" href="start.html">
@@ -267,12 +230,12 @@
       </a>
       <a class="thema" href="technik.html">
         <h3>Technik &amp; Hilfe</h3>
-        <p><!-- AB 0.3.0 -->Ein Programm in C++, Ports, Renderrate<!-- SONST -->Ports, Renderer, Renderrate<!-- ENDE --> — und was zu tun ist, wenn nichts ankommt oder OBS das Fenster nicht findet.</p>
+        <p>Ein Programm in C++, Ports, Renderrate — und was zu tun ist, wenn nichts ankommt oder OBS das Fenster nicht findet.</p>
         <span class="thema-mehr">Ansehen</span>
       </a>
       <a class="thema" href="leaks.html">
-        <h3>Leaks<!-- VOR 0.3.0 --><span class="etikett">0.3.0</span><!-- ENDE --></h3>
-        <p><!-- VOR 0.3.0 -->0.3.0 in C++, rund 55 MB, die neue Regie mit Twitch-Chat — was gerade entsteht.<!-- SONST -->Was gerade entsteht, bevor es draußen ist.<!-- ENDE --></p>
+        <h3>Leaks</h3>
+        <p>Was gerade entsteht, bevor es draußen ist.</p>
         <span class="thema-mehr">Ansehen</span>
       </a>
     </div>
@@ -284,15 +247,12 @@
   <div class="wrap dl-in">
     <img src="assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
     <h2 class="dl-titel">Hol es dir.</h2>
-    <p class="dl-text">Eine Datei<!-- AB 0.3.0 --> mit rund <span data-gen="groesse">55</span>&nbsp;MB<!-- ENDE -->, kein Installer, keine Kosten. Läuft neben dem Spiel und
+    <p class="dl-text">Eine Datei mit rund <span data-gen="groesse">56</span>&nbsp;MB, kein Installer, keine Kosten. Läuft neben dem Spiel und
       aktualisiert sich selbst.</p>
-    <p class="dl-version">Aktuelle Version <b>v<span data-gen="version">0.2.6</span></b></p>
-    <!-- VOR 0.3.0 -->
-    <p class="dl-naechste">Als Nächstes: <b>0.3.0 in C++</b> — kommt als Update über den Knopf im Schaltbrett. <a href="leaks.html">Was neu ist</a></p>
-    <!-- ENDE -->
+    <p class="dl-version">Aktuelle Version <b>v<span data-gen="version">0.3.1</span></b></p>
 
     <div class="cta cta-haupt">
-      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · <!-- AB 0.3.0 --><span data-gen="groesse">55</span>&nbsp;MB · <!-- ENDE -->Windows</small></a>
+      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · <span data-gen="groesse">56</span>&nbsp;MB · Windows</small></a>
       <a class="btn btn-lg btn-dl btn-ghost" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord beitreten<small>Direkter Support</small></a>
     </div>
     <div class="cta">

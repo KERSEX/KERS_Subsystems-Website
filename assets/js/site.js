@@ -410,6 +410,111 @@
     lupe.addEventListener("close", function () { lupeBild.removeAttribute("src"); });
   }
 
+  /* ── Nachbau des Designs "F1 TV" ───────────────────────────────────────── */
+  // Verhalten wie in designs/f1tv (Tower.qml, F1TowerRow.qml): Abstand zum
+  // Fuehrenden und Intervall wechseln alle 8 s, P1 zeigt dann "Leader" bzw.
+  // "Interval"; Platzwechsel mit Pfeil fuer 3 s; lila Stoppuhr bei der
+  // schnellsten Runde; der Kamera-Fahrer bekommt Strich und Pfeil.
+  var F1FELD = [
+    { name: "Verstappen", farbe: "var(--t-redbull)",  reifen: "M", alter: 18 },
+    { name: "Norris",     farbe: "var(--t-mclaren)",  reifen: "H", alter: 9, schnellste: true },
+    { name: "Leclerc",    farbe: "var(--t-ferrari)",  reifen: "M", alter: 17 },
+    { name: "Piastri",    farbe: "var(--t-mclaren)",  reifen: "H", alter: 9 },
+    { name: "Russell",    farbe: "var(--t-mercedes)", reifen: "M", alter: 21 },
+    { name: "Hamilton",   farbe: "var(--t-ferrari)",  reifen: "H", alter: 12, strafe: 5 },
+    { name: "Antonelli",  farbe: "var(--t-mercedes)", reifen: "S", alter: 4 },
+    { name: "Alonso",     farbe: "var(--t-aston)",    reifen: "M", alter: 19 }
+  ];
+  var REIFENFARBE = { S: "#ff3333", M: "#ffd400", H: "#f2f2f2", I: "#2bd04b", W: "#2e8bff" };
+  // Scheibe plus zwei Boegen zu je 116 Grad, oben und unten offen (F1Reifen.qml:
+  // Strich 11 %, Bogenradius 37 % des Durchmessers).
+  function reifenSvg(farbe) {
+    return '<svg viewBox="0 0 28 28" width="28" height="28"><circle cx="14" cy="14" r="14" fill="#0b0b0e"/>'
+         + '<path d="M8.51 22.79A10.36 10.36 0 0 1 8.51 5.21M19.49 5.21A10.36 10.36 0 0 1 19.49 22.79"'
+         + ' fill="none" stroke="' + farbe + '" stroke-width="3.08"/></svg>';
+  }
+  var UHR = '<svg class="f1-uhr" viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="7.5" fill="#8f2ad8"/>'
+          + '<circle cx="7.5" cy="8.3" r="3.9" fill="none" stroke="#fff" stroke-width="1.4"/>'
+          + '<path d="M7.5 8.3 9.7 5.9" stroke="#fff" stroke-width="1.4"/><rect x="6.3" y="1.2" width="2.4" height="1.6" fill="#fff"/></svg>';
+
+  document.querySelectorAll("[data-f1tv]").forEach(function (tower) {
+    var koerper = tower.querySelector(".f1-body"), runde = tower.querySelector("[data-runde]");
+    var ZEILE = 34, lap = 32;
+    koerper.style.height = (F1FELD.length * ZEILE) + "px";
+
+    var fahrer = F1FELD.map(function (d, i) {
+      var el = document.createElement("div");
+      el.className = "f1-row";
+      el.innerHTML = '<div class="f1-pos"><span class="num"></span><span class="chg"></span></div>'
+        + '<i class="f1-team" style="--tc:' + d.farbe + '"></i>'
+        + '<div class="f1-name">' + d.name + (d.strafe ? '<span class="f1-pen">+' + d.strafe + '</span>' : '')
+        + (d.schnellste ? UHR : '') + '</div>'
+        + '<div class="f1-wert"><span class="w-leader"></span><span class="w-int"></span></div>'
+        + '<div class="f1-reifen">' + reifenSvg(REIFENFARBE[d.reifen]) + '<b></b></div>'
+        + '<i class="f1-drs"></i><i class="f1-pfeil"></i>';
+      koerper.appendChild(el);
+      return { d: d, el: el, platz: i, luecke: i === 0 ? 0 : i * 1.4 + Math.random() * 0.8, alter: d.alter };
+    });
+    var fokus = 2;
+
+    function zeichne() {
+      var reihe = fahrer.slice().sort(function (a, b) { return a.platz - b.platz; });
+      reihe.forEach(function (f, i) {
+        var abstand = i === 0 ? 0 : f.luecke - reihe[i - 1].luecke;
+        f.el.style.transform = "translateY(" + (f.platz * ZEILE) + "px)";
+        f.el.classList.toggle("p1", f.platz === 0);
+        f.el.classList.toggle("fokus", f.platz === fokus);
+        f.el.classList.toggle("drs", i > 0 && abstand < 1.0);
+        f.el.querySelector(".num").textContent = f.platz + 1;
+        f.el.querySelector(".w-leader").textContent = i === 0 ? "Leader" : "+" + f.luecke.toFixed(1);
+        f.el.querySelector(".w-int").textContent = i === 0 ? "Interval" : "+" + Math.max(0.1, abstand).toFixed(1);
+        var alt = f.el.querySelector(".f1-reifen b");
+        alt.textContent = f.alter;
+        alt.classList.toggle("zwei", f.alter >= 10);
+      });
+    }
+    zeichne();
+    if (sanft) return;               // ruhiges Bild fuer alle, die Bewegung abbestellt haben
+
+    setInterval(function () { tower.classList.toggle("intervall"); }, 8000);
+    // Die Abstaende atmen, die Reihenfolge bleibt dabei stehen.
+    setInterval(function () {
+      var reihe = fahrer.slice().sort(function (a, b) { return a.platz - b.platz; });
+      for (var i = 1; i < reihe.length; i++) {
+        var min = reihe[i - 1].luecke + 0.2;
+        reihe[i].luecke = Math.max(min, reihe[i].luecke + (Math.random() - 0.5) * 0.3);
+      }
+      zeichne();
+    }, 1000);
+    // Ab und zu ein Ueberholmanoever - mit Pfeil im Positionsfeld, 3 s lang.
+    setInterval(function () {
+      var oben = 1 + Math.floor(Math.random() * (fahrer.length - 2));
+      var a = fahrer.filter(function (f) { return f.platz === oben; })[0];
+      var b = fahrer.filter(function (f) { return f.platz === oben + 1; })[0];
+      a.platz = oben + 1; b.platz = oben;
+      var g = a.luecke; a.luecke = b.luecke; b.luecke = g;
+      [[b, "up", "▲"], [a, "down", "▼"]].forEach(function (x) {
+        var chg = x[0].el.querySelector(".chg");
+        chg.textContent = x[2]; chg.className = "chg " + x[1];
+        x[0].el.classList.add("pfeil");
+        setTimeout(function () { x[0].el.classList.remove("pfeil"); }, 3000);
+      });
+      zeichne();
+    }, 5200);
+    // Die Kamera wandert, die Runden laufen, und gelegentlich kommt das Safety Car.
+    setInterval(function () { fokus = Math.floor(Math.random() * 6); zeichne(); }, 7000);
+    setInterval(function () {
+      lap = lap >= 57 ? 1 : lap + 1;
+      if (runde) runde.textContent = lap;
+      fahrer.forEach(function (f) { f.alter += 1; });
+      zeichne();
+    }, 9000);
+    setInterval(function () {
+      tower.classList.add("sc");
+      setTimeout(function () { tower.classList.remove("sc"); }, 6000);
+    }, 40000);
+  });
+
   /* ── Timing-Tower-Nachbau ────────────────────────────────────────────────── */
   var body = document.getElementById("towerBody");
   if (!body) return;

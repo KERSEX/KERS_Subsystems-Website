@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Technical &amp; help — KERS Subsystems</title>
-<meta name="description" content="How the overlay is built — ports, renderer, render rate — and what to do when something goes wrong.">
+<meta name="description" content="How the overlay is built — one program in C++, ports, render rate — and what to do when something goes wrong.">
 <meta name="theme-color" content="#0e0e13">
 <link rel="icon" href="../assets/img/favicon.ico" sizes="any">
 <link rel="icon" href="../assets/img/icon.png" type="image/png">
@@ -19,7 +19,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KERS Subsystems">
 <meta property="og:title" content="Technical &amp; help — KERS Subsystems">
-<meta property="og:description" content="How the overlay is built — ports, renderer, render rate — and what to do when something goes wrong.">
+<meta property="og:description" content="How the overlay is built — one program in C++, ports, render rate — and what to do when something goes wrong.">
 <meta property="og:url" content="https://kersex.github.io/KERS_Subsystems-Website/en/technik.html">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://kersex.github.io/KERS_Subsystems-Website/assets/img/vorschau-en.jpg">
@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="../assets/css/site.css?v=23">
+<link rel="stylesheet" href="../assets/css/site.css?v=24">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -74,7 +74,7 @@ document.documentElement.className += " js";
       <a href="obs.html">OBS</a>
       <a href="start.html">Quick start</a>
       <a href="technik.html" aria-current="page">Technical</a>
-      <a class="menu-leaks" href="leaks.html">Leaks<i class="menu-punkt" title="New in the leaks"></i></a>
+      <a class="menu-leaks" href="leaks.html">Leaks</a>
       <a class="sprachwahl" href="../technik.html" id="sprachwahl"
          title="Auf Deutsch wechseln" lang="de">DE</a>
       <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
@@ -99,7 +99,7 @@ document.documentElement.className += " js";
       <div class="tech-flow">
         <div class="node"><b>F1 26</b><span>UDP · port 20777</span></div>
         <div class="arrow" aria-hidden="true"></div>
-        <div class="node"><b>Parser + Flask</b><span>main.py · port 5100</span></div>
+        <div class="node"><b>KERS_Subsystems.exe</b><span>server and HUD in one process · port 5100</span></div>
         <div class="arrow" aria-hidden="true"></div>
         <div class="node split-node">
           <div><b>HUD window</b><span>transparent, always on top</span></div>
@@ -111,17 +111,15 @@ document.documentElement.className += " js";
       <dl class="specs">
         <div><dt>Game</dt><dd>F1 26, UDP format “2026”. Older titles send a different format and are not read.</dd></div>
         <div><dt>Ports</dt><dd><code>5100</code> web interface · <code>20777</code> telemetry</dd></div>
-        <div><dt>Renderer</dt><dd>The QML scene. The old HTML pages sit alongside as a fallback, but the OBS switches only apply to QML.</dd></div>
+        <div><dt>Program</dt><dd>One EXE of about <span data-gen="groesse">56</span>&nbsp;MB — C++20 and Qt&nbsp;6, statically linked. No Python, no Chromium, no DLLs alongside. Server and HUD run in the same process.</dd></div>
+        <div><dt>Rendering</dt><dd>The QML scene, straight from the EXE. The renderer choice from 0.2.x is gone.</dd></div>
         <div><dt>Render rate</dt><dd>10 to 120&nbsp;Hz. The game sends at most 60 packets/s; above that only the smooth counters run more fluidly.</dd></div>
-        <div><dt>Source</dt><dd>Python 3.13, Flask and PySide6. <code>run.bat</code> creates the venv and starts the server, <code>start_hud.bat</code> the desktop HUD.</dd></div>
-        <div><dt>Your data</dt><dd>Everything personal lives in <code>data\</code> next to the EXE. The EXE itself contains none.</dd></div>
+        <div><dt>Source</dt><dd>C++20 with Qt 6.11. <code>packaging\build.bat</code> builds the EXE; thirteen test suites cover everything from the parser to the updater, from access control to the OBS link. Checked against the old Python version over roughly 20,000 packets each from a race and a qualifying session — no deviation.</dd></div>
+        <div><dt>Access</dt><dd>Only this PC gets to the control page, settings and camera keys as it is. Every other device enters the 6-digit code from the control panel once; devices and IPs can be blocked, and five failed attempts mean a 60&nbsp;s pause. Other websites in this PC's browser can't reach the server.</dd></div>
+        <div><dt>Updates</dt><dd>On start the program checks for a newer version. Only what GitHub delivers with a SHA-256 checksum gets installed; the old file stays behind as a fallback.</dd></div>
+        <div><dt>Your data</dt><dd>Everything personal lives in <code>data\</code> next to the EXE — settings, championship standings and window position from 0.2.x carry over unchanged. The EXE itself contains none.</dd></div>
+        <div><dt>Licences</dt><dd>The project's own source is MIT. The EXE contains Qt&nbsp;6 statically linked (LGPL-3.0); since everything is open, it can be rebuilt against another Qt version.</dd></div>
       </dl>
-    </div>
-    <div class="callout">
-      <b>A lot of this changes with 0.3.0.</b> Server and HUD become one program in C++ and
-      Qt&nbsp;6 — about 55&nbsp;MB, no Python, no Chromium, no renderer choice any more. What the
-      program reports is then under <em>Log</em> on the control panel.
-      <a href="leaks.html">All about 0.3.0</a>
     </div>
   </div>
 </section>
@@ -159,10 +157,34 @@ document.documentElement.className += " js";
            unlock it first on the control panel or via the tray icon.</p>
       </details>
       <details>
-        <summary>The overlay looks different than expected.</summary>
-        <p>When starting from source the fonts have to be generated once:
-           <code>python tools\woff2_to_ttf.py</code>. Qt cannot read woff2 files and otherwise falls
-           back to the system font.</p>
+        <summary>The control panel says “port in use”.</summary>
+        <p>Something is already running on 5100 or 20777 — usually an old 0.2.x or a second
+           KERS. The server takes the UDP port for itself, so two programs never split the game's
+           packets between them. Close the other program, then press <b>Start Server</b>.</p>
+      </details>
+      <details>
+        <summary>My phone can't reach the control page.</summary>
+        <p>On the first start the Windows firewall asks whether the program may be reached on the
+           network. If that was declined, allow <code>KERS_Subsystems.exe</code> for
+           <em>private networks</em> in the firewall settings. On the PC itself it works without.</p>
+      </details>
+      <details>
+        <summary>My phone shows “KERS Subsystems — Code”.</summary>
+        <p>The device isn't cleared yet: enter the 6-digit code from the control panel
+           (<em>Access</em>). It stays cleared after that. If it says “blocked”, clear the device again
+           on the control panel under <em>Devices …</em>.</p>
+      </details>
+      <details>
+        <summary>The OBS card on the control page stays “disconnected”.</summary>
+        <p>Switch on the WebSocket server in OBS (<em>Tools → WebSocket Server Settings</em>, port
+           4455). If OBS asks for a password, enter it in <code>/settings</code> under <em>OBS
+           control</em>. If OBS runs on another PC, its address goes there too.</p>
+      </details>
+      <details>
+        <summary>Where do I see what the program reports?</summary>
+        <p>On the control panel under <b>Log</b> — what server and HUD report, i.e. what used to be in
+           the server's console window. The same lines go to <code>data\kers.log</code>; the file is
+           also what helps on Discord.</p>
       </details>
     </div>
 
@@ -188,6 +210,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="../assets/js/site.js?v=23"></script>
+<script src="../assets/js/site.js?v=24"></script>
 </body>
 </html>

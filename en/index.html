@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="KERS Subsystems — live telemetry overlay for F1 26, next to it the timing tower and two battle boxes">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="../assets/css/site.css?v=23">
+<link rel="stylesheet" href="../assets/css/site.css?v=24">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -74,7 +74,7 @@ document.documentElement.className += " js";
       <a href="obs.html">OBS</a>
       <a href="start.html">Quick start</a>
       <a href="technik.html">Technical</a>
-      <a class="menu-leaks" href="leaks.html">Leaks<i class="menu-punkt" title="New in the leaks"></i></a>
+      <a class="menu-leaks" href="leaks.html">Leaks</a>
       <a class="sprachwahl" href="../index.html" id="sprachwahl"
          title="Auf Deutsch wechseln" lang="de">DE</a>
       <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
@@ -91,7 +91,7 @@ document.documentElement.className += " js";
 
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <a class="bald" href="leaks.html"><b>Soon</b>0.3.0 — rebuilt in C++ <i aria-hidden="true">→</i></a>
+      <a class="bald" href="#neu"><b>New</b>0.3.1 — F1 TV design, OBS control &amp; more <i aria-hidden="true">→</i></a>
       <h1>Your race,<br><em id="wechsel">in numbers.</em></h1>
       <p class="lead">
         KERS Subsystems listens to the telemetry stream from <strong>F1&nbsp;26</strong> and turns it
@@ -107,12 +107,12 @@ document.documentElement.className += " js";
       </div>
       <ul class="merkmale">
         <li>Free, no account</li>
-        <li>Lightweight — runs alongside without taking performance from the game</li>
+        <li>Lightweight — native C++, a single file of about <span data-gen="groesse">56</span>&nbsp;MB, no browser running in the background</li>
         <li>Direct support from the developer via <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a></li>
       </ul>
       <ul class="hero-facts">
         <li><strong><span data-gen="anzahl">13</span></strong><span>modules, each switchable</span></li>
-        <li><strong>0</strong><span>installation — one EXE</span></li>
+        <li><strong><span data-gen="groesse">56</span>&nbsp;MB</strong><span>one EXE, no installation</span></li>
         <li><strong>10–120&nbsp;Hz</strong><span>overlay render rate</span></li>
       </ul>
     </div>
@@ -151,82 +151,57 @@ document.documentElement.className += " js";
     <article>
       <h3>From your phone</h3>
       <p>Control and settings are the two pages in the browser. On the same network you steer the
-         overlay from your phone — right down to the <a href="regie.html">camera in the game</a>.</p>
+         overlay from your phone — cleared once with the code from the control panel, right down to
+         the <a href="regie.html">camera in the game</a>.</p>
     </article>
   </div>
 </section>
 
-<!-- ══════════════ DEMNÄCHST: 0.3.0 ══════════════ -->
-<section class="sec vorschau" id="v030">
+<!-- ══════════════ NEU IN 0.3.1 ══════════════ -->
+<section class="sec vorschau" id="neu">
   <div class="wrap">
-    <p class="kicker">Coming soon · version 0.3.0</p>
-    <h2>Rebuilt. <em>In C++.</em></h2>
-    <p class="sub">Server and overlay become one single program — no Python and no Chromium running in the background. Same overlay, same settings, just far lighter.</p>
+    <p class="kicker">New in version 0.3.1</p>
+    <h2>Now with an <em>F1 TV look.</em></h2>
+    <p class="sub">A second design recreates the TV graphics. On top of that you control OBS straight from the control page, count the championship with your own points — and other devices need a code.</p>
 
-    <div class="vorschau-raster">
-      <div class="vergleich">
-        <h3>The download</h3>
-        <div class="balken-block">
-          <div class="balken-zeile">
-            <span class="balken-name">0.2.6<small>today</small></span>
-            <div class="balken"><i></i></div>
-            <b><span data-gen="groesse">232</span> MB</b>
-          </div>
-          <div class="balken-zeile neu">
-            <span class="balken-name">0.3.0<small>coming</small></span>
-            <div class="balken"><i style="--w:24%"></i></div>
-            <b>about 55 MB</b>
-          </div>
+    <div class="vorschau-raster neu-raster">
+      <div class="f1tv-demo" aria-hidden="true">
+        <div class="f1tv" data-f1tv>
+          <div class="f1-kopf">Grand Prix</div>
+          <div class="f1-lap">LAP <b data-runde>32</b> / 57</div>
+          <div class="f1-band">SAFETY CAR</div>
+          <div class="f1-body"></div>
         </div>
-        <ul class="tausch">
-          <li><span>Python + Chromium</span><i aria-hidden="true">→</i><b>native C++ with Qt&nbsp;6</b></li>
-          <li><span>Server and HUD separate</span><i aria-hidden="true">→</i><b>one program, one process</b></li>
-          <li><span>Start the server by hand</span><i aria-hidden="true">→</i><b>starts on its own</b></li>
-        </ul>
+        <p class="demo-caption">Recreation of the “F1 TV” design — in use the values come from the game.</p>
       </div>
-
       <div class="neuheiten">
         <article class="way">
-          <h3>Twitch chat on the control page</h3>
-          <p>Enter a channel and chat plus a mini stream slide open beside the control page — on your phone too.</p>
+          <h3>Two designs</h3>
+          <p>KERS or F1 TV: full names, tyres as a round disc with their age, gap and interval taking turns, target time like on TV. Or your own design from a copy.</p>
         </article>
         <article class="way">
-          <h3>Log at a click</h3>
-          <p>What server and HUD report is under <em>Log</em> on the control panel — and in <code>data\kers.log</code> for support.</p>
+          <h3>OBS from the control page</h3>
+          <p>Scenes, sources, audio, transitions, stream and recording — via OBS's WebSocket server, straight from the control page. From your phone too.</p>
         </article>
         <article class="way">
-          <h3>Track map stays put</h3>
-          <p>After switching from qualifying to the race, a known circuit's map is back right away.</p>
+          <h3>Team standings, own points</h3>
+          <p>Drivers, teams or both in turn. You enter the points system P1–P20 in the settings, and it travels with the championship file.</p>
         </article>
         <article class="way">
-          <h3>One source on the port</h3>
-          <p>If a second program is still on 20777, the control panel says <em>port in use</em> instead of two programs splitting the packets.</p>
+          <h3>Access with a code</h3>
+          <p>Only this PC gets in as it is. Every other device enters the 6-digit code from the control panel once; devices and IPs can be blocked.</p>
         </article>
         <article class="way">
-          <h3>Update with one button</h3>
-          <p>From 0.2.6 it's the update button on the control panel. Going back to 0.2.x works the same way.</p>
+          <h3>Twitch chat, direct</h3>
+          <p>KERS now reads the chat itself — which also works in browsers that block the Twitch embed.</p>
         </article>
         <article class="way">
-          <h3>Everything stays as it is</h3>
-          <p>Same modules, same layout, your settings and championship standings — only the engine underneath is new.</p>
+          <h3>Hot laps stay put</h3>
+          <p>After the line the time stays for 5 s, even if the next flying lap follows straight away. And no more made-up purple S3.</p>
         </article>
       </div>
     </div>
-
-    <div class="galerie bild-einzeln">
-      <figure class="galerie-bild">
-          <a href="../assets/img/bilder/regie-neu-1600.webp" data-lupe>
-            <img src="../assets/img/bilder/regie-neu-800.webp"
-                 srcset="../assets/img/bilder/regie-neu-800.webp 800w, ../assets/img/bilder/regie-neu-1600.webp 1600w"
-                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1000"
-                 alt="The new control page in the browser, on the right the open drawer with Twitch chat and mini stream" loading="lazy" decoding="async">
-          </a>
-          <figcaption><b>The new control page</b> with Twitch chat and mini stream in the side drawer. Demo race; chat and stream recreated for the picture.</figcaption>
-        </figure>
-    </div>
-
-    <p class="vorschau-fuss"><span>Still in testing — it ships once it holds up in races and with OBS, as an update straight from the button on the control panel. You can already <a href="https://github.com/KERSEX/KERS_Overlay/tree/cpp-0.3.0" target="_blank" rel="noopener">follow it on GitHub</a>.</span></p>
-    <div class="cta vorschau-weiter"><a class="btn" href="leaks.html">All about 0.3.0 in the leaks →</a></div>
+    <div class="cta vorschau-weiter"><a class="btn btn-ghost" href="layout.html#designs">The designs →</a><a class="btn btn-ghost" href="regie.html">The control page →</a></div>
   </div>
 </section>
 <!-- ══════════════ IM BILD ══════════════ -->
@@ -285,10 +260,10 @@ document.documentElement.className += " js";
           <a href="../assets/img/bilder/regie-1600.webp" data-lupe>
             <img src="../assets/img/bilder/regie-800.webp"
                  srcset="../assets/img/bilder/regie-800.webp 800w, ../assets/img/bilder/regie-1600.webp 1600w"
-                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1100"
-                 alt="The control page in the browser with camera hint, the whole field, battles, pace comparison and race control" loading="lazy" decoding="async">
+                 sizes="(max-width: 1240px) 100vw, 1180px" width="1600" height="1000"
+                 alt="The new control page in the browser, on the right the open drawer with Twitch chat and mini stream" loading="lazy" decoding="async">
           </a>
-          <figcaption><b>The control page.</b> Camera hint, the whole field, battles, pace comparison and race control — in the browser, from your phone too.</figcaption>
+          <figcaption><b>The control page.</b> Camera hint, the whole field and OBS control with scenes, sources and audio — on the right the Twitch chat with a mini stream. OBS, chat and stream are recreated for the picture.</figcaption>
         </figure>
       </div>
     </div>
@@ -314,18 +289,18 @@ document.documentElement.className += " js";
         <span class="thema-mehr">View</span>
       </a>
       <a class="thema" href="layout.html">
-        <h3>Free layout</h3>
-        <p>Nine anchor points, size and layer per module, several arrangements saved under a name.</p>
+        <h3>Layout &amp; designs</h3>
+        <p>Nine anchor points, size and layer per module — and two designs: KERS or F1 TV.</p>
         <span class="thema-mehr">View</span>
       </a>
       <a class="thema" href="regie.html">
         <h3>The control page</h3>
-        <p>Director’s Eye, charts and boxes cut in by hand — from a second screen or from your phone.</p>
+        <p>Director’s Eye, cut-ins by hand and OBS control — from a second screen or from your phone.</p>
         <span class="thema-mehr">View</span>
       </a>
       <a class="thema" href="obs.html">
         <h3>Recording &amp; stream</h3>
-        <p>The dedicated OBS window, the window capture and the colour key — in three steps.</p>
+        <p>The dedicated OBS window, the window capture and the colour key — in three steps. Plus OBS control from the control page.</p>
         <span class="thema-mehr">View</span>
       </a>
       <a class="thema" href="start.html">
@@ -335,12 +310,12 @@ document.documentElement.className += " js";
       </a>
       <a class="thema" href="technik.html">
         <h3>Technical &amp; help</h3>
-        <p>Ports, renderer, render rate — and what to do when nothing arrives or OBS can’t find the window.</p>
+        <p>One program in C++, ports, render rate — and what to do when nothing arrives or OBS can’t find the window.</p>
         <span class="thema-mehr">View</span>
       </a>
       <a class="thema" href="leaks.html">
-        <h3>Leaks<span class="etikett">0.3.0</span></h3>
-        <p>0.3.0 in C++, about 55 MB, the new control page with Twitch chat — what is being built.</p>
+        <h3>Leaks</h3>
+        <p>What is being built, before it is out.</p>
         <span class="thema-mehr">View</span>
       </a>
     </div>
@@ -352,12 +327,11 @@ document.documentElement.className += " js";
   <div class="wrap dl-in">
     <img src="../assets/img/logo.png" alt="" width="72" height="72" class="dl-logo">
     <h2 class="dl-titel">Go get it.</h2>
-    <p class="dl-text">One file, no installer, no cost. Runs beside the game and updates itself.</p>
-    <p class="dl-version">Current version <b>v<span data-gen="version">0.2.6</span></b></p>
-    <p class="dl-naechste">Up next: <b>0.3.0 in C++</b> — arrives as an update via the button on the control panel. <a href="leaks.html">What’s new</a></p>
+    <p class="dl-text">One file of about <span data-gen="groesse">56</span>&nbsp;MB, no installer, no cost. Runs beside the game and updates itself.</p>
+    <p class="dl-version">Current version <b>v<span data-gen="version">0.3.1</span></b></p>
 
     <div class="cta cta-haupt">
-      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · Windows</small></a>
+      <a class="btn btn-lg btn-dl" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download<small>KERS_Subsystems.exe · <span data-gen="groesse">56</span>&nbsp;MB · Windows</small></a>
       <a class="btn btn-lg btn-dl btn-ghost" href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Join Discord<small>Direct support</small></a>
     </div>
     <div class="cta">
@@ -400,6 +374,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="../assets/js/site.js?v=23"></script>
+<script src="../assets/js/site.js?v=24"></script>
 </body>
 </html>

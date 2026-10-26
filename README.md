@@ -98,6 +98,13 @@ danach die Seiten baut. Der Pages-Workflow holt das Overlay dafür im Stand des
 neuesten Releases, nicht des Standardzweigs, und ruft beides bei jedem Deploy auf
 und zusätzlich einmal täglich.
 
+Zeigt der Tag eines Releases auf älteren Code als die Release-Version (bei 0.3.1
+sitzt der Tag auf dem 0.3.0-Commit, die EXE kam von `main`), merkt der Workflow
+das an `static/version.txt`: Steht am Tag eine andere Version, im Standardzweig
+aber genau die des Releases, nimmt er den Standardzweig und schreibt eine Warnung
+in den Lauf. Sauberer ist es, den Tag beim Veröffentlichen auf den Commit zu
+setzen, aus dem die EXE gebaut ist.
+
 Von Hand, in dieser Reihenfolge:
 
 ```bash
@@ -151,8 +158,16 @@ python3 tools/seiten.py --stand 0.3.0
 python3 tools/seiten.py
 ```
 
-Ist eine Version draußen, meldet `tools/seiten.py` das bei jedem Lauf — dann
-können die `SONST`-Teile hinter `AB` und die `VOR`-Blöcke raus.
+Ist eine Version draußen, meldet `tools/seiten.py` das bei jedem Lauf. Dann
+räumt
+
+```bash
+python3 tools/seiten.py --aufraeumen
+```
+
+die entschiedenen Weichen aus den Quellen: Bei `AB` bleibt der erste Teil, bei
+`VOR` der `SONST`-Teil, alles Übrige fliegt raus. Weichen für Versionen, die noch
+nicht erschienen sind, bleiben stehen. Das fertige HTML ändert sich dabei nicht.
 
 ## Sonst noch pflegen
 

@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="KERS Subsystems — Live-Telemetrie-Overlay für F1 26, daneben der Timing Tower und zwei Battle-Boxen">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="assets/css/site.css?v=23">
+<link rel="stylesheet" href="assets/css/site.css?v=24">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -74,7 +74,7 @@ document.documentElement.className += " js";
       <a href="obs.html" aria-current="page">OBS</a>
       <a href="start.html">Schnellstart</a>
       <a href="technik.html">Technik</a>
-      <a class="menu-leaks" href="leaks.html">Leaks<i class="menu-punkt" title="Neues in den Leaks"></i></a>
+      <a class="menu-leaks" href="leaks.html">Leaks</a>
       <a class="sprachwahl" href="en/obs.html" id="sprachwahl"
          title="Switch to English" lang="en">EN</a>
       <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
@@ -137,6 +137,13 @@ document.documentElement.className += " js";
       Fenster keine neuen Bilder mehr. An einem Fenster ist das nicht lösbar: entweder durchsichtig für
       den Desktop oder undurchsichtig für die Aufnahme. Deshalb zwei.
     </div>
+    <div class="callout">
+      <b>OBS aus der Regie steuern.</b> In OBS unter <em>Werkzeuge → WebSocket-Server-Einstellungen</em>
+      den Server einschalten, dann in <code>/settings</code> unter <em>OBS-Steuerung</em> verbinden —
+      Adresse und Passwort braucht es nur, wenn OBS auf einem anderen PC läuft bzw. eins verlangt. In der
+      <a href="regie.html">Regie</a> steht dann die Karte <em>OBS</em>: Szenen umschalten, Quellen ein- und
+      ausblenden, Audio, Übergänge, Stream und Aufnahme. Das Passwort bleibt verschlüsselt auf dem PC mit KERS.
+    </div>
   </div>
 </section>
 
@@ -155,6 +162,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=23"></script>
+<script src="assets/js/site.js?v=24"></script>
 </body>
 </html>

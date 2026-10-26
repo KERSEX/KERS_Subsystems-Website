@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="KERS Subsystems — Live-Telemetrie-Overlay für F1 26, daneben der Timing Tower und zwei Battle-Boxen">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="assets/css/site.css?v=23">
+<link rel="stylesheet" href="assets/css/site.css?v=24">
 <script>
 // Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
 // die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
@@ -74,7 +74,7 @@ document.documentElement.className += " js";
       <a href="obs.html">OBS</a>
       <a href="start.html" aria-current="page">Schnellstart</a>
       <a href="technik.html">Technik</a>
-      <a class="menu-leaks" href="leaks.html">Leaks<i class="menu-punkt" title="Neues in den Leaks"></i></a>
+      <a class="menu-leaks" href="leaks.html">Leaks</a>
       <a class="sprachwahl" href="en/start.html" id="sprachwahl"
          title="Switch to English" lang="en">EN</a>
       <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
@@ -122,19 +122,22 @@ document.documentElement.className += " js";
       </li>
       <li>
         <h3>Starten</h3>
-        <p>EXE öffnen — es erscheint das Schaltbrett <em>KERS Subsystems</em>.
-           Dort <b>Start Server</b> drücken, dann <b>HUD IST AN</b>.</p>
-        <p class="urls-note"><b>Ab 0.3.0</b> fällt das weg: Schaltbrett, HUD und Server gehen dann
-           zusammen auf. <a href="leaks.html">Was 0.3.0 noch bringt</a></p>
+        <p>EXE öffnen — Schaltbrett, HUD und Server gehen zusammen auf. Nichts zu drücken.</p>
+        <p class="urls-note"><b>Beim ersten Start</b> fragt die Windows-Firewall, ob das Programm im
+           Netzwerk erreichbar sein darf. Für Regie und Settings vom Handy oder zweiten PC
+           <b>Private Netzwerke</b> erlauben — nur am eigenen Rechner geht es auch ohne.</p>
       </li>
       <li>
         <h3>Einrichten</h3>
         <p>Zwei Seiten im Browser — im Schaltbrett je ein Knopf, oder direkt aufgerufen,
            sobald der Server läuft:</p>
         <div class="urls">
-          <div><code>/regie</code><span>Das ganze Feld, Kamera-Tipp, Kamera setzen und die Einblendungen</span></div>
-          <div><code>/settings</code><span>Branding, Farben, Deckkraft, Sichtbarkeit, Layout</span></div>
+          <div><code>/regie</code><span>Das ganze Feld, Kamera-Tipp, Kamera setzen, die Einblendungen und OBS</span></div>
+          <div><code>/settings</code><span>Design, Branding, Farben, Deckkraft, Sichtbarkeit, Layout, WM-Punkte, OBS</span></div>
         </div>
+        <p class="urls-note"><b>Vom Handy, Tablet oder zweiten PC</b> fragt die Seite beim ersten Aufruf
+           nach einem Code — er steht im Schaltbrett unter <em>Zugriff</em>. Einmal eingegeben, bleibt
+           das Gerät freigegeben.</p>
         <p class="urls-note">Das Overlay selbst wird nicht im Browser aufgerufen — es läuft im HUD-Fenster
            und für die Aufnahme im OBS-Fenster.</p>
       </li>
@@ -143,8 +146,13 @@ document.documentElement.className += " js";
     <div class="callout">
       <b>Selbst-Update.</b> Beim Start sieht das Programm still nach, ob es eine neuere Version gibt.
       Der Download wird gegen Größe und SHA-256 geprüft, bevor er die laufende Datei ersetzt —
-      die alte bleibt als Rückfallebene liegen.
+      die alte bleibt als Rückfallebene liegen, bis die neue einmal gestartet ist.
       Eine bestimmte Version wählst du im Schaltbrett gezielt aus.
+    </div>
+    <div class="callout">
+      <b>Schon 0.2.x im Einsatz?</b> Dann bringt dich der Update-Knopf ganz normal auf
+      0.3.0. Einstellungen, WM-Stände und Fensterlage bleiben, die alte Datei räumt die neue beim
+      ersten Start selbst weg. Zurück auf eine 0.2.x geht im Schaltbrett genauso.
     </div>
   </div>
 </section>
@@ -164,6 +172,6 @@ document.documentElement.className += " js";
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=23"></script>
+<script src="assets/js/site.js?v=24"></script>
 </body>
 </html>

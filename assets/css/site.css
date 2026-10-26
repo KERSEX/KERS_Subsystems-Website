@@ -424,6 +424,8 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 /* OBS */
 .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:1.3rem;margin-top:3rem}
 .way{position:relative;display:flex;flex-direction:column}
+/* Sechs Karten: drei je Reihe statt vier plus zwei */
+.ways.drei{grid-template-columns:repeat(3,minmax(0,1fr))}
 /* Die Nummer sitzt in der Kopfleiste, gross und in der Akzentfarbe */
 .way-no{position:absolute;top:.55rem;right:1.1rem;z-index:1;
   font-family:'Teko',sans-serif;font-size:2.4rem;font-weight:700;line-height:1;
@@ -573,6 +575,11 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .vorschau>.wrap{position:relative}
 .vorschau h2 em{font-style:normal;color:var(--accent);text-shadow:0 0 28px var(--accent-glow)}
 .vorschau-raster{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1.6rem;margin-top:2.6rem;align-items:start}
+/* Neu-Abschnitt: links der Nachbau, rechts die Karten - mittig zueinander */
+.neu-raster{align-items:center;gap:2.4rem}
+/* Designs auf der Layout-Seite: Liste links, Nachbau rechts, beide oben buendig */
+.designs-split{margin-top:2.4rem;align-items:start}
+.designs-split .checks{margin-top:0}
 
 /* Vorher / nachher als Panel */
 .vergleich{background:linear-gradient(180deg,rgba(26,26,35,.92),rgba(16,16,23,.92));
@@ -661,6 +668,64 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .tausch li{font-size:.85rem}
 }
 
+/* ── Nachbau des Designs "F1 TV" ─────────────────────────────────────────── */
+/* Masse, Farben und Verhalten aus designs/f1tv im Overlay: design.json,
+   Tower.qml, F1TowerRow.qml, F1Reifen.qml. 340 px breit, 34 px je Zeile, roter
+   P1, Reifen als dunkle Scheibe mit zwei Boegen. Schrift: Titillium Web (OFL,
+   liegt dem Overlay bei; Lizenz in assets/fonts/TitilliumWeb-OFL.txt). */
+@font-face{font-family:'Titillium Web';src:url('../fonts/TitilliumWeb-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Titillium Web';src:url('../fonts/TitilliumWeb-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Titillium Web';src:url('../fonts/TitilliumWeb-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Titillium Web';src:url('../fonts/TitilliumWeb-Black.woff2') format('woff2');font-weight:900;font-display:swap}
+.f1tv-demo{display:flex;flex-direction:column;align-items:center;gap:.9rem}
+.f1tv{position:relative;width:340px;zoom:var(--f1-zoom,1.1);color:#fff;
+  font-family:'Titillium Web',system-ui,sans-serif;font-variant-numeric:tabular-nums;
+  background:rgba(29,30,37,.9);border:1px solid rgba(255,255,255,.06);border-radius:4px;
+  box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.f1-kopf{height:58px;display:grid;place-items:center;font-size:21px;font-weight:900;font-style:italic;
+  letter-spacing:1.5px;text-transform:uppercase}
+.f1-lap{height:32px;background:#2a2b33;display:flex;justify-content:center;align-items:baseline;gap:6px;
+  font-size:15px;letter-spacing:1px;line-height:32px}
+.f1-lap b{font-size:18px;font-weight:900;letter-spacing:0}
+.f1-band{height:0;overflow:hidden;background:#ffd200;color:#111;display:grid;place-items:center;
+  font-size:18px;font-weight:900;letter-spacing:1px;transition:height .25s ease}
+.f1tv.sc .f1-band{height:34px}
+.f1-body{position:relative}
+.f1-row{position:absolute;left:0;right:0;top:0;height:34px;
+  transition:transform .6s cubic-bezier(.65,0,.35,1)}
+.f1-pos{position:absolute;left:0;top:0;z-index:1;width:34px;height:34px;display:grid;place-items:center;
+  background:#14151a;font-size:15px;font-weight:600}
+.f1-row.p1 .f1-pos{background:#e10600}
+.f1-pos .chg{display:none;font-size:13px}
+.f1-row.pfeil .f1-pos .num{display:none}
+.f1-row.pfeil .f1-pos .chg{display:block}
+.f1-pos .chg.up{color:#2ad04b}
+.f1-pos .chg.down{color:#e10600}
+/* Statt Teamlogo eine Kachel in Teamfarbe - die Logos liefert das Overlay selbst */
+.f1-team{position:absolute;left:43px;top:9px;width:16px;height:16px;border-radius:3px;background:var(--tc)}
+.f1-name{position:absolute;left:68px;top:0;height:34px;display:flex;align-items:center;gap:5px;
+  font-size:15px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.f1-pen{height:15px;padding:0 3px;border-radius:2px;background:#e10600;font-size:11px;font-weight:700;
+  line-height:15px;letter-spacing:0}
+.f1-uhr{display:block;width:15px;height:15px}
+.f1-wert{position:absolute;right:44px;top:0;width:64px;height:34px;font-size:15px}
+.f1-wert span{position:absolute;right:0;top:0;line-height:34px;white-space:nowrap;transition:opacity .3s ease}
+.f1-wert .w-int,.f1tv.intervall .f1-wert .w-leader{opacity:0}
+.f1tv.intervall .f1-wert .w-int{opacity:1}
+.f1-reifen{position:absolute;right:8px;top:3px;width:28px;height:28px}
+.f1-reifen svg{display:block}
+.f1-reifen b{position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:700}
+.f1-reifen b.zwei{font-size:12px}
+.f1-drs{position:absolute;right:2px;top:9px;width:3px;height:16px;border-radius:1px;background:#2ad04b;display:none}
+.f1-row.drs .f1-drs{display:block}
+/* Kamera-Fahrer: hellere Zeile, weisser Strich, kleiner Pfeil neben dem Tower */
+.f1-row.fokus::before{content:"";position:absolute;left:34px;right:0;top:0;bottom:0;background:rgba(255,255,255,.16)}
+.f1-row.fokus::after{content:"";position:absolute;left:34px;top:0;z-index:1;width:3px;height:100%;background:#fff}
+.f1-pfeil{display:none;position:absolute;left:calc(100% + 3px);top:10px;width:0;height:0;
+  border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:8px solid #fff}
+.f1-row.fokus .f1-pfeil{display:block}
+@media (max-width:600px){ .f1tv{--f1-zoom:.95} }
+
 /* ── Galerie: echte Aufnahmen aus dem Overlay ─────────────────────────────── */
 /* Ohne Skript ein Streifen, der sich wischen laesst, und die Reiter sind Sprung-
    marken; mit Skript folgen die Reiter dem Streifen, und ein Klick aufs Bild
@@ -738,7 +803,7 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .hero-in,.split{grid-template-columns:1fr;gap:3rem}
   .tower{transform:none}
   .trio{grid-template-columns:1fr;gap:1.8rem}
-  .ways{grid-template-columns:1fr}
+  .ways,.ways.drei{grid-template-columns:1fr}
   .hero{padding:8.5rem 0 4.5rem}
 }
 /* Das Menue klappt ein, sobald die acht Eintraege nicht mehr in eine Zeile passen
