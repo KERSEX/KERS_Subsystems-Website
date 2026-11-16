@@ -29,14 +29,35 @@ tools/bausteine.py    schreibt Bausteinliste und Version aus dem Overlay in seit
 bausteine.json        die Beschreibungen der Bausteine je Sprache (Handarbeit)
 assets/css/site.css   Farben und Layout — Tokens 1:1 aus dem Overlay (core.css)
 assets/js/site.js     Kopfzeile, Einblenden, Tower- und Battle-Nachbau, Ankerraster
+assets/css/builder.css  Design Builder: Bedienung (bb-*) und Vorschau-Bausteine (m-*)
+assets/js/builder.js  Design Builder: Vorschau, Ziehen, Vorlagen, Export/Import
 assets/fonts/         Inter und Teko (woff2), aus dem Overlay übernommen
 assets/img/           Logo, Icon, Favicon
 *.html                erzeugt — nicht von Hand ändern, sondern seiten/ bearbeiten
 ```
 
 Die Seite besteht aus einer Startseite mit den Themen als Kacheln und je einer
-Unterseite dahinter: `besonders`, `bausteine`, `layout`, `regie`, `obs`, `start`
-und `technik`.
+Unterseite dahinter: `besonders`, `bausteine`, `layout`, `builder`, `regie`, `obs`,
+`start` und `technik`.
+
+## Design Builder
+
+`builder.html` stellt Farben, Deckkraft, Ecken, Schriften und die Lage aller
+Bausteine über einer Vorschau in HUD-Pixeln zusammen. Exportiert wird genau das,
+was das Overlay liest:
+
+* `design.json` — wie `designs/kers/design.json` bzw. `designs/f1tv/design.json`
+  im Overlay (Basis KERS oder F1 TV), für `data\designs\<Name>\`
+* das Layout `{baustein: {ecke, dx, dy, z, groesse}}` — als Konsolenbefehl für
+  `/settings` (setzt `layout` und legt es unter *Eigene Layouts* ab) oder als
+  `layouts.json`
+
+Die Lage rechnet wie `lx`/`ly` in `hud/qml/Overlay.qml`, der Tower skaliert wie
+`Tower.qml` (autoFit). Ändert sich im Overlay das Format von `design.json`, die
+Bausteinliste oder die Standard-Lage, müssen `KERS`, `F1TV`, `TEILE` und
+`STANDARD` oben in `assets/js/builder.js` nachgezogen werden. Der Builder lädt
+nichts hoch; gemerkt wird nur im `localStorage` (`kers-builder-v1`) und im
+Teilen-Link (`#d=…`).
 
 ## Zwei Sprachen
 

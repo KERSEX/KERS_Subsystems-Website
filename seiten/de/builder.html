@@ -1,0 +1,47 @@
+<!-- titel: Design Builder — KERS Subsystems -->
+<!-- beschreibung: Stell dir dein Overlay im Browser zusammen: Farben, Deckkraft, Ecken, Schriften und die Lage jedes Bausteins — mit Live-Vorschau und Export als design.json und Layout für KERS. -->
+<link rel="stylesheet" href="{{WURZEL}}assets/css/builder.css?v={{V}}">
+
+<section class="seitenkopf">
+  <div class="wrap weit">
+    <a class="zurueck" href="index.html">← Übersicht</a>
+    <h1>Design Builder</h1>
+    <p class="sub">Farben, Ecken, Schriften und die Lage jedes Bausteins — live über einer Vorschau in HUD-Pixeln. Was dir gefällt, nimmst du als <code>design.json</code> und Layout mit ins Overlay.</p>
+  </div>
+</section>
+
+<section class="sec bb-sec" id="builder">
+  <div class="wrap weit">
+    <div class="bb" id="bb">
+      <noscript><p class="callout">Der Builder braucht JavaScript. Ohne geht es auch: <code>design.json</code> von Hand ändern — <a href="layout.html#designs">so geht’s</a>.</p></noscript>
+    </div>
+  </div>
+</section>
+
+<section class="sec bb-einbau" id="einbauen">
+  <div class="wrap">
+    <p class="kicker">Ins Overlay</p>
+    <h2>In drei Schritten im HUD.</h2>
+    <p class="sub">Der Builder schreibt genau die Dateien, die KERS liest. Die Vorschau ist ein Nachbau — Maße, Farben und Lage stimmen, Feinheiten zeigt das echte HUD.</p>
+    <div class="ways drei">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Design anlegen</h3>
+        <p>KERS starten, <code>/settings</code> → <em>Design</em>: die Basis wählen, die du im Builder hattest (KERS oder F1 TV), einen Namen eintragen und <em>Kopieren</em>. Dann liegt <code>data\designs\&lt;Name&gt;</code> neben der EXE.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>design.json ersetzen</h3>
+        <p>Die geladene <code>design.json</code> in diesen Ordner legen und die alte überschreiben. Im Schaltbrett <em>Neu laden</em> — fertig. Eigene Schriften gehören in <code>fonts\</code> daneben.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Layout übernehmen</h3>
+        <p>Unter <em>Export</em> den Befehl kopieren, in <code>/settings</code> mit <kbd>F12</kbd> die Konsole öffnen, einfügen, Enter. Das Layout gilt sofort und liegt unter <em>Eigene Layouts</em>. Ohne Konsole: <code>layouts.json</code> nach <code>data\</code>, KERS neu starten.</p>
+      </article>
+    </div>
+    <div class="callout"><b>Alles bleibt bei dir.</b> Der Builder lädt nichts hoch — auch kein Hintergrundbild. Dein Stand wird nur in diesem Browser gemerkt; zum Weitergeben gibt es den Link unter <em>Export</em>.</div>
+  </div>
+</section>
+
+<script src="{{WURZEL}}assets/js/builder.js?v={{V}}"></script>
