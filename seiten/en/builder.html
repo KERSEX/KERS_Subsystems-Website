@@ -1,0 +1,47 @@
+<!-- titel: Design Builder — KERS Subsystems -->
+<!-- beschreibung: Put your overlay together in the browser: colours, opacity, corners, fonts and the position of every module — with a live preview and export as design.json and layout for KERS. -->
+<link rel="stylesheet" href="{{WURZEL}}assets/css/builder.css?v={{V}}">
+
+<section class="seitenkopf">
+  <div class="wrap weit">
+    <a class="zurueck" href="index.html">← Overview</a>
+    <h1>Design Builder</h1>
+    <p class="sub">Colours, corners, fonts and the position of every module — live over a preview in HUD pixels. Whatever you like goes into the overlay as <code>design.json</code> and a layout.</p>
+  </div>
+</section>
+
+<section class="sec bb-sec" id="builder">
+  <div class="wrap weit">
+    <div class="bb" id="bb">
+      <noscript><p class="callout">The builder needs JavaScript. Without it you can still edit <code>design.json</code> by hand — <a href="layout.html#designs">here’s how</a>.</p></noscript>
+    </div>
+  </div>
+</section>
+
+<section class="sec bb-einbau" id="einbauen">
+  <div class="wrap">
+    <p class="kicker">Into the overlay</p>
+    <h2>On the HUD in three steps.</h2>
+    <p class="sub">The builder writes exactly the files KERS reads. The preview is a recreation — sizes, colours and positions match, the real HUD shows the finer details.</p>
+    <div class="ways drei">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Create the design</h3>
+        <p>Start KERS, <code>/settings</code> → <em>Design</em>: pick the base you used in the builder (KERS or F1 TV), enter a name and <em>Copy</em>. Now <code>data\designs\&lt;name&gt;</code> sits next to the EXE.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>Replace design.json</h3>
+        <p>Put the downloaded <code>design.json</code> into that folder, overwriting the old one. Press <em>Reload</em> on the control panel — done. Your own fonts go into <code>fonts\</code> next to it.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Apply the layout</h3>
+        <p>Copy the command under <em>Export</em>, open the console in <code>/settings</code> with <kbd>F12</kbd>, paste, Enter. The layout applies at once and is listed under <em>Custom layouts</em>. No console: put <code>layouts.json</code> into <code>data\</code> and restart KERS.</p>
+      </article>
+    </div>
+    <div class="callout"><b>Everything stays with you.</b> The builder uploads nothing — not even a background image. Your work is only remembered in this browser; to pass it on, use the link under <em>Export</em>.</div>
+  </div>
+</section>
+
+<script src="{{WURZEL}}assets/js/builder.js?v={{V}}"></script>

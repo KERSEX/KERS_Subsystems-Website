@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Builder — KERS Subsystems</title>
+<meta name="description" content="Stell dir dein Overlay im Browser zusammen: Farben, Deckkraft, Ecken, Schriften und die Lage jedes Bausteins — mit Live-Vorschau und Export als design.json und Layout für KERS.">
+<meta name="theme-color" content="#0e0e13">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icon.png">
+
+<link rel="alternate" hreflang="de" href="https://kersex.github.io/KERS_Subsystems-Website/builder.html">
+<link rel="alternate" hreflang="en" href="https://kersex.github.io/KERS_Subsystems-Website/en/builder.html">
+<link rel="alternate" hreflang="x-default" href="https://kersex.github.io/KERS_Subsystems-Website/builder.html">
+
+<link rel="canonical" href="https://kersex.github.io/KERS_Subsystems-Website/builder.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KERS Subsystems">
+<meta property="og:title" content="Design Builder — KERS Subsystems">
+<meta property="og:description" content="Stell dir dein Overlay im Browser zusammen: Farben, Deckkraft, Ecken, Schriften und die Lage jedes Bausteins — mit Live-Vorschau und Export als design.json und Layout für KERS.">
+<meta property="og:url" content="https://kersex.github.io/KERS_Subsystems-Website/builder.html">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://kersex.github.io/KERS_Subsystems-Website/assets/img/vorschau-de.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="KERS Subsystems — Live-Telemetrie-Overlay für F1 26, daneben der Timing Tower und zwei Battle-Boxen">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/css/site.css?v=25">
+<script>
+// Vor dem ersten Anstrich: .js schaltet die Einblend-Animationen frei, und wer
+// die Seite in der falschen Sprache aufruft, wird gleich hier umgeleitet - so
+// sieht niemand kurz die andere Sprache aufblitzen.
+document.documentElement.className += " js";
+(function () {
+  try {
+    var hier = "de", gewaehlt = localStorage.getItem("kers-sprache");
+    if (!gewaehlt) {
+      // Ohne eigene Wahl entscheidet die Sprache des Geräts: Deutsch bleibt
+      // Deutsch, alles andere bekommt Englisch.
+      var geraet = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      gewaehlt = /^de\b/i.test(geraet) ? "de" : "en";
+      if (gewaehlt === hier) return;               // schon richtig, nichts tun
+      sessionStorage.setItem("kers-umgeleitet", "1");
+    }
+    if (gewaehlt !== hier) location.replace("en/builder.html");
+  } catch (e) { /* ohne Speicher bleibt die Seite, wie sie ist */ }
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.png" alt="" width="34" height="34">
+      <span class="brand-txt">KERS<span class="brand-thin">Subsystems</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"
+            aria-label="Menü öffnen" data-auf="Menü öffnen" data-zu="Menü schließen">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+      <a href="besonders.html">Besonders</a>
+      <a href="bausteine.html">Bausteine</a>
+      <a href="layout.html">Layout</a>
+      <a class="menu-builder" href="builder.html" aria-current="page">Builder</a>
+      <a href="regie.html">Regie</a>
+      <a href="obs.html">OBS</a>
+      <a href="start.html">Schnellstart</a>
+      <a href="technik.html">Technik</a>
+      <a class="menu-leaks" href="leaks.html">Leaks</a>
+      <a class="sprachwahl" href="en/builder.html" id="sprachwahl"
+         title="Switch to English" lang="en">EN</a>
+      <a class="btn btn-sm" href="https://github.com/KERSEX/KERS_Overlay/releases/latest/download/KERS_Subsystems.exe">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+
+<link rel="stylesheet" href="assets/css/builder.css?v=25">
+
+<section class="seitenkopf">
+  <div class="wrap weit">
+    <a class="zurueck" href="index.html">← Übersicht</a>
+    <h1>Design Builder</h1>
+    <p class="sub">Farben, Ecken, Schriften und die Lage jedes Bausteins — live über einer Vorschau in HUD-Pixeln. Was dir gefällt, nimmst du als <code>design.json</code> und Layout mit ins Overlay.</p>
+  </div>
+</section>
+
+<section class="sec bb-sec" id="builder">
+  <div class="wrap weit">
+    <div class="bb" id="bb">
+      <noscript><p class="callout">Der Builder braucht JavaScript. Ohne geht es auch: <code>design.json</code> von Hand ändern — <a href="layout.html#designs">so geht’s</a>.</p></noscript>
+    </div>
+  </div>
+</section>
+
+<section class="sec bb-einbau" id="einbauen">
+  <div class="wrap">
+    <p class="kicker">Ins Overlay</p>
+    <h2>In drei Schritten im HUD.</h2>
+    <p class="sub">Der Builder schreibt genau die Dateien, die KERS liest. Die Vorschau ist ein Nachbau — Maße, Farben und Lage stimmen, Feinheiten zeigt das echte HUD.</p>
+    <div class="ways drei">
+      <article class="way">
+        <span class="way-no">01</span>
+        <h3>Design anlegen</h3>
+        <p>KERS starten, <code>/settings</code> → <em>Design</em>: die Basis wählen, die du im Builder hattest (KERS oder F1 TV), einen Namen eintragen und <em>Kopieren</em>. Dann liegt <code>data\designs\&lt;Name&gt;</code> neben der EXE.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">02</span>
+        <h3>design.json ersetzen</h3>
+        <p>Die geladene <code>design.json</code> in diesen Ordner legen und die alte überschreiben. Im Schaltbrett <em>Neu laden</em> — fertig. Eigene Schriften gehören in <code>fonts\</code> daneben.</p>
+      </article>
+      <article class="way">
+        <span class="way-no">03</span>
+        <h3>Layout übernehmen</h3>
+        <p>Unter <em>Export</em> den Befehl kopieren, in <code>/settings</code> mit <kbd>F12</kbd> die Konsole öffnen, einfügen, Enter. Das Layout gilt sofort und liegt unter <em>Eigene Layouts</em>. Ohne Konsole: <code>layouts.json</code> nach <code>data\</code>, KERS neu starten.</p>
+      </article>
+    </div>
+    <div class="callout"><b>Alles bleibt bei dir.</b> Der Builder lädt nichts hoch — auch kein Hintergrundbild. Dein Stand wird nur in diesem Browser gemerkt; zum Weitergeben gibt es den Link unter <em>Export</em>.</div>
+  </div>
+</section>
+
+<script src="assets/js/builder.js?v=25"></script>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand"><img src="assets/img/logo.png" alt="" width="22" height="22"> KERS Subsystems</p>
+    <p class="foot-legal">Privates Projekt, kein offizielles Produkt von EA oder Codemasters. Alle Marken gehören ihren jeweiligen Eigentümern.</p>
+    <p class="foot-links">
+      <a href="https://discord.gg/69PYNucFFX" target="_blank" rel="noopener">Discord</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay" target="_blank" rel="noopener">Projekt</a>
+      <a href="https://github.com/KERSEX/KERS_Overlay/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/KERSEX/KERS_Subsystems-Website" target="_blank" rel="noopener">Diese Seite</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js?v=25"></script>
+</body>
+</html>

@@ -63,6 +63,10 @@ code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em
 .menu a{text-decoration:none;font-size:.9rem;font-weight:500;color:var(--muted);transition:color .2s}
 .menu a:hover,.menu a:focus-visible{color:#fff}
 .menu .btn{color:#fff}
+/* Builder: kleiner Akzent, damit das neue Werkzeug auffaellt */
+.menu .menu-builder{color:#fff}
+.menu .menu-builder::before{content:"";display:inline-block;width:6px;height:6px;margin-right:.45rem;border-radius:2px;
+  vertical-align:.15em;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
 /* Leaks: ein pulsierender Punkt, solange dort etwas Unveroeffentlichtes steht */
 .menu-punkt{display:inline-block;width:7px;height:7px;margin-left:.4rem;border-radius:50%;vertical-align:.18em;
   background:var(--accent);animation:pulse 2.4s ease-out infinite}
@@ -314,6 +318,11 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
 .thema-mehr::after{content:" →";transition:transform .25s ease;display:inline-block}
 .thema:hover .thema-mehr::after{transform:translateX(.3rem)}
 .thema:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* Die Builder-Kachel steht vorn und leuchtet etwas */
+.thema-neu{border-color:rgba(225,6,0,.38);box-shadow:0 10px 26px rgba(0,0,0,.45),0 0 26px rgba(225,6,0,.12)}
+.thema-neu>h3{border-bottom-color:var(--accent)}
+.demo-caption a{color:var(--accent);text-decoration:none;font-weight:600}
+.demo-caption a:hover{text-decoration:underline}
 
 /* ── Unterseiten: der Kopf über dem Inhalt ────────────────────────────────── */
 .seitenkopf{padding:8.5rem 0 0;position:relative}
@@ -806,9 +815,9 @@ h3{font-family:'Teko',sans-serif;font-weight:600;text-transform:uppercase;letter
   .ways,.ways.drei{grid-template-columns:1fr}
   .hero{padding:8.5rem 0 4.5rem}
 }
-/* Das Menue klappt ein, sobald die acht Eintraege nicht mehr in eine Zeile passen
-   (mit "Leaks" ist das knapp unter 1100 px). */
-@media (max-width:1100px){
+/* Das Menue klappt ein, sobald die neun Eintraege nicht mehr in eine Zeile passen
+   (mit "Builder" und "Leaks" ist das knapp unter 1240 px). */
+@media (max-width:1240px){
   .burger{display:block}
   .menu{position:fixed;inset:68px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;
     background:rgba(11,11,15,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
